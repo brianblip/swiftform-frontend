@@ -1,6 +1,8 @@
 import FormSuggestionButton from "@/components/FormSuggestionButton";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import DynamicForm from "@/components/DynamicForm";
 
 export default function Home() {
   return (
@@ -9,7 +11,12 @@ export default function Home() {
       <div className="flex flex-col items-center">
         <div className="w-2/3 flex flex-col gap-y-5">
           <div className="relative flex items-center">
-            <textarea name="" id="" placeholder="type something" className="w-full p-3 pl-6 pr-14 border border-solid border-white rounded-lg resize-none bg-transparent"></textarea>
+            <textarea
+              name=""
+              id=""
+              placeholder="type something"
+              className="w-full p-3 pl-6 pr-14 border border-solid border-white rounded-lg resize-none bg-transparent"
+            ></textarea>
             <button className="absolute right-0 z-10 mr-6">
               <FontAwesomeIcon className="h-1em" icon={faPaperPlane} />
             </button>
@@ -20,9 +27,14 @@ export default function Home() {
             <FormSuggestionButton t="Title 3" s="subtitle 3" />
             <FormSuggestionButton t="Title 4" s="subtitle 4" />
           </div>
-          <button className="mt-6 p-5 bg-white rounded-xl text-black">Or create a new form</button>
+          <Link
+            href="/form"
+            className="mt-6 p-5 bg-white rounded-xl text-black"
+          >
+            <button>Or create a new form</button>
+          </Link>
         </div>
       </div>
     </section>
-  )
+  );
 }
