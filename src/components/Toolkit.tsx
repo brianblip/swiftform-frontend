@@ -86,6 +86,7 @@ export default function Toolkit() {
           >
             <h1 className="text-lg font-semibold">Profile</h1>
             <Link href="/UserProfile">Edit Profile</Link>
+            <button>Logout</button>
           </div>
         </div>
       </div>
