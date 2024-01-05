@@ -1,3 +1,4 @@
+import Link from "next/link";
 import FormSuggestionButton from "@/components/FormSuggestionButton";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,9 +26,12 @@ export default function Home() {
             <FormSuggestionButton t="Title 3" s="subtitle 3" />
             <FormSuggestionButton t="Title 4" s="subtitle 4" />
           </div>
-          <button className="mt-6 rounded-xl bg-white p-5 text-black transition-all hover:bg-neutral-200">
+          <Link
+            href="/GeneratedForm"
+            className="mt-6 rounded-xl text-center bg-white p-5 text-black transition-all hover:bg-neutral-200"
+          >
             Or create a new form
-          </button>
+          </Link>
         </div>
       </div>
     </section>
