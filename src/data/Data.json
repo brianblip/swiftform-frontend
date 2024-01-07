@@ -1,0 +1,23 @@
+{
+   "items": [
+      {
+         "type": "select",
+         "question": "What is the capital city of the imaginary country 'Fictionland'?",
+         "options": [
+            "Imaginopolis",
+            "Dreamburgh",
+            "Fantasia City",
+            "Makebelievia"
+         ],
+         "require": true
+      },
+      {
+         "type": "text",
+         "question": "In a magical story, describe the appearance of the mystical creature known as the 'Whimsy-Wisp.' Be as creative as you like!"
+      },
+      {
+         "type": "number",
+         "question": "How many secret passages are hidden within the enchanted castle of Eldoria in the tale of 'Mystic Kingdom'?"
+      }
+   ]
+}
