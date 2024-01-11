@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Aside from "@/components/Aside";
 import Toolkit from "@/components/Toolkit";
+import Login from "./Authentication/Login";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-neutral-800`}>
-        <Aside />
+        <Login/>
+        {/* <Aside />
         <main className="min-h-dvh rounded-md border border-solid border-yellow-500 p-2">
           <Toolkit />
           {children}
-        </main>
+        </main> */}
       </body>
     </html>
   );
