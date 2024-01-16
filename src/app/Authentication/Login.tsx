@@ -27,7 +27,6 @@ export default function Login() {
                             placeholder='********'
                             id='password'
                         />
-
                     </div>
                     <button
                         type='submit'
