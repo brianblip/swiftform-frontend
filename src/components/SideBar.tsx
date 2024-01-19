@@ -12,17 +12,19 @@ export default function SideBar() {
   function onClickToggleNotification() {
     setIsNotificationOpen(!isNotificationOpen);
   }
-  
+
   return (
     <nav className="hidden h-screen w-60 flex-col items-center p-4 bg-primary-black justify-between md:flex">
       <Link className="" href="/">
         <p>LOGO</p>
       </Link>
       <div className="flex flex-col gap-2 w-full">
-        <button onClick={onClickToggleNotification} className="w-full p-2 flex gap-2">
-          <NotificationsOutlinedIcon />
-          <p>Notification</p>
-        </button>
+        <div className="relative">
+          <button onClick={onClickToggleNotification} className="w-full p-2 flex gap-2">
+            <NotificationsOutlinedIcon />
+            <p>Notification</p>
+          </button>
+        </div>
         <button className="w-full p-2 flex gap-2">
           <PermIdentityOutlinedIcon />
           <p>My Account</p>
