@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
