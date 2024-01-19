@@ -7,6 +7,12 @@ import { useState } from 'react';
 
 export default function SideBar() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  /* function for toggling the notification panel */
+  function onClickToggleNotification() {
+    setIsNotificationOpen(!isNotificationOpen);
+  }
+  
   return (
     <nav className="hidden h-screen w-60 flex-col items-center p-4 bg-primary-black justify-between md:flex">
       <Link className="" href="/">
