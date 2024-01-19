@@ -1,3 +1,7 @@
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+
 export default function SideBar() {
   return (
     <nav className="hidden h-screen w-60 flex-col items-center p-4 md:flex">
