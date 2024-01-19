@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { useState } from 'react';
 
 export default function TopBar() {
     return (
