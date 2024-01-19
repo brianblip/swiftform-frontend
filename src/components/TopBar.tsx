@@ -18,6 +18,17 @@ export default function TopBar() {
                     <MenuIcon />
                 </button>
                     <div className='bg-primary-black h-screen w-3/4 absolute right-0 top-0'>
+                        <button className='absolute top-0 right-full p-4'>
+                            <CloseIcon />
+                        </button>
+                        <button className="w-full p-2">
+                            <PermIdentityOutlinedIcon />
+                            <p>My Account</p>
+                        </button>
+                        <button className="w-full p-2">
+                            <LogoutOutlinedIcon />
+                            <p>Log out</p>
+                        </button>
                     </div>
             </div>
         </nav>
