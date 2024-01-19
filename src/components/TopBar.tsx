@@ -37,7 +37,7 @@ export default function TopBar() {
                 <button className="p-4">
                     <MenuIcon />
                 </button>
-                    <div className='bg-primary-black h-screen w-3/4 absolute right-0 top-0'>
+                    <div className='bg-primary-black h-screen w-3/4 absolute right-full top-0'>
                         <button className='absolute top-0 right-full p-4'>
                             <CloseIcon />
                         </button>
