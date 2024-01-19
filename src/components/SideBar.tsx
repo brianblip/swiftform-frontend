@@ -6,6 +6,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useState } from 'react';
 
 export default function SideBar() {
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   return (
     <nav className="hidden h-screen w-60 flex-col items-center p-4 bg-primary-black justify-between md:flex">
       <Link className="" href="/">
