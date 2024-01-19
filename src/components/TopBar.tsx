@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 export default function TopBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
     /* function for opening and closing mobile menu */
     function onClickOpenMenu() {
@@ -17,6 +18,11 @@ export default function TopBar() {
 
     function onClickCloseMenu() {
         setIsMenuOpen(false);
+    }
+
+    /* function for toggling the notification panel */
+    function onClickToggleNotification() {
+        setIsNotificationOpen(!isNotificationOpen);
     }
 
     return (
