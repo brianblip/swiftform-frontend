@@ -31,7 +31,7 @@ export default function TopBar() {
                 <button onClick={onClickToggleNotification} className="p-4">
                     <NotificationsOutlinedIcon />
                 </button>
-                <div className='absolute top-full left-0 bg-primary-neutral w-full p-2'><h1>No Notifications</h1></div>
+                <div className={`absolute top-full left-0 bg-primary-neutral w-full p-2 ${isNotificationOpen ? 'scale-100' : 'scale-0'} `}><h1>No Notifications</h1></div>
             </div>
 
             <Link className="" href="/">
@@ -42,7 +42,7 @@ export default function TopBar() {
                 <button onClick={onClickOpenMenu} className="p-4">
                     <MenuIcon />
                 </button>
-                    <div className='bg-primary-black h-screen w-3/4 absolute right-full top-0 flex flex-col justify-end p-2'>
+                    <div className={`bg-primary-black h-screen w-3/4 absolute top-0 flex flex-col justify-end p-2 ${isMenuOpen ? 'right-0' : 'right-full' }`}>
                         <button onClick={onClickCloseMenu} className='absolute top-0 right-full p-4'>
                             <CloseIcon />
                         </button>
