@@ -7,7 +7,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 export default function TopBar() {
     return (
-        <nav className="flex justify-between items-center md:hidden">
+        <nav className="sticky top-0 flex justify-between items-center bg-primary-black md:hidden">
             <button className="p-4">
                 <NotificationsOutlinedIcon />
             </button>
