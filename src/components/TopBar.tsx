@@ -27,9 +27,12 @@ export default function TopBar() {
 
     return (
         <nav className="sticky top-0 flex justify-between items-center bg-primary-black md:hidden">
+            <div>
                 <button onClick={onClickToggleNotification} className="p-4">
                     <NotificationsOutlinedIcon />
                 </button>
+                <div><h1>No Notifications</h1></div>
+            </div>
 
             <Link className="" href="/">
                 <p>LOGO</p>
