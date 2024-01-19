@@ -5,7 +5,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 export default function SideBar() {
   return (
-    <nav className="hidden h-screen w-60 flex-col items-center p-4 md:flex">
+    <nav className="hidden h-screen w-60 flex-col items-center p-4 bg-primary-black md:flex">
       <Link className="" href="/">
         <p>LOGO</p>
       </Link>
