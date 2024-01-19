@@ -9,18 +9,20 @@ export default function SideBar() {
       <Link className="" href="/">
         <p>LOGO</p>
       </Link>
-      <button className="w-full p-2">
-        <NotificationsOutlinedIcon />
-        <p>Notification</p>
-      </button>
-      <button className="w-full p-2">
-        <PermIdentityOutlinedIcon />
-        <p>My Account</p>
-      </button>
-      <button className="w-full p-2">
-        <LogoutOutlinedIcon />
-        <p>Log out</p>
-      </button>
+      <div>
+        <button className="w-full p-2">
+          <NotificationsOutlinedIcon />
+          <p>Notification</p>
+        </button>
+        <button className="w-full p-2">
+          <PermIdentityOutlinedIcon />
+          <p>My Account</p>
+        </button>
+        <button className="w-full p-2">
+          <LogoutOutlinedIcon />
+          <p>Log out</p>
+        </button>
+      </div>
     </nav>
   );
 }
