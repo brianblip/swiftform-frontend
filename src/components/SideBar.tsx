@@ -9,7 +9,7 @@ export default function SideBar() {
       <Link className="" href="/">
         <p>LOGO</p>
       </Link>
-      <div>
+      <div className="flex flex-col gap-2 w-full">
         <button className="w-full p-2">
           <NotificationsOutlinedIcon />
           <p>Notification</p>
