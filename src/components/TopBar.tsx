@@ -40,7 +40,7 @@ export default function TopBar() {
                     <MenuIcon />
                 </button>
                     <div className='bg-primary-black h-screen w-3/4 absolute right-full top-0 flex flex-col justify-end p-2'>
-                        <button className='absolute top-0 right-full p-4'>
+                        <button onClick={onClickCloseMenu} className='absolute top-0 right-full p-4'>
                             <CloseIcon />
                         </button>
                         <div className="flex flex-col gap-2 w-full">
