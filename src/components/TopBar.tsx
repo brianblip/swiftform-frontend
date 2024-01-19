@@ -37,18 +37,20 @@ export default function TopBar() {
                 <button className="p-4">
                     <MenuIcon />
                 </button>
-                    <div className='bg-primary-black h-screen w-3/4 absolute right-full top-0'>
+                    <div className='bg-primary-black h-screen w-3/4 absolute right-full top-0 flex flex-col justify-end p-2'>
                         <button className='absolute top-0 right-full p-4'>
                             <CloseIcon />
                         </button>
-                        <button className="w-full p-2">
-                            <PermIdentityOutlinedIcon />
-                            <p>My Account</p>
-                        </button>
-                        <button className="w-full p-2">
-                            <LogoutOutlinedIcon />
-                            <p>Log out</p>
-                        </button>
+                        <div className="flex flex-col gap-2 w-full">
+                            <button className="w-full p-2 flex gap-2">
+                                <PermIdentityOutlinedIcon />
+                                <p>My Account</p>
+                            </button>
+                            <button className="w-full p-2 flex gap-2">
+                                <LogoutOutlinedIcon />
+                                <p>Log out</p>
+                            </button>
+                        </div>
                     </div>
             </div>
         </nav>
