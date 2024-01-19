@@ -23,6 +23,7 @@ export default function SideBar() {
           <button onClick={onClickToggleNotification} className="w-full p-2 flex gap-2">
             <NotificationsOutlinedIcon />
             <p>Notification</p>
+            <div><h1>No Notifications</h1></div>
           </button>
         </div>
         <button className="w-full p-2 flex gap-2">
