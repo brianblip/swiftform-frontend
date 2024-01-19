@@ -34,6 +34,8 @@ export default function TopBar() {
                 <button className="p-4">
                     <MenuIcon />
                 </button>
+                    <div className='bg-primary-black h-screen w-3/4 absolute right-0 top-0'>
+                    </div>
             </div>
         </nav>
     );
