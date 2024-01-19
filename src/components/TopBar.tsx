@@ -13,9 +13,11 @@ export default function TopBar() {
                 <p>LOGO</p>
             </Link>
 
-            <button className="p-4">
-                <MenuIcon />
-            </button>
+            <div>
+                <button className="p-4">
+                    <MenuIcon />
+                </button>
+            </div>
         </nav>
     );
 }
