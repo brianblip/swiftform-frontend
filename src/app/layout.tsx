@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
    return (
       <html lang="en">
-         <body className={`${sora.className} bg-primary-neutral text-primary-white`}>
+         <body className={`${sora.className} bg-primary-neutral text-primary-white md:flex`}>
             <TopBar />
             <Sidebar />
             {children}
