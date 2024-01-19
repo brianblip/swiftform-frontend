@@ -19,7 +19,7 @@ export default function SideBar() {
         <p>LOGO</p>
       </Link>
       <div className="flex flex-col gap-2 w-full">
-        <button className="w-full p-2 flex gap-2">
+        <button onClick={onClickToggleNotification} className="w-full p-2 flex gap-2">
           <NotificationsOutlinedIcon />
           <p>Notification</p>
         </button>
