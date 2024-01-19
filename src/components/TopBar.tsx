@@ -8,6 +8,17 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useState } from 'react';
 
 export default function TopBar() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    /* function for opening and closing mobile menu */
+    function onClickOpenMenu() {
+        setIsMenuOpen(true);
+    };
+
+    function onClickCloseMenu() {
+        setIsMenuOpen(false);
+    }
+
     return (
         <nav className="sticky top-0 flex justify-between items-center bg-primary-black md:hidden">
             <button className="p-4">
