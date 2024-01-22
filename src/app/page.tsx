@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SuggestionButton from "@/components/SuggestionButton";
 
 export default function Home() {
    return (
