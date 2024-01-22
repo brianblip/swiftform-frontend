@@ -26,6 +26,11 @@ export default function TopBar() {
         setIsNotificationOpen(!isNotificationOpen);
     }
 
+    /* function for toggling the profile panel */
+    function onClickToggleProfile() {
+        setIsProfileOpen(!isProfileOpen);
+    }
+
     return (
         <nav className="sticky top-0 flex justify-between items-center bg-primary-black md:hidden">
             <div>
