@@ -1,4 +1,5 @@
 import SuggestionButton from "@/components/SuggestionButton";
+import Link from "next/link";
 
 export default function Home() {
    return (
@@ -12,7 +13,7 @@ export default function Home() {
                   <SuggestionButton />
                   <SuggestionButton />
                </div>
-               <button className="w-full bg-primary-white text-primary-black px-2 py-3">Create new form</button>
+               <Link href={'./FormCreate'} className="w-full bg-primary-white text-primary-black px-2 py-3">Create new form</Link>
             </div>
          </div>
       </main>
