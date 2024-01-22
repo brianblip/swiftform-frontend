@@ -10,6 +10,7 @@ import { useState } from 'react';
 export default function TopBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     /* function for opening and closing mobile menu */
     function onClickOpenMenu() {
