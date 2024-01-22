@@ -32,7 +32,7 @@ export default function SideBar() {
           </button>
           <div className={`absolute bottom-full left-0 bg-primary-neutral w-full p-2 ${isNotificationOpen ? 'scale-100' : 'scale-0'} `}><h1>No Notifications</h1></div>
         </div>
-        <div>
+        <div className="relative">
           <button className="w-full p-2 flex gap-2">
             <PermIdentityOutlinedIcon />
             <p>My Account</p>
