@@ -4,6 +4,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useState } from 'react';
+import FormsList from "./FormsList";
 
 export default function SideBar() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function SideBar() {
       <Link className="" href="/">
         <p>LOGO</p>
       </Link>
+      <FormsList/>
       <div className="flex flex-col gap-2 w-full">
         <div className="relative">
           <button onClick={onClickToggleNotification} className="w-full p-2 flex gap-2">
