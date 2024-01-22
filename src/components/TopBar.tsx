@@ -53,10 +53,12 @@ export default function TopBar() {
                             <CloseIcon />
                         </button>
                         <div className="flex flex-col gap-2 w-full">
-                            <button className="w-full p-2 flex gap-2">
-                                <PermIdentityOutlinedIcon />
-                                <p>My Account</p>
-                            </button>
+                            <div>
+                                <button className="w-full p-2 flex gap-2">
+                                    <PermIdentityOutlinedIcon />
+                                    <p>My Account</p>
+                                </button>
+                            </div>
                             <button className="w-full p-2 flex gap-2">
                                 <LogoutOutlinedIcon />
                                 <p>Log out</p>
