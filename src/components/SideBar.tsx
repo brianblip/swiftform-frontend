@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 export default function SideBar() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   /* function for toggling the notification panel */
   function onClickToggleNotification() {
