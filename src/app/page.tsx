@@ -2,6 +2,11 @@ import SuggestionButton from "@/components/SuggestionButton";
 
 export default function Home() {
    return (
-      <h1>Swift Form</h1>
+      <main>
+         <div>
+            <h1>Forms</h1>
+                  <SuggestionButton />
+         </div>
+      </main>
    );
 }
