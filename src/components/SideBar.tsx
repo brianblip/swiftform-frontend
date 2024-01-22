@@ -37,6 +37,7 @@ export default function SideBar() {
             <PermIdentityOutlinedIcon />
             <p>My Account</p>
           </button>
+          <div><button>Edit Profile</button></div>
         </div>
         <button className="w-full p-2 flex gap-2">
           <LogoutOutlinedIcon />
