@@ -11,6 +11,7 @@ export default function Home() {
                   <SuggestionButton />
                   <SuggestionButton />
                </div>
+               <button>Create new form</button>
          </div>
       </main>
    );
