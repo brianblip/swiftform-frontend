@@ -29,8 +29,9 @@ export default function SideBar() {
           <button onClick={onClickToggleNotification} className="w-full p-2 flex gap-2">
             <NotificationsOutlinedIcon />
             <p>Notification</p>
-            <div className={`absolute bottom-full left-0 bg-primary-neutral w-full p-2 ${isNotificationOpen ? 'scale-100' : 'scale-0'} `}><h1>No Notifications</h1></div>
           </button>
+          <div className={`absolute bottom-full left-0 bg-primary-neutral w-full p-2 ${isNotificationOpen ? 'scale-100' : 'scale-0'} `}><h1>No Notifications</h1></div>
+        </div>
         </div>
         <button className="w-full p-2 flex gap-2">
           <PermIdentityOutlinedIcon />
