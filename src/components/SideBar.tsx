@@ -14,6 +14,11 @@ export default function SideBar() {
     setIsNotificationOpen(!isNotificationOpen);
   }
 
+  /* function for toggling the profile panel */
+  function onClickToggleProfile() {
+    setIsProfileOpen(!isProfileOpen);
+}
+
   return (
     <nav className="hidden h-screen w-60 flex-col items-center p-4 bg-primary-black justify-between md:flex">
       <Link className="" href="/">
