@@ -11,7 +11,7 @@ export default function Home() {
                   <SuggestionButton />
                   <SuggestionButton />
                </div>
-               <button>Create new form</button>
+               <button className="w-full bg-primary-white text-primary-black px-2 py-3">Create new form</button>
          </div>
       </main>
    );
