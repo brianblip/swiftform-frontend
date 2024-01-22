@@ -58,8 +58,8 @@ export default function TopBar() {
                                     <PermIdentityOutlinedIcon />
                                     <p>My Account</p>
                                 </button>
-                                    <div>
-                                        <button>Edit Profile</button>
+                                    <div className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-neutral ${isProfileOpen ? 'flex' : 'hidden' }`}>
+                                        <button className='p-2 w-full text-start'>Edit Profile</button>
                                     </div>
                             </div>
                             <button className="w-full p-2 flex gap-2">
