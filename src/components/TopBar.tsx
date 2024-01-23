@@ -37,7 +37,7 @@ export default function TopBar() {
                 <button onClick={onClickToggleNotification} className="p-4">
                     <NotificationsOutlinedIcon />
                 </button>
-                <div className={`absolute top-full left-0 bg-primary-neutral w-full p-2 ${isNotificationOpen ? 'scale-100' : 'scale-0'} `}><h1>No Notifications</h1></div>
+                <div className={`absolute top-full left-0 bg-primary-secondary w-full p-2 ${isNotificationOpen ? 'scale-100' : 'scale-0'} `}><h1>No Notifications</h1></div>
             </div>
 
             <Link className="" href="/">
