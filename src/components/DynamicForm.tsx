@@ -1,117 +1,130 @@
 "use client"
-// src/app/components/DynamicForm.tsx
-import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
+import { useForm, SubmitHandler, useFieldArray, Control } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import React from 'react';
 
-interface FormFields {
-   question_type: string;
-   question: string;
-   required_field: boolean;
+class FormFieldModel {
+   question_type: string = '';
+   question: string = '';
+   required_field: boolean = false;
 }
-
-interface FormData {
+interface FormDataModel {
+   id: string;
    title: string;
    description: string;
-   fields: FormFields[];
+   fields: FormFieldModel[];
 }
 
-export default function DynamicForm() {
-   const { register, control, handleSubmit } = useForm<FormData>();
-   const { fields, append, remove } = useFieldArray<FormFields>({
-      control,
-      name: 'fields', // Updated to match the change in the FormData interface
+interface DynamicFormProps extends FormDataModel {
+   onSubmit: SubmitHandler<FormDataModel>;
+}
+
+export default function DynamicForm({ id, title, description, fields, onSubmit }: DynamicFormProps) {
+   const { register, control, handleSubmit } = useForm<FormDataModel>({
+      defaultValues: { id, title, description, fields: fields },
    });
    const router = useRouter();
+   const { fields: formFields, append, remove } = useFieldArray<FormFieldModel>({
+      control: control as Control<FormDataModel>,
+      name: 'fields',
+   });
 
-   // Ensure at least one fieldset is present on load
-   if (fields.length === 0) {
-      append({ question_type: '', question: '', required_field: false });
-   }
-
-   const onSubmit: SubmitHandler<FormData> = async (data) => {
+   const handleFormSubmit = async (data: FormDataModel) => {
       try {
-         // Make POST request using Axios
-         const response = await axios.post('http://localhost:3000/api', data);
-
+         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+         const response = await axios.patch(`${apiUrl}/${id}`, data);
          console.log('Form submitted successfully:', response.data);
-         router.refresh();
-         router.push(`/`);
+         window.dispatchEvent(new CustomEvent('formCreated'));
+         router.push('/');
       } catch (error) {
          console.error('Error submitting form:', error);
       }
    };
 
+   const appendNewFormField = () => {
+      append(new FormFieldModel());
+   };
+
    return (
-
-         <form onSubmit={handleSubmit(onSubmit)} className="w-1/2 h-full flex flex-col gap-3 border-slate-500">
-            <label>
-               Title:
-               <input
-                  {...register('title')}
-                  className="border border-slate-500 px-10 py-2 bg-slate-900 text-white"
-               />
-            </label>
-            <label>
-               Description:
-               <input
-                  {...register('description')}
-                  className="border border-slate-500 px-10 py-2 bg-slate-900 text-white"
-               />
-            </label>
-            {fields.map((field, index) => (
-               <fieldset key={field.id} className='legend border border-slate-500 p-5 flex flex-col gap-3'>
-                  <legend className='mx-2 px-2'>Fieldset {index + 1}</legend>
-                  <label>
-                     Select Question Type:
-                     <select
-                        {...register(`fields.${index}.question_type` as const)}
-                        className='w-1/3 h-10 p-2 bg-slate-900 border border-slate-800 rounded'
-                     >
-                        <option value="" disabled>Select question type</option>
-                        <option value="TEXTFIELD">Text Field</option>
-                        <option value="TEXTAREA">Text Area</option>
-                        <option value="MULTIPLE_CHOICE">Multiple Choice</option>
-                        <option value="CHECKBOX">Checkbox</option>
-                        <option value="DROPDOWN">Dropdown</option>
-                        <option value="ATTACHMENT">Attachment</option>
-                        <option value="SLIDER">Slider</option>
-                     </select>
-                  </label>
-                  <label>
-                     Insert a question
-                     <input
-                        {...register(`fields.${index}.question` as const)}
-                        className='w-1/3 h-10 p-2 bg-slate-900 border border-slate-800 rounded'
-                     />
-                  </label>
-                  <label>
-                     Checkbox:
-                     <input
-                        type="checkbox"
-                        {...register(`fields.${index}.required_field` as const, { valueAsNumber: true })}
-                     />
-                  </label>
-                  {fields.length > 1 && (
-                     <button
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="bg-red-600 text-white py-2 px-4 w-1/6"
-                     >
-                        Remove Fieldset
-                     </button>
-                  )}
-               </fieldset>
-            ))}
-            <button
-               type="button"
-               onClick={() => append({ question_type: '', question: '', required_field: false })}
-               className="bg-green-600 font-bold text-white py-3 px-6 w-fit"
-            >
-               Add Fieldset
-            </button>
-            <button type="submit" className="bg-blue-500 font-bold text-white py-3 px-6 w-fit">Submit</button>
-         </form>
-
+      <form onSubmit={handleSubmit(handleFormSubmit)} className="w-1/2 h-full flex flex-col gap-3 border-slate-500">
+         <label htmlFor="title">
+            Title:
+            <input
+               defaultValue={title}
+               {...register('title')}
+               className="border border-slate-500 px-10 py-2 bg-slate-900 text-white"
+               id="title"
+            />
+         </label>
+         <label htmlFor="description">
+            Description:
+            <input
+               defaultValue={description}
+               {...register('description')}
+               className="border border-slate-500 px-10 py-2 bg-slate-900 text-white"
+               id="description"
+            />
+         </label>
+         {formFields.map((field, index) => (
+            <fieldset key={field.id} className='legend border border-slate-500 p-5 flex flex-col gap-3'>
+               <legend className='mx-2 px-2'>Fieldset {index + 1}</legend>
+               <label htmlFor={`fields.${index}.question_type`}>
+                  Select Question Type:
+                  <select
+                     defaultValue={field.question_type}
+                     {...register(`fields.${index}.question_type` as const)}
+                     className='w-1/3 h-10 p-2 bg-slate-900 border border-slate-800 rounded'
+                     id={`fields.${index}.question_type`}
+                  >
+                     <option value="" disabled>Select question type</option>
+                     <option value="textfield">Text Field</option>
+                     <option value="textarea">Text Area</option>
+                     <option value="multiple_choice">Multiple Choice</option>
+                     <option value="checkbox">Checkbox</option>
+                     <option value="dropdown">Dropdown</option>
+                     <option value="attachment">Attachment</option>
+                     <option value="slider">Slider</option>
+                  </select>
+               </label>
+               <label htmlFor={`fields.${index}.question`}>
+                  Insert a question
+                  <input
+                     defaultValue={field.question}
+                     {...register(`fields.${index}.question` as const)}
+                     className='w-1/3 h-10 p-2 bg-slate-900 border border-slate-800 rounded'
+                     id={`fields.${index}.question`}
+                  />
+               </label>
+               <label htmlFor={`fields.${index}.required_field`}>
+                  Checkbox:
+                  <input
+                     type="checkbox"
+                     defaultChecked={field.required_field}
+                     {...register(`fields.${index}.required_field` as const)}
+                     id={`fields.${index}.required_field`}
+                  />
+               </label>
+               {formFields.length > 1 && (
+                  <button
+                     type="button"
+                     onClick={() => remove(index)}
+                     className="bg-red-600 text-white py-2 px-4 w-1/6"
+                  >
+                     Remove Fieldset
+                  </button>
+               )}
+            </fieldset>
+         ))}
+         <button
+            type="button"
+            onClick={appendNewFormField}
+            className="bg-green-600 font-bold text-white py-3 px-6 w-fit"
+         >
+            Add Fieldset
+         </button>
+         <button type="submit" className="bg-blue-500 font-bold text-white py-3 px-6 w-fit">Submit</button>
+      </form>
    );
 }
+
