@@ -2,12 +2,15 @@
 interface InputProps {
     label: string,
     placeholder: string,
-    type: string
+    type: string,
+    size: string
 }
 
-const Input = ({ label, placeholder, type }: InputProps) => {
+const Input = ({ label, placeholder, type, size }: InputProps) => {
+   
     return (
-        <div className="mb-4 w-72 max-w-md">
+
+        <div className={`mb-4 ${getSize()} max-w-md`}>
             <label className="block text-sm font-bold text-[#ECECF1]" htmlFor="email">
                 {label}
             </label>
@@ -28,13 +31,20 @@ export default function MyAccount() {
 
             <div>
                 <p className="text-xl">Profile Information</p>
-                <div></div>
-                <div className="flex flex-row justify-center gap-10">
-                    <Input type="name" placeholder="First name" label="First name" />
-                    <Input type="name" placeholder="Last name" label="Last name" />
+                <div className="h-[20vh] flex items-center gap-10 lg:pl-48  ">
+                    <div className="border border-red-500 rounded-full h-[120px] w-[120px]">
+
+                    </div>
+                    <div className="h-[44px] w-[176px] bg-slate-600 rounded-sm flex items-center justify-center">
+                        <button>Change picture</button>
+                    </div>
                 </div>
-                <div className="flex flex-row justify-center gap-10">
-                    <Input type="email" placeholder="Email" label="Email" />
+                <div className="flex flex-row justify-center gap-10 border-red-500 border">
+                    <Input type="name" placeholder="First name" label="First name" size="md" />
+                    <Input type="name" placeholder="Last name" label="Last name" size="md"/>
+                </div>
+                <div className="flex flex-row justify-center gap-10 border border-red-500">
+                    <Input type="email" placeholder="Email" label="Email" size="full" />
                 </div>
                 <div></div>
             </div>
@@ -42,7 +52,7 @@ export default function MyAccount() {
             <div>
                 <p className="text-xl">Account Setting</p>
                 <div></div>
-                <div></div>
+                  <div></div>
                 <div></div>
             </div>
         </div>
