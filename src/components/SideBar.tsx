@@ -1,12 +1,17 @@
 'use client'
+
 import Link from "next/link";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useState } from 'react';
 import FormsList from "./FormsList";
+import { usePathname } from 'next/navigation';
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 
 export default function SideBar() {
+  const pathname = usePathname();
+  // Extract form ID from the pathname
+  const currentFormId = Number(pathname.split('/Form/')[1]);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
@@ -25,7 +30,7 @@ export default function SideBar() {
       <Link className="" href="/">
         <p>LOGO</p>
       </Link>
-      <FormsList/>
+      <FormsList formId={currentFormId}/>
       <div className="flex flex-col gap-2 w-full">
         <div className="relative">
           <button onClick={onClickToggleNotification} className="w-full p-2 flex gap-2">
