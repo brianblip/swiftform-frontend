@@ -45,11 +45,7 @@ export default function MyAccount() {
 
             
 
-            <div>
-                <p className="text-xl">Account Setting</p>
-                <div className="flex flex-row justify-center gap-10">
-                </div>
-            </div>
+           
         </div>
     )
 }
