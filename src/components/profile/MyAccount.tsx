@@ -1,4 +1,6 @@
 'use client'
+import ProfileInformation from "./ProfileInformation"
+import AccountSettings from "./AccountSettings"
 interface InputProps {
     label: string,
     placeholder: string,
@@ -43,9 +45,8 @@ export default function MyAccount() {
         <div className="border border-red-500 w-full px-20 py-20 h-max">
             <p className="text-center text-3xl">My account</p>
 
-            
-
-           
+            <ProfileInformation />
+            <AccountSettings />
         </div>
     )
 }
