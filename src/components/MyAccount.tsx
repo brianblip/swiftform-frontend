@@ -48,15 +48,15 @@ export default function MyAccount() {
                     <div className="border border-red-500 rounded-full h-[120px] w-[120px]">
 
                     </div>
-                    <div className="h-[44px] w-[176px] bg-slate-600 rounded-sm flex items-center justify-center">
+                    <div className="h-[44px] w-[176px] bg-[#444654] rounded-sm flex items-center justify-center">
                         <button>Change picture</button>
                     </div>
                 </div>
-                <div className="flex flex-row justify-center gap-10 border-red-500 border">
-                    <Input type="name" placeholder="First name" label="First name" size="md" />
-                    <Input type="name" placeholder="Last name" label="Last name" size="md" />
+                <div className="flex flex-row justify-center gap-10">
+                    <Input type="name" placeholder="First name" label="First name" size="md"/>
+                    <Input type="name" placeholder="Last name" label="Last name" size="md"/>
                 </div>
-                <div className="flex flex-row justify-center gap-10 border border-red-500">
+                <div className="flex flex-row justify-center gap-10">
                     <Input type="email" placeholder="Email" label="Email" size="full" />
                 </div>
                 <div></div>
