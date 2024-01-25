@@ -7,7 +7,20 @@ interface InputProps {
 }
 
 const Input = ({ label, placeholder, type, size }: InputProps) => {
-   
+    const getSize = () => {
+        switch (size) {
+            case 'sm':
+                return 'w-24';
+            case 'md':
+                return 'w-[205px]';
+            case 'lg':
+                return 'w-60';
+            case 'full':
+                return 'w-full';
+            default:
+                return 'w-48';
+        }
+    };
     return (
 
         <div className={`mb-4 ${getSize()} max-w-md`}>
@@ -41,7 +54,7 @@ export default function MyAccount() {
                 </div>
                 <div className="flex flex-row justify-center gap-10 border-red-500 border">
                     <Input type="name" placeholder="First name" label="First name" size="md" />
-                    <Input type="name" placeholder="Last name" label="Last name" size="md"/>
+                    <Input type="name" placeholder="Last name" label="Last name" size="md" />
                 </div>
                 <div className="flex flex-row justify-center gap-10 border border-red-500">
                     <Input type="email" placeholder="Email" label="Email" size="full" />
@@ -52,7 +65,7 @@ export default function MyAccount() {
             <div>
                 <p className="text-xl">Account Setting</p>
                 <div></div>
-                  <div></div>
+                <div></div>
                 <div></div>
             </div>
         </div>
