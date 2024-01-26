@@ -30,14 +30,14 @@ export default function SideBar() {
             <NotificationsOutlinedIcon />
             <p>Notification</p>
           </button>
-          <div className={`absolute bottom-full left-0 bg-primary-neutral w-full p-2 ${isNotificationOpen ? 'scale-100' : 'scale-0'} `}><h1>No Notifications</h1></div>
+          <div className={`absolute top-0 left-[calc(100%+theme(spacing.4))] bg-primary-secondary w-full p-2 ${isNotificationOpen ? 'scale-100' : 'scale-0'} `}><h1>No Notifications</h1></div>
         </div>
         <div className="relative">
           <button onClick={onClickToggleProfile} className="w-full p-2 flex gap-2">
             <PermIdentityOutlinedIcon />
             <p>My Account</p>
           </button>
-          <div className={`absolute bottom-full left-0 bg-primary-neutral w-full p-2 ${isProfileOpen ? 'scale-100' : 'scale-0'}`}><button>Edit Profile</button></div>
+          <div className={`absolute top-0 left-[calc(100%+theme(spacing.4))] bg-primary-secondary w-full p-2 ${isProfileOpen ? 'scale-100' : 'scale-0'}`}><button>Edit Profile</button></div>
         </div>
         <button className="w-full p-2 flex gap-2">
           <LogoutOutlinedIcon />
