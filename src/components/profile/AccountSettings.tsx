@@ -1,4 +1,4 @@
-import { Input } from "./MyAccount"
+import Input from "./Input"
 
 export default function AccountSettings() {
     return (
