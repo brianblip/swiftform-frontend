@@ -15,7 +15,7 @@ interface FormData {
    }[];
 } 
 
-interface FormParams {
+interface FormParam {
    id: string;
 }
 
@@ -34,7 +34,7 @@ const fetchFormDataById = async (id: string): Promise<FormData> => {
    }
 };
 
-export default function Form({ params }: { params: FormParams }) {
+export default function Form({ params }: { params: FormParam }) {
    const { id } = params;
    const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
    const [formData, setFormData] = useState<DynamicFormData | null>(null);
@@ -68,7 +68,7 @@ export default function Form({ params }: { params: FormParams }) {
       console.log('Form data submitted:', formData);
    };
 
-   const mainClassNames = "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll";
+   const mainClassNames = "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
 
    if (isLoadingVisible) {
       return <main className={mainClassNames}>Loading...</main>;
