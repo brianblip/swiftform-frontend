@@ -1,4 +1,5 @@
 import React from 'react'
+
 export default function Signup() {
     return (
         <div className='h-[100vh] bg-white w-screen flex justify-center items-center min-w-[352px]'>
