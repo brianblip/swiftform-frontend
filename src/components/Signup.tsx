@@ -5,7 +5,7 @@ export default function Signup() {
         <div className='h-[100vh] bg-white w-screen flex justify-center items-center min-w-[352px]'>
             <div className='border rounded-lg border-gray-300 w-[80%] md:w-[50%] h-[93%] flex flex-col items-center gap-9 justify-center max-h-[1300px] '>
                 <div className="border border-red-500 w-28 h-36 rounded-full overflow-hidden " >
-                    LOGO
+                    Swift Form
                 </div>
                 <p className='text-center font-extrabold text-4xl text-black'>Create your account</p>
                 <form className="w-full flex flex-col justify-center items-center">
