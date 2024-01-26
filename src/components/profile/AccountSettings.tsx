@@ -19,6 +19,9 @@ export default function AccountSettings() {
                     size="full"
                 />
             </div>
+            <div className="border border-red-500 flex justify-end">
+                <button className="h-[44px] w-[176px] bg-[#444654] rounded-sm flex items-center justify-center">Save Changes</button>
+            </div>
         </div>
     )
 }
