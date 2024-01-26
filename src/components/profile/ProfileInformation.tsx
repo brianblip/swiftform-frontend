@@ -19,7 +19,7 @@ export default function ProfileInformation() {
             <div className="flex flex-row justify-center gap-10">
                 <Input type="email" placeholder="Email" label="Email" size="full" id="email" />
             </div>
-            <div className="border border-red-500 flex justify-end">
+            <div className="flex justify-end">
                 <button className="h-[44px] w-[176px] bg-[#444654] rounded-sm flex items-center justify-center">Save Changes</button>
 
             </div>
