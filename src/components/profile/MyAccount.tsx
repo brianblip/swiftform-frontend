@@ -42,8 +42,8 @@ export const Input = ({ label, placeholder, type, size, id }: InputProps) => {
 }
 export default function MyAccount() {
     return (
-        <div className="border border-red-500 w-full px-20 py-20 h-max">
-            <p className="text-center text-3xl">My account</p>
+        <div className="border border-red-500 w-full px-20 h-[100vh] overflow-y-scroll">
+            <p className="text-center text-3xl py-10">My account</p>
 
             <ProfileInformation />
             <AccountSettings />
