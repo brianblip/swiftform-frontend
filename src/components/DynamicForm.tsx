@@ -11,6 +11,7 @@ import {
    ArrowDownwardRounded,
    AddCircleOutlineOutlined
 } from '@mui/icons-material';
+import RangeFields from './RangeFields';
 import DynamicChoiceRender from "./DynamicChoiceRender";
 
 interface FormDataModel {
@@ -39,7 +40,7 @@ export default function DynamicForm({
    fields,
    onSubmit,
 }: DynamicFormProps) {
-   const { register, control, handleSubmit, setValue, getValues } = useForm<FormDataModel>({
+   const { register, control, handleSubmit, setValue, getValues, watch } = useForm<FormDataModel>({
       defaultValues: { id, title, description, fields },
    });
    const router = useRouter();
@@ -50,7 +51,6 @@ export default function DynamicForm({
 
    const [selectedQuestionType, setSelectedQuestionType] = useState<string | null>(null);
    const [selectedFieldChoices, setSelectedFieldChoices] = useState<string[]>([]);
-
    const [fieldQuestionTypes, setFieldQuestionTypes] = useState<string[]>([]);
 
    const handleQuestionTypeChange = (index: number, questionType: string) => {
@@ -89,6 +89,7 @@ export default function DynamicForm({
                data.fields[index].choices = [];
             }
          });
+
 
          const response = await axios.patch(`${apiUrl}/${id}`, data);
          console.log('Form submitted successfully:', response.data);
@@ -142,6 +143,30 @@ export default function DynamicForm({
             onAddChoice={handleAddChoice}
             onRemoveChoice={handleRemoveChoice}
             onUpdateChoice={handleUpdateChoice}
+         />
+      );
+   };
+
+   const renderRangeFields = (index: number) => {
+      const minimumValue = watch(`fields.${index}.minimum`) || 1;
+      const maximumValue = watch(`fields.${index}.maximum`) || 100;
+
+      const handleMinimumChange = (e: ChangeEvent) => {
+         setValue(`fields.${index}.minimum`, (e.target as HTMLInputElement).value);
+      };
+
+      const handleMaximumChange = (e: ChangeEvent) => {
+         setValue(`fields.${index}.maximum`, (e.target as HTMLInputElement).value);
+      };
+
+      // Use the RangeFields component here
+      return (
+         <RangeFields
+            index={index}
+            minimumValue={minimumValue}
+            maximumValue={maximumValue}
+            handleMinimumChange={handleMinimumChange}
+            handleMaximumChange={handleMaximumChange}
          />
       );
    };
@@ -211,11 +236,11 @@ export default function DynamicForm({
                            setValue(`fields.${index}.question_type`, selectedType);
                            handleQuestionTypeChange(index, selectedType);
 
-                           // Render choices only if it's a multiple choice type
+                           // Render choices or range fields based on the selected question type
                            if (['select', 'checkbox', 'radio'].includes(selectedType)) {
                               setSelectedQuestionType(selectedType);
-                              setSelectedFieldChoices(getValues(`fields.${index}.choices`));
-                           } else {
+                              setSelectedFieldChoices(getValues(`fields.${index}.choices`) || []);
+                           } else if (selectedType === 'range') {
                               setSelectedQuestionType(null);
                            }
                         }}
@@ -301,6 +326,10 @@ export default function DynamicForm({
                {fieldQuestionTypes[index] === 'select' || fieldQuestionTypes[index] === 'checkbox' || fieldQuestionTypes[index] === 'radio' ? (
                   <div>
                      {renderChoices(index)}
+                  </div>
+               ) : fieldQuestionTypes[index] === 'range' ? (
+                  <div>
+                     {renderRangeFields(index)}
                   </div>
                ) : null}
 
