@@ -1,4 +1,5 @@
 'use client'
+
 import ProfileInformation from "./ProfileInformation"
 import AccountSettings from "./AccountSettings"
 
