@@ -18,7 +18,14 @@ export const DummyFormData = [
             question_name: "New Question 2",
             question_type: "textarea",
             question: "Who Are you?",
-            choices: [],
+            required_field: false
+         },
+         {
+            question_name: "New Question 3",
+            question_type: "range",
+            question: "Who Are you?",
+            minimum: 0,
+            maximum: 10,
             required_field: false
          }
       ],
