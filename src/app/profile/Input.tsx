@@ -10,16 +10,16 @@ interface InputProps {
 const Input = ({ label, placeholder, type, size, id }: InputProps) => {
     const getSize = () => {
         switch (size) {
-            case 'sm':
-                return 'w-24';
-            case 'md':
-                return 'w-[205px]';
-            case 'lg':
-                return 'w-60';
-            case 'full':
+            case "sm":
+                return "w-24";
+            case "md":
+                return "w-[205px]";
+            case"lg":
+                return "w-60";
+            case "full":
                 return 'w-full';
             default:
-                return 'w-48';
+                return "w-48";
         }
     };
     return (
@@ -29,7 +29,7 @@ const Input = ({ label, placeholder, type, size, id }: InputProps) => {
                 {label}
             </label>
             <input
-                className="border h-[52px] bg-[#444654] border-none w-full py-2 px-3 text-white leading-tight rounded-[4px]  focus:shadow-outline"
+                className="border h-[52px] bg-[#444654] border-none w-full py-2 px-3 text-white leading-tight rounded-[4px] focus:shadow-outline"
                 id={id}
                 placeholder={placeholder}
                 type={type}
