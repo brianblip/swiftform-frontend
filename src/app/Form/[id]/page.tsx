@@ -6,6 +6,7 @@ import QuestionComponent from '@/components/QuestionComponent';
 import ResponseComponent from '@/components/ResponseComponent';
 import { Edit } from '@mui/icons-material';
 
+
 interface FormData {
    title: string;
    description: string;
@@ -13,8 +14,9 @@ interface FormData {
       question_name: string;
       question_type: string;
       question: string;
+      choices: string[]; // Choices should be an array of strings
       required_field: boolean;
-   };
+   }[];
 }
 
 interface FormParam {
@@ -39,7 +41,7 @@ const fetchFormDataById = async (id: string): Promise<FormData> => {
 export default function Form({ params }: { params: FormParam }) {
    const { id } = params;
    const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
-   const [formData, setFormData] = useState<DynamicFormData | null>(null);
+   const [formData, setFormData] = useState<FormData | null>(null);
    const [isLoadingVisible, setLoadingVisible] = useState(true);
    const [error, setError] = useState<string | null>(null);
 
@@ -70,7 +72,7 @@ export default function Form({ params }: { params: FormParam }) {
       setIsQuestionSectionOpen(false);
    };
 
-   const handleFormSubmission = async (formData: DynamicFormData) => {
+   const handleFormSubmission = async (formData: FormData) => {
       console.log('Form data submitted:', formData);
    };
 
