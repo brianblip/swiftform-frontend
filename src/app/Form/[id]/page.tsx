@@ -4,16 +4,20 @@ import { useState, useEffect } from 'react';
 import DynamicForm from '@/components/DynamicForm';
 import QuestionComponent from '@/components/QuestionComponent';
 import ResponseComponent from '@/components/ResponseComponent';
+import { Edit } from '@mui/icons-material';
+
 
 interface FormData {
    title: string;
    description: string;
    fields: {
+      question_name: string;
       question_type: string;
       question: string;
+      choices: string[]; // Choices should be an array of strings
       required_field: boolean;
    }[];
-} 
+}
 
 interface FormParam {
    id: string;
@@ -37,15 +41,19 @@ const fetchFormDataById = async (id: string): Promise<FormData> => {
 export default function Form({ params }: { params: FormParam }) {
    const { id } = params;
    const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
-   const [formData, setFormData] = useState<DynamicFormData | null>(null);
+   const [formData, setFormData] = useState<FormData | null>(null);
    const [isLoadingVisible, setLoadingVisible] = useState(true);
    const [error, setError] = useState<string | null>(null);
+
+   // Use titleInput state to manage the input value
+   const [titleInput, setTitleInput] = useState<string>('');
 
    useEffect(() => {
       const fetchData = async () => {
          try {
             const data = await fetchFormDataById(id);
             setFormData(data);
+            setTitleInput(data?.title || ''); // Update titleInput when formData changes
             setLoadingVisible(false);
          } catch (error) {
             setLoadingVisible(false);
@@ -64,8 +72,13 @@ export default function Form({ params }: { params: FormParam }) {
       setIsQuestionSectionOpen(false);
    };
 
-   const handleFormSubmission = async (formData: DynamicFormData) => {
+   const handleFormSubmission = async (formData: FormData) => {
       console.log('Form data submitted:', formData);
+   };
+
+   // Handle title change
+   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTitleInput(event.target.value);
    };
 
    const mainClassNames = "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
@@ -82,10 +95,17 @@ export default function Form({ params }: { params: FormParam }) {
 
    return (
       <main className={mainClassNames}>
-         <div className="flex flex-col items-center gap-y-4 w-full">
-            <h1 className="text-3xl font-bold">{title}</h1>
-
-            <div className="flex w-full gap-x-4 border-b border-b-primary-white">
+         <div className="flex flex-col items-center w-full gap-y-4">
+            <div className="flex items-center justify-center w-full">
+               <input
+                  autoFocus
+                  value={titleInput}
+                  onChange={handleTitleChange}
+                  className="w-1/4 p-2 text-3xl text-center bg-transparent border-none"
+               />
+               <Edit className='text-3xl' />
+            </div>
+            <div className="flex w-full border-b gap-x-4 border-b-primary-white">
                <button onClick={onClickOpenQuestionSection} className={`border-b-2 ${isQuestionSectionOpen ? 'border-b-primary-white font-bold' : 'border-b-transparent'}`}>
                   Question
                </button>
@@ -97,7 +117,13 @@ export default function Form({ params }: { params: FormParam }) {
 
          {/* Conditional rendering based on isQuestionSectionOpen */}
          {isQuestionSectionOpen ? (
-            <DynamicForm id={params.id} title={formData?.title} description={formData?.description} fields={formData?.fields} onSubmit={handleFormSubmission} />
+            <DynamicForm
+               id={params.id}
+               title={titleInput}  // Pass the modified title to DynamicForm
+               description={formData?.description}
+               fields={formData?.fields}
+               onSubmit={handleFormSubmission}
+            />
          ) : (
             <ResponseComponent />
          )}

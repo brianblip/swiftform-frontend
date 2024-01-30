@@ -15,7 +15,7 @@ export default function Home() {
       try {
          const apiUrl = process.env.NEXT_PUBLIC_API_URL;
          if (!apiUrl) {
-            throw new Error('API URL is not defined');
+            throw new Error('You need to set PUBLIC_API_URL first.');
          }
 
          const response = await fetch(apiUrl, {
@@ -24,12 +24,13 @@ export default function Home() {
                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-               title: 'New Form',
-               description: 'Enter Description',
+               title: 'Write your form title',
+               description: 'Write your description',
                fields: [
                   {
+                     question_name: "Question Name",
                      question_type: '',
-                     question: 'Placeholder Question',
+                     question: 'Question',
                      required_field: true,
                   },
                ],
