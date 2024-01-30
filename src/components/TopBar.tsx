@@ -5,12 +5,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useState } from "react";
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function TopBar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const pathname = usePathname();
+    // Extract form ID from the pathname
+    const currentFormId = Number(pathname.split('/Form/')[1]);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   /* function for opening and closing mobile menu */
   function onClickOpenMenu() {
