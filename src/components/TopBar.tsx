@@ -67,7 +67,9 @@ export default function TopBar() {
             <CloseIcon />
           </button>
           <div className="flex flex-col gap-2 w-full">
-            <FormsList formId={currentFormId} />
+            <div className="px-2">
+              <FormsList formId={currentFormId} />
+            </div>
             <div className="relative">
               <button
                 onClick={onClickToggleProfile}
