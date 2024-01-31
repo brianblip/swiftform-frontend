@@ -52,7 +52,9 @@ export default function Login() {
                         Continue
                     </button>
                 </form>
-                <p className="text-center text-black">Don't have an account? Signup</p>
+                <p className="text-center text-black cursor-pointer" onClick={() => router.push('/signup')}>
+                    Don't have an account? Signup
+                </p>
             </div>
         </div>
     )
