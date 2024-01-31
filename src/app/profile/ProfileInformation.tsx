@@ -1,4 +1,4 @@
-import Input from "./Input"
+import Input from "../../components/profile/Input"
 
 export default function ProfileInformation() {
     return (
