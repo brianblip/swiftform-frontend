@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import Input from "../../components/profile/Input"
+=======
+
+import Input from "../../components/Input"
+>>>>>>> b2485af (Move Input into component folder)
 
 export default function ProfileInformation() {
     return (
