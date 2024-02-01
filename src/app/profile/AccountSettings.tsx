@@ -10,13 +10,16 @@ export default function AccountSettings() {
                     id="password"
                     label="Password"
                     placeholder="Password"
-                    size="full" />
+                    size="full"
+                    required={true}
+                    />
                 <Input
                     label="New Password"
                     id="newPassword"
                     type="password"
                     placeholder="New Password"
                     size="full"
+                    required={true}
                 />
             </div>
             <div className="flex justify-end">
