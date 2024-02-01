@@ -2,7 +2,7 @@ import Input from "../../components/Input"
 
 export default function AccountSettings() {
     return (
-        <div>
+        <form>
             <p className="text-xl">Account Setting</p>
             <div className="flex flex-col items-center justify-center">
                 <Input
@@ -22,6 +22,6 @@ export default function AccountSettings() {
             <div className="flex justify-end">
                 <button className="h-[44px] w-[176px] bg-[#444654] rounded-sm flex items-center justify-center">Save Changes</button>
             </div>
-        </div>
+        </form>
     )
 }
