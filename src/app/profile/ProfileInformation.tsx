@@ -7,7 +7,7 @@ import Input from "../../components/Input"
 
 export default function ProfileInformation() {
     return (
-        <div>
+        <form>
             <p className="text-xl">Profile Information</p>
             <div className="h-[20vh] flex items-center gap-10 lg:pl-48">
                 <div className="border border-red-500 rounded-full h-[120px] w-[120px]">
@@ -30,6 +30,6 @@ export default function ProfileInformation() {
                 </button>
 
             </div>
-        </div>
+        </form>
     )
 }
