@@ -4,10 +4,11 @@ interface InputProps {
     placeholder: string,
     type: string,
     size: string,
-    id: string
+    id: string,
+    required?: boolean;
 
 }
-const Input = ({ label, placeholder, type, size, id }: InputProps) => {
+const Input = ({ label, placeholder, type, size, id, required }: InputProps) => {
     const getSize = () => {
         switch (size) {
             case "sm":
@@ -33,6 +34,7 @@ const Input = ({ label, placeholder, type, size, id }: InputProps) => {
                 id={id}
                 placeholder={placeholder}
                 type={type}
+                required={required}
             />
         </div>
     )
