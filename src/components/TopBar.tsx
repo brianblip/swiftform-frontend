@@ -5,9 +5,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import FormsList from "./FormsList";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function TopBar() {
+  const pathname = usePathname();
+  // Extract form ID from the pathname
+  const currentFormId = Number(pathname.split("/Form/")[1]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -62,6 +67,9 @@ export default function TopBar() {
             <CloseIcon />
           </button>
           <div className="flex flex-col gap-2 w-full">
+            <div className="px-2">
+              <FormsList formId={currentFormId} />
+            </div>
             <div className="relative">
               <button
                 onClick={onClickToggleProfile}
