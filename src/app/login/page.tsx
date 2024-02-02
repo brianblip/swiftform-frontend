@@ -1,11 +1,14 @@
-'use client'
+"use client"
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image"
 import Birdie from "../../assets/Birdie.png"
+import LoginLayout from "./layout";
 export default function Login() {
     const router = useRouter();
-
+    const currentPath = usePathname()
+    const isLoginPage = currentPath === "/login"
+    
 
     return (
         <div className="h-[100vh] bg-white w-screen flex flex-col justify-center items-center min-w-[352px]">
