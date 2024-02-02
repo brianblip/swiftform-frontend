@@ -70,53 +70,37 @@ export default function FormsList({ formId }: FormListID) {
         }
     };
 
-    return (
-        <div className="h-full w-full py-4">
-            {isLoadingVisible ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>Error fetching data: {error}</p>
-            ) : (
-                <ul>
-                    {forms &&
-                        forms.map((form) => (
-                            <li key={form.id} className="flex">
-                                <Link
-                                    href={`/Form/${form.id}`}
-                                    className={`group relative flex w-full items-center justify-between rounded p-2 transition-all ease-in-out hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
-                                >
-                                    <h2 className="w-full grow overflow-hidden truncate whitespace-nowrap rounded text-sm">
-                                        {form.title}
-                                    </h2>
-                                    <div className="h-fll absolute right-0 flex w-24 justify-end rounded opacity-0 group-hover:opacity-100">
-                                        <div className="w-2/6 border-slate-50 bg-gradient-to-r from-transparent from-10% to-primary-secondary"></div>
-                                        <div className="flex w-4/6 justify-end rounded-r bg-primary-secondary">
-                                            <button
-                                                className="text-sm-white w-fit rounded"
-                                                onClick={() =>
-                                                    console.log("hi")
-                                                }
-                                            >
-                                                <MoreHoriz className="text-2xl transition-colors ease-in-out hover:text-zinc-500" />
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    handleDelete(
-                                                        form.id,
-                                                        form.title,
-                                                    )
-                                                }
-                                                className="text-sm-white w-fit rounded"
-                                            >
-                                                <DeleteForeverOutlined className="text-2xl transition-colors ease-in-out hover:text-red-500" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </li>
-                        ))}
-                </ul>
-            )}
-        </div>
-    );
+  return (
+    <>
+      {isLoadingVisible ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error fetching data: {error}</p>
+      ) : (
+        <ul className="flex h-full w-full flex-col gap-2 overflow-y-auto py-4">
+          {forms &&
+            forms.map((form) => (
+              <li key={form.id}>
+                <Link
+                  href={`/Form/${form.id}`}
+                  className={`group relative flex items-center rounded p-2 hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
+                >
+                  <h2 className="truncate whitespace-nowrap rounded text-sm">
+                    {form.title}
+                  </h2>
+                  <div className="absolute right-0 hidden rounded pr-2 group-hover:flex">
+                    <button onClick={() => console.log("hi")}>
+                      <MoreHoriz className="text-2xl hover:text-zinc-500" />
+                    </button>
+                    <button onClick={() => handleDelete(form.id, form.title)}>
+                      <DeleteForeverOutlined className="text-2xl hover:text-red-500" />
+                    </button>
+                  </div>
+                </Link>
+              </li>
+            ))}
+        </ul>
+      )}
+    </>
+  );
 }
