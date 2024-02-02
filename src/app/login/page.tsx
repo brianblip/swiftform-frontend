@@ -6,14 +6,7 @@ import Birdie from "../../assets/Birdie.png"
 export default function Login() {
     const router = useRouter();
 
-    // mock status
-    const isLogin = false
 
-    if (true) {
-        router.push('/login')
-    } else {
-        router.push('/')
-    }
     return (
         <div className="h-[100vh] bg-white w-screen flex flex-col justify-center items-center min-w-[352px]">
             <div className="border rounded-lg border-gray-300 w-[80%] md:w-[50%] h-[85%] flex flex-col items-center gap-9 justify-center max-h-[1300px]">
