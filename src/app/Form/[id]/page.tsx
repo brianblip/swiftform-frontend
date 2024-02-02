@@ -10,19 +10,22 @@ interface FormData {
   title: string;
   description: string;
   fields: {
+    field_id: number;
     question_name: string;
     question_type: string;
     question: string;
-    choices: string[]; // Choices should be an array of strings
     required_field: boolean;
+    choices: string[];
+    minimum: number;
+    maximum: number;
   }[];
 }
 
 interface FormParam {
-  id: string;
+  id: number;
 }
 
-const fetchFormDataById = async (id: string): Promise<FormData> => {
+const fetchFormDataById = async (id: number): Promise<FormData> => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const response = await fetch(`${apiUrl}/${id}`);
@@ -125,7 +128,8 @@ export default function Form({ params }: { params: FormParam }) {
       {isQuestionSectionOpen ? (
         <DynamicForm
           id={params.id}
-          title={titleInput} // Pass the modified title to DynamicForm
+          title={title}
+          titleInput={titleInput}
           description={formData?.description}
           fields={formData?.fields}
           onSubmit={handleFormSubmission}

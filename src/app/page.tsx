@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import SuggestionButton from "@/components/SuggestionButton";
@@ -28,10 +27,11 @@ export default function Home() {
           description: "Write your description",
           fields: [
             {
-              question_name: "Question Name",
+              field_id: 1,
+              question_name: "",
               question_type: "",
-              question: "Question",
-              required_field: true,
+              question: "",
+              required_field: false,
             },
           ],
         }),
