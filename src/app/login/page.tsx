@@ -26,6 +26,7 @@ export default function Login() {
                             id="email"
                             placeholder="Email address"
                             type="email"
+                            required
                         />
                     </div>
                     <div className="mb-4 w-[60%] max-w-md">
@@ -37,6 +38,7 @@ export default function Login() {
                             type="password"
                             placeholder="********"
                             id="password"
+                            required
                         />
                     </div>
                     <p className="text-black cursor-pointer w-[60%] mb-4">Forgot password?</p>

@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image"
 import Birdie from "../../assets/Birdie.png"
-import { Router } from "next/router";
 
 export default function Signup() {
     const router = useRouter();
@@ -25,6 +24,7 @@ export default function Signup() {
                             id="email"
                             placeholder="Email address"
                             type="email"
+                            required
                         />
                     </div>
                     <div className="mb-4 w-[60%] max-w-md">
@@ -36,6 +36,7 @@ export default function Signup() {
                             type="password"
                             placeholder="********"
                             id="password"
+                            required
                         />
                     </div>
                     <div className="mb-4 w-[60%] max-w-md">
@@ -47,6 +48,7 @@ export default function Signup() {
                             type="password"
                             placeholder="********"
                             id="password"
+                            required
                         />
                     </div>
                     <button
