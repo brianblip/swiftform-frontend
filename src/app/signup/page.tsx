@@ -16,7 +16,7 @@ export default function Signup() {
     const { handleSubmit, control, setError, reset } = useForm<FormData>();
 
     const onSubmit = (data: FormData) => {
-        // Your form submission logic here
+        //logic here
         console.log(data);
         reset({
             email: "",  
