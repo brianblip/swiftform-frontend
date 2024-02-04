@@ -1,42 +1,29 @@
-import { createContext, ReactNode } from "react";
+"use client";
 
+import { createContext, ReactNode } from "react";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
+import { User } from "@/types/user";
+import useAuth from "@/store/useAuth";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  avatar_url: string;
-}
-
-type AuthContextType = {
-  user: User | undefined;
-  isLoading: boolean;
-  error: unknown;
-};
-
-const defaultAuthContext = {
-  user: undefined,
-  isLoading: false,
-  error: undefined,
-};
-
-export const AuthContext = createContext<AuthContextType>(defaultAuthContext);
+export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const { data, isLoading, error } = useSWR<User>(`/users/me`, fetcher);
-
-  return (
-    <AuthContext.Provider
-      value={{
+  const { isLoading, error } = useSWR<{
+    data: User;
+  }>(`/users/me`, fetcher, {
+    onSuccess: (response) => {
+      const { data } = response;
+      initialize({
         user: data,
         isLoading,
         error,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+      });
+    },
+  });
+
+  const { initialize } = useAuth();
+
+  return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
 }
 export default AuthContext;
