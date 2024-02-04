@@ -3,11 +3,28 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image"
 import Birdie from "../../assets/Birdie.png"
-import LoginLayout from "./layout";
+import { useForm, Controller } from 'react-hook-form';
+
+
+type FormData = {
+    email: string;
+    password: string;
+};
+
 export default function Login() {
 
     const router = useRouter();
-    
+
+    const { handleSubmit, control, setError, reset } = useForm<FormData>();
+
+    const onSubmit = (data: FormData) => {
+        //logic here
+        console.log(data);
+        reset({
+            email: "",
+            password: "",
+        });
+    };
 
     return (
         <div className="h-[100vh] bg-white w-screen flex flex-col justify-center items-center min-w-[352px]">
@@ -16,29 +33,63 @@ export default function Login() {
                     <Image src={Birdie} alt="Swift form logo" />
                 </div>
                 <p className="text-center font-extrabold text-4xl text-black">Welcome Back</p>
-                <form className="w-full flex flex-col justify-center items-center">
+                <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col justify-center items-center">
                     <div className="mb-4 w-[60%] max-w-md">
                         <label className="block text-sm font-bold text-black" htmlFor="email">
                             Email
                         </label>
-                        <input
-                            className="border h-[52px] border-black w-full py-2 px-3 text-gray-700 leading-tight rounded-[4px] focus:shadow-outline"
-                            id="email"
-                            placeholder="Email address"
-                            type="email"
-                            required
+                        <Controller
+                            name="email"
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <>
+                                    <input
+                                        {...field}
+                                        className="border h-[52px] border-black w-full py-2 px-3 text-gray-700 leading-tight rounded-[4px]  focus:shadow-outline"
+                                        id="email"
+                                        placeholder="Email address"
+                                        type="email"
+                                        required
+                                    />
+                                    {fieldState.error && <p className="text-red-500">{fieldState.error.message}</p>}
+                                </>
+                            )}
+                            rules={{
+                                required: 'Email is required',
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                    message: 'Invalid email address',
+                                },
+                            }}
                         />
                     </div>
                     <div className="mb-4 w-[60%] max-w-md">
                         <label className='block text-sm font-bold text-black' htmlFor='password'>
                             Password
                         </label>
-                        <input
-                            className="border h-[52px] border-black w-full py-2 px-3 text-gray-700 leading-tight rounded-[4px]"
-                            type="password"
-                            placeholder="********"
-                            id="password"
-                            required
+                        <Controller
+                            name="password"
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <>
+                                    <input
+                                        {...field}
+                                        className="border h-[52px] border-black w-full py-2 px-3 text-gray-700 leading-tight rounded-[4px]"
+                                        type="password"
+                                        placeholder="********"
+                                        id="password"
+                                        required
+                                    />
+                                    {fieldState.error && <p className="text-red-500">{fieldState.error.message}</p>}
+                                </>
+                            )}
+                            rules={{
+                                required: 'Password is required',
+                                minLength: {
+                                    value: 6,
+                                    message: 'Password must be at least 6 characters',
+                                },
+                            }}
                         />
                     </div>
                     <p className="text-black cursor-pointer w-[60%] mb-4">Forgot password?</p>
