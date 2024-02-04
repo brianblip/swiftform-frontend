@@ -8,6 +8,10 @@ interface InitializeProps {
   error: string | null;
 }
 
+interface RegisterProps extends Omit<User, "id"> {
+  password: string;
+}
+
 interface AuthState {
   user?: User | null;
   isLoading: boolean;
@@ -15,6 +19,12 @@ interface AuthState {
   initialize: (props: InitializeProps) => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  register: ({
+    name,
+    email,
+    password,
+    avatar_url,
+  }: RegisterProps) => Promise<void>;
 }
 
 const useAuth = create<AuthState>((set) => ({
@@ -31,6 +41,16 @@ const useAuth = create<AuthState>((set) => ({
   },
   logout: async () => {
     const response = await axios.post("/auth/logout");
+
+    return response.data;
+  },
+  register: async ({ name, email, password, avatar_url }) => {
+    const response = await axios.post("/auth/register", {
+      name,
+      email,
+      password,
+      avatar_url,
+    });
 
     return response.data;
   },
