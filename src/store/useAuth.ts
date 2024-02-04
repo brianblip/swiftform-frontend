@@ -12,12 +12,16 @@ interface RegisterProps extends Omit<User, "id"> {
   password: string;
 }
 
+interface LoginProps extends Pick<User, "email"> {
+  password: string;
+}
+
 interface AuthState {
   user?: User | null;
   isLoading: boolean;
   error: string | null;
   initialize: (props: InitializeProps) => void;
-  login: (email: string, password: string) => Promise<User>;
+  login: (props: LoginProps) => Promise<User>;
   logout: () => Promise<void>;
   register: ({
     name,
@@ -34,7 +38,7 @@ const useAuth = create<AuthState>((set) => ({
   initialize: ({ user, isLoading, error }: InitializeProps) => {
     set({ user, isLoading, error });
   },
-  login: async (email, password) => {
+  login: async ({ email, password }) => {
     const response = await axios.post<User>("/auth/login", { email, password });
 
     set({ user: response.data });
