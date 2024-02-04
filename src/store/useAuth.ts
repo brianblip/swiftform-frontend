@@ -17,14 +17,14 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
   initialize: (props: InitializeProps) => void;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   logout: () => Promise<void>;
   register: ({
     name,
     email,
     password,
     avatar_url,
-  }: RegisterProps) => Promise<void>;
+  }: RegisterProps) => Promise<User>;
 }
 
 const useAuth = create<AuthState>((set) => ({
@@ -35,22 +35,27 @@ const useAuth = create<AuthState>((set) => ({
     set({ user, isLoading, error });
   },
   login: async (email, password) => {
-    const response = await axios.post("/auth/login", { email, password });
+    const response = await axios.post<User>("/auth/login", { email, password });
+
+    set({ user: response.data });
 
     return response.data;
   },
   logout: async () => {
     const response = await axios.post("/auth/logout");
 
+    set({ user: null });
     return response.data;
   },
   register: async ({ name, email, password, avatar_url }) => {
-    const response = await axios.post("/auth/register", {
+    const response = await axios.post<User>("/auth/register", {
       name,
       email,
       password,
       avatar_url,
     });
+
+    set({ user: response.data });
 
     return response.data;
   },
