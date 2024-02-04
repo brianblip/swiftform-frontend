@@ -14,6 +14,7 @@ interface AuthState {
   error: string | null;
   initialize: (props: InitializeProps) => void;
   login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const useAuth = create<AuthState>((set) => ({
@@ -25,6 +26,11 @@ const useAuth = create<AuthState>((set) => ({
   },
   login: async (email, password) => {
     const response = await axios.post("/auth/login", { email, password });
+
+    return response.data;
+  },
+  logout: async () => {
+    const response = await axios.post("/auth/logout");
 
     return response.data;
   },
