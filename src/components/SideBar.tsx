@@ -26,7 +26,7 @@ export default function SideBar() {
     }
 
     return (
-        <nav className="hidden h-screen min-w-60 max-w-60 flex-col items-center justify-between bg-primary-black px-2 py-4 md:flex">
+        <nav className="sticky left-0 top-0 hidden h-dvh min-w-60 max-w-60 flex-col items-center justify-between bg-primary-black px-2 py-4 md:flex">
             <Link className="" href="/">
                 <p>LOGO</p>
             </Link>
