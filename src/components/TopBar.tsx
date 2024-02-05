@@ -37,7 +37,7 @@ export default function TopBar() {
     }
 
     return (
-        <nav className="sticky top-0 flex items-center justify-between bg-primary-black md:hidden">
+        <nav className="sticky top-0 z-50 flex items-center justify-between bg-primary-black md:hidden">
             <div>
                 <button
                     onClick={onClickToggleNotification}
