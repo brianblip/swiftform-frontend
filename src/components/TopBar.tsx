@@ -78,20 +78,22 @@ export default function TopBar() {
                             <div className="relative">
                                 <button
                                     onClick={onClickToggleProfile}
-                                    className="flex w-full gap-2 p-2"
+                                    className={`flex w-full gap-2 p-2 hover:bg-primary-secondary ${isProfileOpen ? "bg-primary-secondary" : ""}`}
                                 >
                                     <PermIdentityOutlinedIcon />
                                     <p>My Account</p>
                                 </button>
                                 <div
-                                    className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-neutral ${isProfileOpen ? "flex" : "hidden"}`}
+                                    className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-secondary p-2 ${isProfileOpen ? "flex" : "hidden"}`}
                                 >
-                                    <button className="w-full p-2 text-start">
+                                    <button className="w-full p-2 text-start hover:bg-primary-neutral">
                                         Edit Profile
                                     </button>
                                 </div>
                             </div>
-                            <button className="flex w-full gap-2 p-2">
+                            <button
+                                className={`flex w-full gap-2 p-2 hover:bg-primary-secondary`}
+                            >
                                 <LogoutOutlinedIcon />
                                 <p>Log out</p>
                             </button>
