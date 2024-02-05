@@ -59,7 +59,7 @@ export default function TopBar() {
             <div>
                 <button
                     onClick={onClickOpenMenu}
-                    className={`p-4 hover:bg-primary-secondary ${isNotificationOpen ? "bg-primary-secondary" : ""}`}
+                    className={`p-4 hover:bg-primary-secondary ${isMenuOpen ? "bg-primary-secondary" : ""}`}
                 >
                     <MenuIcon />
                 </button>
