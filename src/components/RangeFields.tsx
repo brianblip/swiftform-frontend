@@ -16,10 +16,10 @@ export default function RangeFields({
     handleMaximumChange,
 }: RangeFieldsProps) {
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex w-full flex-col gap-4 md:w-3/4">
             <label
                 htmlFor={`fields.${index}.maximum`}
-                className="flex w-1/2 flex-col items-start gap-3"
+                className="flex w-full items-center gap-2"
             >
                 Maximum:
                 <input
@@ -29,12 +29,12 @@ export default function RangeFields({
                     pattern="[0-9]*"
                     defaultValue={maximumValue}
                     onChange={handleMaximumChange}
-                    className="w-full rounded bg-primary-white p-2 text-black"
+                    className="w-full rounded bg-primary-white p-2 text-primary-neutral"
                 />
             </label>
             <label
                 htmlFor={`fields.${index}.minimum`}
-                className="flex w-1/2 flex-col items-start gap-3"
+                className="flex w-full items-center gap-2"
             >
                 Minimum:
                 <input
@@ -44,7 +44,7 @@ export default function RangeFields({
                     pattern="[0-9]*"
                     defaultValue={minimumValue}
                     onChange={handleMinimumChange}
-                    className="w-full rounded bg-primary-white p-2 text-black"
+                    className="w-full rounded bg-primary-white p-2 text-primary-neutral"
                 />
             </label>
         </div>
