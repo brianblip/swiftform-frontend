@@ -32,35 +32,41 @@ export default function SideBar() {
             </Link>
             <FormsList formId={currentFormId} />
             <div className="flex w-full flex-col gap-2">
-                <div className="relative">
+                <div className="relative flex items-center">
                     <button
                         onClick={onClickToggleNotification}
-                        className="flex w-full gap-2 p-2"
+                        className={`flex w-full gap-2 p-2 hover:bg-primary-secondary ${isNotificationOpen ? "bg-primary-secondary" : ""}`}
                     >
                         <NotificationsOutlinedIcon />
                         <p>Notification</p>
                     </button>
                     <div
-                        className={`absolute left-[calc(100%+theme(spacing.4))] top-0 w-full bg-primary-secondary p-2 ${isNotificationOpen ? "scale-100" : "scale-0"} `}
+                        className={`absolute left-[calc(100%+theme(spacing.4))] flex w-full flex-col bg-primary-secondary p-2 ${isNotificationOpen ? "scale-100" : "scale-0"} `}
                     >
                         <h1>No Notifications</h1>
                     </div>
                 </div>
-                <div className="relative">
+                <div className="relative flex items-center">
                     <button
                         onClick={onClickToggleProfile}
-                        className="flex w-full gap-2 p-2"
+                        className={`flex w-full gap-2 p-2 hover:bg-primary-secondary ${isProfileOpen ? "bg-primary-secondary" : ""}`}
                     >
                         <PermIdentityOutlinedIcon />
                         <p>My Account</p>
                     </button>
                     <div
-                        className={`absolute left-[calc(100%+theme(spacing.4))] top-0 w-full bg-primary-secondary p-2 ${isProfileOpen ? "scale-100" : "scale-0"}`}
+                        className={`absolute left-[calc(100%+theme(spacing.4))] flex w-full flex-col bg-primary-secondary p-2 ${isProfileOpen ? "scale-100" : "scale-0"}`}
                     >
-                        <button>Edit Profile</button>
+                        <button
+                            className={`w-full p-2 text-start hover:bg-primary-neutral`}
+                        >
+                            Edit Profile
+                        </button>
                     </div>
                 </div>
-                <button className="flex w-full gap-2 p-2">
+                <button
+                    className={`flex w-full gap-2 p-2 hover:bg-primary-secondary`}
+                >
                     <LogoutOutlinedIcon />
                     <p>Log out</p>
                 </button>
