@@ -36,63 +36,69 @@ export default function TopBar() {
         setIsProfileOpen(!isProfileOpen);
     }
 
-  return (
-    <nav className="sticky top-0 flex items-center justify-between bg-primary-black md:hidden">
-      <div>
-        <button onClick={onClickToggleNotification} className="p-4">
-          <NotificationsOutlinedIcon />
-        </button>
-        <div
-          className={`absolute left-0 top-full w-full bg-primary-secondary p-2 ${isNotificationOpen ? "scale-100" : "scale-0"} `}
-        >
-          <h1>No Notifications</h1>
-        </div>
-      </div>
+    return (
+        <nav className="sticky top-0 flex items-center justify-between bg-primary-black md:hidden">
+            <div>
+                <button
+                    onClick={onClickToggleNotification}
+                    className={`p-4 hover:bg-primary-secondary ${isNotificationOpen ? "bg-primary-secondary" : ""}`}
+                >
+                    <NotificationsOutlinedIcon />
+                </button>
+                <div
+                    className={`absolute left-0 top-full w-full bg-primary-secondary p-2 ${isNotificationOpen ? "scale-100" : "scale-0"} `}
+                >
+                    <h1>No Notifications</h1>
+                </div>
+            </div>
 
             <Link className="" href="/">
                 <p>LOGO</p>
             </Link>
 
-      <div>
-        <button onClick={onClickOpenMenu} className="p-4">
-          <MenuIcon />
-        </button>
-        <div
-          className={`absolute top-0 flex h-screen w-3/4 flex-col justify-end bg-primary-black p-2 ${isMenuOpen ? "right-0" : "right-full"}`}
-        >
-          <button
-            onClick={onClickCloseMenu}
-            className="absolute right-full top-0 p-4"
-          >
-            <CloseIcon />
-          </button>
-          <div className="flex h-full w-full flex-col justify-between gap-2">
-            <FormsList formId={currentFormId} />
-            <div className="flex flex-col gap-2">
-              <div className="relative">
+            <div>
                 <button
-                  onClick={onClickToggleProfile}
-                  className="flex w-full gap-2 p-2"
+                    onClick={onClickOpenMenu}
+                    className={`p-4 hover:bg-primary-secondary ${isNotificationOpen ? "bg-primary-secondary" : ""}`}
                 >
-                  <PermIdentityOutlinedIcon />
-                  <p>My Account</p>
+                    <MenuIcon />
                 </button>
                 <div
-                  className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-neutral ${isProfileOpen ? "flex" : "hidden"}`}
+                    className={`absolute top-0 flex h-screen w-3/4 flex-col justify-end bg-primary-black p-2 ${isMenuOpen ? "right-0" : "right-full"}`}
                 >
-                  <button className="w-full p-2 text-start">
-                    Edit Profile
-                  </button>
+                    <button
+                        onClick={onClickCloseMenu}
+                        className="absolute right-full top-0 mx-2 my-2 p-2 hover:bg-primary-secondary"
+                    >
+                        <CloseIcon />
+                    </button>
+                    <div className="flex h-full w-full flex-col justify-between gap-2">
+                        <FormsList formId={currentFormId} />
+                        <div className="flex flex-col gap-2">
+                            <div className="relative">
+                                <button
+                                    onClick={onClickToggleProfile}
+                                    className="flex w-full gap-2 p-2"
+                                >
+                                    <PermIdentityOutlinedIcon />
+                                    <p>My Account</p>
+                                </button>
+                                <div
+                                    className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-neutral ${isProfileOpen ? "flex" : "hidden"}`}
+                                >
+                                    <button className="w-full p-2 text-start">
+                                        Edit Profile
+                                    </button>
+                                </div>
+                            </div>
+                            <button className="flex w-full gap-2 p-2">
+                                <LogoutOutlinedIcon />
+                                <p>Log out</p>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <button className="flex w-full gap-2 p-2">
-                <LogoutOutlinedIcon />
-                <p>Log out</p>
-              </button>
             </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
+        </nav>
+    );
 }
