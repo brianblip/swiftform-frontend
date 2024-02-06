@@ -70,37 +70,46 @@ export default function FormsList({ formId }: FormListID) {
         }
     };
 
-  return (
-    <>
-      {isLoadingVisible ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error fetching data: {error}</p>
-      ) : (
-        <ul className="flex h-full w-full flex-col gap-2 overflow-y-auto py-4">
-          {forms &&
-            forms.map((form) => (
-              <li key={form.id}>
-                <Link
-                  href={`/Form/${form.id}`}
-                  className={`group relative flex items-center rounded p-2 hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
-                >
-                  <h2 className="truncate whitespace-nowrap rounded text-sm">
-                    {form.title}
-                  </h2>
-                  <div className="absolute right-0 hidden rounded pr-2 group-hover:flex">
-                    <button onClick={() => console.log("hi")}>
-                      <MoreHoriz className="text-2xl hover:text-zinc-500" />
-                    </button>
-                    <button onClick={() => handleDelete(form.id, form.title)}>
-                      <DeleteForeverOutlined className="text-2xl hover:text-red-500" />
-                    </button>
-                  </div>
-                </Link>
-              </li>
-            ))}
-        </ul>
-      )}
-    </>
-  );
+    return (
+        <>
+            {isLoadingVisible ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>Error fetching data: {error}</p>
+            ) : (
+                <ul className="flex h-full w-full flex-col gap-2 overflow-y-auto py-4">
+                    {forms &&
+                        forms.map((form) => (
+                            <li key={form.id}>
+                                <Link
+                                    href={`/Form/${form.id}`}
+                                    className={`group relative flex items-center rounded p-2 hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
+                                >
+                                    <h2 className="truncate whitespace-nowrap rounded text-sm">
+                                        {form.title}
+                                    </h2>
+                                    <div className="absolute right-0 hidden rounded pr-2 group-hover:flex">
+                                        <button
+                                            onClick={() => console.log("hi")}
+                                        >
+                                            <MoreHoriz className="text-2xl hover:text-zinc-500" />
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                handleDelete(
+                                                    form.id,
+                                                    form.title,
+                                                )
+                                            }
+                                        >
+                                            <DeleteForeverOutlined className="text-2xl hover:text-red-500" />
+                                        </button>
+                                    </div>
+                                </Link>
+                            </li>
+                        ))}
+                </ul>
+            )}
+        </>
+    );
 }
