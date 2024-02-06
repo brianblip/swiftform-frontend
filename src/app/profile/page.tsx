@@ -5,11 +5,11 @@ import AccountSettings from "./AccountSettings";
 
 export default function MyAccount() {
     return (
-        <div className="h-[100vh] w-full overflow-y-scroll px-20">
-            <p className="py-10 text-center text-3xl">My account</p>
+        <main className="flex w-full flex-col items-center gap-4 overflow-y-scroll p-8">
+            <h1 className="text-3xl font-bold">My account</h1>
 
             <ProfileInformation />
             <AccountSettings />
-        </div>
+        </main>
     );
 }
