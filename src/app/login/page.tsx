@@ -123,7 +123,7 @@ export default function Login() {
                     className="cursor-pointer text-center text-black"
                     onClick={() => router.push("/signup")}
                 >
-                    Don't have an account? Signup
+                    Don&rsquo;t have an account? Signup
                 </p>
             </div>
         </div>
