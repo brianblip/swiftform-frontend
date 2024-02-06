@@ -2,9 +2,9 @@ import Input from "../../components/Input";
 
 export default function AccountSettings() {
     return (
-        <form>
-            <p className="text-xl">Account Setting</p>
-            <div className="flex flex-col items-center justify-center">
+        <form className="flex w-full flex-col gap-4">
+            <p className="text-xl font-medium">Account Setting</p>
+            <div className="flex flex-col gap-4">
                 <Input
                     type="password"
                     id="password"
@@ -22,11 +22,9 @@ export default function AccountSettings() {
                     required={true}
                 />
             </div>
-            <div className="flex justify-end">
-                <button className="flex h-[44px] w-[176px] items-center justify-center rounded-sm bg-[#444654]">
-                    Save Changes
-                </button>
-            </div>
+            <button className="w-fit rounded bg-primary-secondary px-8 py-2">
+                Save Changes
+            </button>
         </form>
     );
 }
