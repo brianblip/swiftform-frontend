@@ -1,11 +1,7 @@
 export default function SignupLayout({
     children,
 }: {
-    children: React.ReactNode
+    children: React.ReactNode;
 }) {
-    return (
-        <>
-            {children}
-        </>)
-
+    return <>{children}</>;
 }
