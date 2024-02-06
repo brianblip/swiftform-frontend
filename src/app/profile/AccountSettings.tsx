@@ -1,4 +1,4 @@
-import Input from "../../components/Input"
+import Input from "../../components/Input";
 
 export default function AccountSettings() {
     return (
@@ -12,7 +12,7 @@ export default function AccountSettings() {
                     placeholder="Password"
                     size="full"
                     required={true}
-                    />
+                />
                 <Input
                     label="New Password"
                     id="newPassword"
@@ -23,8 +23,10 @@ export default function AccountSettings() {
                 />
             </div>
             <div className="flex justify-end">
-                <button className="h-[44px] w-[176px] bg-[#444654] rounded-sm flex items-center justify-center">Save Changes</button>
+                <button className="flex h-[44px] w-[176px] items-center justify-center rounded-sm bg-[#444654]">
+                    Save Changes
+                </button>
             </div>
         </form>
-    )
+    );
 }
