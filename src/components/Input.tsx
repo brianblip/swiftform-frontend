@@ -29,15 +29,12 @@ const Input = ({
         }
     };
     return (
-        <div className={`mb-4 ${getSize()} max-w-md`}>
-            <label
-                className="block text-sm font-bold text-[#ECECF1]"
-                htmlFor={id}
-            >
-                {label}
+        <div className={`${getSize()} max-w-md`}>
+            <label className="flex flex-col gap-2" htmlFor={id}>
+                <p className="text-sm font-bold">{label}</p>
             </label>
             <input
-                className="focus:shadow-outline h-[52px] w-full rounded-[4px] border border-none bg-[#444654] px-3 py-2 leading-tight text-white"
+                className="focus:shadow-outline w-full rounded bg-primary-secondary p-4 leading-tight text-white"
                 id={id}
                 placeholder={placeholder}
                 type={type}
