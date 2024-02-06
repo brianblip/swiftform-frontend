@@ -9,21 +9,21 @@ import useAuth from "@/store/useAuth";
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const { isLoading, error } = useSWR<{
-    data: User;
-  }>(`/users/me`, fetcher, {
-    onSuccess: (response) => {
-      const { data } = response;
-      initialize({
-        user: data,
-        isLoading,
-        error,
-      });
-    },
-  });
+    const { isLoading, error } = useSWR<{
+        data: User;
+    }>(`/users/me`, fetcher, {
+        onSuccess: (response) => {
+            const { data } = response;
+            initialize({
+                user: data,
+                isLoading,
+                error,
+            });
+        },
+    });
 
-  const { initialize } = useAuth();
+    const { initialize } = useAuth();
 
-  return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
 }
 export default AuthContext;
