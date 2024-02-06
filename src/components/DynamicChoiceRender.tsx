@@ -14,15 +14,15 @@ export default function DynamicChoiceRender({
     onUpdateChoice,
 }: DynamicChoiceRenderProps) {
     return (
-        <div className="flex flex-col gap-3 py-5">
+        <div className="flex w-full flex-col gap-y-4 md:w-3/4">
             {choices.map((choice, choiceIndex) => (
                 <div
                     key={choiceIndex}
-                    className="flex items-center justify-between gap-3"
+                    className="flex w-full items-center gap-2"
                 >
                     <label
                         htmlFor={`choices.${choiceIndex}`}
-                        className="flex w-full items-center justify-start gap-3"
+                        className="flex w-full items-center gap-2"
                     >
                         {String.fromCharCode(65 + choiceIndex)}:
                         <input
@@ -30,14 +30,14 @@ export default function DynamicChoiceRender({
                             onChange={(e) =>
                                 onUpdateChoice(choiceIndex, e.target.value)
                             }
-                            className="h-10 w-full rounded bg-primary-white p-2 text-zinc-800"
+                            className="w-full rounded bg-primary-white p-2 text-primary-neutral"
                             id={`choices.${choiceIndex}`}
                         />
                     </label>
                     <button
                         type="button"
                         onClick={() => onRemoveChoice(choiceIndex)}
-                        className="text-primary-white transition-colors ease-in-out hover:text-red-600"
+                        className="hover:text-red-600"
                     >
                         <Delete titleAccess="Delete Choice" />
                     </button>
@@ -46,9 +46,9 @@ export default function DynamicChoiceRender({
             <button
                 type="button"
                 onClick={onAddChoice}
-                className="group flex w-fit items-center gap-1 text-green-500 transition-colors ease-in-out hover:text-green-600 hover:underline"
+                className="flex w-fit items-center gap-1 text-green-500 hover:text-green-600 hover:underline"
             >
-                <AddCircleOutlineOutlined className="origin-center transition-all ease-in-out group-hover:rotate-90" />{" "}
+                <AddCircleOutlineOutlined className="" />
                 Add Choice
             </button>
         </div>

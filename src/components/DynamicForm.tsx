@@ -224,20 +224,17 @@ export default function DynamicForm({
     return (
         <form
             onSubmit={handleSubmit(handleFormSubmit)}
-            className="flex w-3/4 flex-col items-center gap-10 border border-zinc-500 p-5"
+            className="flex w-full flex-col items-center gap-10 lg:w-[720px] xl:w-[820px]"
         >
-            <div className="flex w-4/5 flex-col items-center gap-3 p-5">
-                <label
-                    htmlFor="description"
-                    className="flex w-4/5 flex-col items-center justify-center gap-3"
-                >
+            <div className="flex w-full flex-col">
+                <label htmlFor="description" className="flex flex-col gap-y-2">
+                    Description:
                     <textarea
                         defaultValue={description}
                         {...register("description")}
                         className="max-h-80 min-h-40 w-full rounded bg-primary-secondary p-2 text-white"
                         id="description"
                     ></textarea>
-                    Description:
                 </label>
             </div>
 
@@ -245,28 +242,27 @@ export default function DynamicForm({
                 <fieldset
                     key={field.id}
                     id={`fieldset-${index}`}
-                    className="flex w-4/5 flex-col gap-5 rounded-md border border-zinc-500 p-7 shadow-xl"
+                    className="flex w-full flex-col items-center justify-center gap-6 rounded-md border border-zinc-500 p-4 shadow-xl"
                 >
-                    <legend className="mx-5 w-fit px-3">
-                        <label
-                            htmlFor={`fields.${index}.question_name`}
-                            className="flex w-full items-center justify-start gap-3 text-xs"
-                        >
-                            Item Name:
-                            <input
-                                defaultValue={field.question_name}
-                                {...register(
-                                    `fields.${index}.question_name` as const,
-                                )}
-                                className="w-fit rounded bg-primary-secondary p-2 text-primary-white"
-                                id={`fields.${index}.question_name`}
-                            />
-                        </label>
-                    </legend>
-                    <div className="flex w-full justify-between">
+                    <label
+                        htmlFor={`fields.${index}.question_name`}
+                        className="md:text-s flex items-center justify-center gap-2 text-xs"
+                    >
+                        Item Name:
+                        <input
+                            defaultValue={field.question_name}
+                            {...register(
+                                `fields.${index}.question_name` as const,
+                            )}
+                            className="rounded bg-primary-secondary p-2 text-primary-white"
+                            id={`fields.${index}.question_name`}
+                        />
+                    </label>
+
+                    <div className="flex w-full flex-col items-center gap-2 md:w-3/4">
                         <label
                             htmlFor={`fields.${index}.question_type`}
-                            className="flex w-3/4 flex-col items-start gap-3"
+                            className="flex items-center gap-2"
                         >
                             Type:
                             <select
@@ -275,7 +271,7 @@ export default function DynamicForm({
                                 {...register(
                                     `fields.${index}.question_type` as const,
                                 )}
-                                className="h-10 w-1/2 rounded bg-primary-secondary p-2"
+                                className="rounded bg-primary-secondary p-2"
                                 onChange={(e) => {
                                     const selectedType = e.target.value;
                                     setValue(
@@ -337,28 +333,22 @@ export default function DynamicForm({
                             </select>
                         </label>
 
-                        <div className="flex h-fit w-1/4 items-start justify-between gap-5">
+                        <div className="flex gap-2">
                             <button
                                 type="button"
                                 onClick={() => append({ ...field })}
-                                className="ml-2 h-7 w-7 place-content-center"
+                                className={`cursor-pointer hover:text-blue-600`}
                             >
-                                <CopyAllOutlined
-                                    titleAccess="Duplicate Question"
-                                    className={`h-full w-full text-white transition-colors duration-300 hover:text-blue-600`}
-                                />
+                                <CopyAllOutlined titleAccess="Duplicate Question" />
                             </button>
 
                             {formFields.length > 1 && (
                                 <button
                                     type="button"
                                     onClick={() => remove(index)}
-                                    className="h-7 w-7 place-content-center"
+                                    className={`cursor-pointer hover:text-red-600`}
                                 >
-                                    <Delete
-                                        titleAccess="Delete Question"
-                                        className={`h-full w-full text-white transition-colors duration-300 hover:text-red-600`}
-                                    />
+                                    <Delete titleAccess="Delete Question" />
                                 </button>
                             )}
 
@@ -370,13 +360,10 @@ export default function DynamicForm({
                                         setValue("fields", [...formFields]);
                                     }
                                 }}
-                                className="ml-2 h-7 w-7 place-content-center"
+                                className={`cursor-pointer hover:text-green-600 disabled:cursor-auto disabled:text-primary-secondary`}
                                 disabled={index === 0}
                             >
-                                <ArrowUpwardRounded
-                                    titleAccess="Move Up"
-                                    className={`h-full w-full text-white transition-colors duration-300 hover:text-green-600`}
-                                />
+                                <ArrowUpwardRounded titleAccess="Move Up" />
                             </button>
 
                             <button
@@ -387,26 +374,23 @@ export default function DynamicForm({
                                         setValue("fields", [...formFields]);
                                     }
                                 }}
-                                className="ml-2 h-7 w-7 place-content-center"
+                                className={`cursor-pointer hover:text-green-600 disabled:cursor-auto disabled:text-primary-secondary`}
                                 disabled={index === formFields.length - 1}
                             >
-                                <ArrowDownwardRounded
-                                    titleAccess="Move Down"
-                                    className={`h-full w-full text-white transition-colors duration-300 hover:text-green-600`}
-                                />
+                                <ArrowDownwardRounded titleAccess="Move Down" />
                             </button>
                         </div>
                     </div>
 
                     <label
                         htmlFor={`fields.${index}.question`}
-                        className="flex flex-col items-start justify-center gap-3"
+                        className="flex w-full flex-col gap-2 md:w-3/4"
                     >
                         Question:
                         <textarea
                             defaultValue={field.question}
                             {...register(`fields.${index}.question` as const)}
-                            className="max-h-64 min-h-24 w-full rounded bg-primary-white p-2 text-black"
+                            className="max-h-64 min-h-24 w-full rounded bg-primary-white p-2 text-primary-black"
                             id={`fields.${index}.question`}
                         ></textarea>
                     </label>
@@ -414,15 +398,16 @@ export default function DynamicForm({
                     {fieldQuestionTypes[index] === "select" ||
                     fieldQuestionTypes[index] === "checkbox" ||
                     fieldQuestionTypes[index] === "radio" ? (
-                        <div>{renderChoices(index)}</div>
+                        <>{renderChoices(index)}</>
                     ) : fieldQuestionTypes[index] === "range" ? (
-                        <div>{renderRangeFields(index)}</div>
+                        <>{renderRangeFields(index)}</>
                     ) : null}
 
                     <label
                         htmlFor={`fields.${index}.required_field`}
-                        className="flex items-center gap-3"
+                        className="flex items-center gap-2"
                     >
+                        Required:
                         <input
                             type="checkbox"
                             defaultChecked={field.required_field}
@@ -430,8 +415,8 @@ export default function DynamicForm({
                                 `fields.${index}.required_field` as const,
                             )}
                             id={`fields.${index}.required_field`}
+                            className="rounded-full bg-primary-white"
                         />
-                        Required:
                     </label>
                 </fieldset>
             ))}
@@ -439,14 +424,14 @@ export default function DynamicForm({
             <button
                 type="button"
                 onClick={appendNewFormField}
-                className="group flex w-fit items-center gap-1 text-lg font-bold text-green-500 transition-colors ease-in-out hover:underline"
+                className="flex w-fit items-center gap-1 text-lg font-bold text-green-500 hover:text-green-600 hover:underline"
             >
-                <AddCircleOutlineOutlined className="origin-center transition-all ease-in-out group-hover:rotate-180 " />{" "}
+                <AddCircleOutlineOutlined className="" />
                 Add Fieldset
             </button>
             <button
                 type="submit"
-                className="w-fit bg-blue-500 px-6 py-3 font-bold text-white"
+                className="w-3/4 rounded bg-primary-white px-4 py-2 font-bold text-primary-neutral"
             >
                 Submit
             </button>

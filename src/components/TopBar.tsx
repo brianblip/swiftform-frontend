@@ -37,9 +37,12 @@ export default function TopBar() {
     }
 
     return (
-        <nav className="sticky top-0 flex items-center justify-between bg-primary-black md:hidden">
+        <nav className="sticky top-0 z-50 flex items-center justify-between bg-primary-black md:hidden">
             <div>
-                <button onClick={onClickToggleNotification} className="p-4">
+                <button
+                    onClick={onClickToggleNotification}
+                    className={`p-4 hover:bg-primary-secondary ${isNotificationOpen ? "bg-primary-secondary" : ""}`}
+                >
                     <NotificationsOutlinedIcon />
                 </button>
                 <div
@@ -54,7 +57,10 @@ export default function TopBar() {
             </Link>
 
             <div>
-                <button onClick={onClickOpenMenu} className="p-4">
+                <button
+                    onClick={onClickOpenMenu}
+                    className={`p-4 hover:bg-primary-secondary ${isMenuOpen ? "bg-primary-secondary" : ""}`}
+                >
                     <MenuIcon />
                 </button>
                 <div
@@ -62,34 +68,36 @@ export default function TopBar() {
                 >
                     <button
                         onClick={onClickCloseMenu}
-                        className="absolute right-full top-0 p-4"
+                        className="absolute right-full top-0 mx-2 my-2 p-2 hover:bg-primary-secondary"
                     >
                         <CloseIcon />
                     </button>
-                    <div className="flex w-full flex-col gap-2">
-                        <div className="px-2">
-                            <FormsList formId={currentFormId} />
-                        </div>
-                        <div className="relative">
-                            <button
-                                onClick={onClickToggleProfile}
-                                className="flex w-full gap-2 p-2"
-                            >
-                                <PermIdentityOutlinedIcon />
-                                <p>My Account</p>
-                            </button>
-                            <div
-                                className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-neutral ${isProfileOpen ? "flex" : "hidden"}`}
-                            >
-                                <button className="w-full p-2 text-start">
-                                    Edit Profile
+                    <div className="flex h-full w-full flex-col justify-between gap-2">
+                        <FormsList formId={currentFormId} />
+                        <div className="flex flex-col gap-2">
+                            <div className="relative">
+                                <button
+                                    onClick={onClickToggleProfile}
+                                    className={`flex w-full gap-2 p-2 hover:bg-primary-secondary ${isProfileOpen ? "bg-primary-secondary" : ""}`}
+                                >
+                                    <PermIdentityOutlinedIcon />
+                                    <p>My Account</p>
                                 </button>
+                                <div
+                                    className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-secondary p-2 ${isProfileOpen ? "flex" : "hidden"}`}
+                                >
+                                    <button className="w-full p-2 text-start hover:bg-primary-neutral">
+                                        Edit Profile
+                                    </button>
+                                </div>
                             </div>
+                            <button
+                                className={`flex w-full gap-2 p-2 hover:bg-primary-secondary`}
+                            >
+                                <LogoutOutlinedIcon />
+                                <p>Log out</p>
+                            </button>
                         </div>
-                        <button className="flex w-full gap-2 p-2">
-                            <LogoutOutlinedIcon />
-                            <p>Log out</p>
-                        </button>
                     </div>
                 </div>
             </div>
