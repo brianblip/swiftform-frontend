@@ -86,9 +86,12 @@ export default function TopBar() {
                                 <div
                                     className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-secondary p-2 ${isProfileOpen ? "flex" : "hidden"}`}
                                 >
-                                    <button className="w-full p-2 text-start hover:bg-primary-neutral">
+                                    <Link
+                                        href="/Profile"
+                                        className="w-full p-2 text-start hover:bg-primary-neutral"
+                                    >
                                         Edit Profile
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                             <button
