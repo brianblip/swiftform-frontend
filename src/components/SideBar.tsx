@@ -3,18 +3,25 @@
 import Link from "next/link";
 import { useState } from "react";
 import FormsList from "./FormsList";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import useAuth from "@/store/useAuth";
 
 export default function SideBar() {
     const pathname = usePathname();
-    // Extract form ID from the pathname
+    const router = useRouter();
+    const { logout } = useAuth();
     const currentFormId = Number(pathname.split("/Form/")[1]);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [isLoggedOut, setIsLoggedOut] = useState(false);
 
+    const handleLogout = async () => {
+        await logout();
+        setIsLoggedOut(true);
+    };
     /* function for toggling the notification panel */
     function onClickToggleNotification() {
         setIsNotificationOpen(!isNotificationOpen);
@@ -23,6 +30,11 @@ export default function SideBar() {
     /* function for toggling the profile panel */
     function onClickToggleProfile() {
         setIsProfileOpen(!isProfileOpen);
+    }
+
+    if (isLoggedOut) {
+        router.push("/Login"); // This will reload the current route
+        return null; // Return null while reloading to avoid rendering the component
     }
 
     return (
@@ -57,14 +69,16 @@ export default function SideBar() {
                     <div
                         className={`absolute left-[calc(100%+theme(spacing.4))] flex w-full flex-col bg-primary-secondary p-2 ${isProfileOpen ? "scale-100" : "scale-0"}`}
                     >
-                        <button
+                        <Link
+                            href="/Profile"
                             className={`w-full p-2 text-start hover:bg-primary-neutral`}
                         >
                             Edit Profile
-                        </button>
+                        </Link>
                     </div>
                 </div>
                 <button
+                    onClick={handleLogout}
                     className={`flex w-full gap-2 p-2 hover:bg-primary-secondary`}
                 >
                     <LogoutOutlinedIcon />
