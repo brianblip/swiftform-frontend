@@ -29,6 +29,18 @@ const config: Config = {
                 },
                 error: "#ef4444",
             },
+            animation: {
+                loading: "loading 2s ease-in-out infinite",
+            },
+            keyframes: {
+                loading: {
+                    "0%": { transform: "rotate(0deg)" },
+                    "25%": { transform: "rotate(180deg)" },
+                    "50%": { transform: "rotate(181deg)" },
+                    "75%": { transform: "rotate(359deg)" },
+                    "100%": { transform: "rotate(360deg)" },
+                },
+            },
         },
     },
     plugins: [],
