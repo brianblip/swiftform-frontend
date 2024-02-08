@@ -1,11 +1,24 @@
+import axios from "@/lib/axios";
 import { create } from "zustand";
 import { User } from "@/types/user";
-import axios from "@/lib/axios";
+import { createSelectorHooks } from "auto-zustand-selectors-hook";
+
+type AuthState = {
+    user: User | null;
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    stopLoading: () => void;
+    initialize: (props: InitializeProps) => void;
+    login: (props: LoginProps) => Promise<User>;
+    logout: () => Promise<void>;
+    register: (props: RegisterProps) => Promise<User>;
+};
 
 interface InitializeProps {
     user?: User | null;
     isLoading: boolean;
     error: string | null;
+    isAuthenticated: boolean;
 }
 
 interface RegisterProps extends Omit<User, "id"> {
@@ -16,56 +29,87 @@ interface LoginProps extends Pick<User, "email"> {
     password: string;
 }
 
-interface AuthState {
-    user?: User | null;
-    isLoading: boolean;
-    error: string | null;
-    initialize: (props: InitializeProps) => void;
-    login: (props: LoginProps) => Promise<User>;
-    logout: () => Promise<void>;
-    register: ({
-        name,
-        email,
-        password,
-        avatar_url,
-    }: RegisterProps) => Promise<User>;
-}
-
-const useAuth = create<AuthState>((set) => ({
+const useAuthStoreBase = create<AuthState>((set) => ({
     user: null,
-    isLoading: false,
-    error: null,
-    initialize: ({ user, isLoading, error }: InitializeProps) => {
-        set({ user, isLoading, error });
+    isAuthenticated: false,
+    isLoading: true,
+    initialize: ({
+        user,
+        isLoading,
+        error,
+        isAuthenticated,
+    }: InitializeProps) => {
+        set((state) => ({
+            ...state,
+            user,
+            isLoading,
+            error,
+            isAuthenticated,
+        }));
     },
-    login: async ({ email, password }) => {
-        const response = await axios.post<User>("/auth/login", {
-            email,
-            password,
-        });
+    login: async ({ email, password }: LoginProps) => {
+        try {
+            // Perform login logic, e.g., axios request
+            const response = await axios.post("/auth/login", {
+                email,
+                password,
+            });
+            const user = response.data;
 
-        set({ user: response.data });
+            set((state) => ({
+                ...state,
+                isAuthenticated: true,
+                user,
+            }));
 
-        return response.data;
+            return user;
+        } catch (error) {
+            console.error("Error logging in", error);
+            throw error; // Propagate the error to the caller
+        }
     },
     logout: async () => {
-        const response = await axios.post("/auth/logout");
+        try {
+            const response = await axios.post("/auth/logout");
 
-        set({ user: null });
-        return response.data;
+            set({ user: null });
+            return response.data;
+        } catch (error) {
+            console.error("Error logging out", error);
+            throw error; // Propagate the error to the caller
+        }
     },
-    register: async ({ name, email, password, avatar_url }) => {
-        const response = await axios.post<User>("/auth/register", {
-            name,
-            email,
-            password,
-            avatar_url,
-        });
+    register: async ({ name, email, password, avatar_url }: RegisterProps) => {
+        try {
+            // Perform registration logic, e.g., axios request
+            const response = await axios.post("/auth/register", {
+                name,
+                email,
+                password,
+                avatar_url,
+            });
+            const user = response.data;
 
-        set({ user: response.data });
+            set((state) => ({
+                ...state,
+                isAuthenticated: true,
+                user,
+            }));
 
-        return response.data;
+            return user;
+        } catch (error) {
+            console.error("Error registering", error);
+            throw error; // Propagate the error to the caller
+        }
+    },
+    stopLoading: () => {
+        set((state) => ({
+            ...state,
+            isLoading: false,
+        }));
     },
 }));
 
-export default useAuth;
+const useAuthStore = createSelectorHooks(useAuthStoreBase);
+
+export default useAuthStore;
