@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import DynamicForm from "@/components/FormBuilderComponents/DynamicForm";
-import QuestionComponent from "@/components/QuestionComponent";
 import ResponseComponent from "@/components/ResponseComponent";
 import { Edit } from "@mui/icons-material";
 
@@ -10,6 +9,7 @@ interface FormData {
     title: string;
     description: string;
     fields: {
+        field_id: number;
         question_name: string;
         question_type: string;
         question: string;
@@ -21,12 +21,12 @@ interface FormData {
 }
 
 interface FormParam {
-    id: string;
+    id: number;
 }
 
-const fetchFormDataById = async (id: string): Promise<FormData> => {
+const fetchFormDataById = async (id: number): Promise<FormData> => {
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        const apiUrl = process.env.NEXT_PUBLIC_FRONTEND_API_URL;
         const response = await fetch(`${apiUrl}/${id}`);
         if (!response.ok) {
             throw new Error("Failed to fetch form data");
@@ -127,7 +127,8 @@ export default function Form({ params }: { params: FormParam }) {
             {isQuestionSectionOpen ? (
                 <DynamicForm
                     id={params.id}
-                    title={titleInput} // Pass the modified title to DynamicForm
+                    title={title}
+                    titleInput={titleInput}
                     description={formData?.description}
                     fields={formData?.fields}
                     onSubmit={handleFormSubmission}
