@@ -1,7 +1,7 @@
 import defaultAxios from "axios";
 
 const axios = defaultAxios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     withCredentials: true,
 });
 
