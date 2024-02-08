@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DeleteForeverOutlined, MoreHoriz } from "@mui/icons-material";
+import ErrorPage from "@/components/ErrorPage";
 
 interface FormData {
     id: number;
@@ -73,9 +74,16 @@ export default function FormsList({ formId }: FormListID) {
     return (
         <>
             {isLoadingVisible ? (
-                <p>Loading...</p>
+                <section className="flex h-full w-full animate-pulse flex-col gap-2 overflow-y-auto py-4">
+                    {Array.from({ length: 3 }, (_, i) => (
+                        <div
+                            key={i}
+                            className="m-2 h-8 rounded bg-primary-secondary/75"
+                        ></div>
+                    ))}
+                </section>
             ) : error ? (
-                <p>Error fetching data: {error}</p>
+                <ErrorPage />
             ) : (
                 <ul className="flex h-full w-full flex-col gap-2 overflow-y-auto py-4">
                     {forms &&
