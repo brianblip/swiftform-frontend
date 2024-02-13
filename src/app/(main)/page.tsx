@@ -1,47 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import useAuth from "@/store/useAuth";
 import { useRouter } from "next/navigation";
 import SuggestionButton from "@/components/SuggestionButton";
+import { useState } from "react";
+import useUserId from "@/store/useUserId";
+import useUserData from "@/store/useUserData";
 
 export default function Home() {
     const [isLoadingVisible, setLoadingVisible] = useState(false);
     const router = useRouter();
+    const userId = useUserId();
+    const userData = useUserData();
 
     const handleCreateForm = async () => {
         setLoadingVisible(true);
 
         try {
+            if (!userId || userId === 0) {
+                console.error("User not authenticated or invalid userId.");
+                return;
+            }
+
             const apiUrl = process.env.NEXT_PUBLIC_FRONTEND_API_URL;
             if (!apiUrl) {
                 throw new Error("You need to set PUBLIC_API_URL first.");
             }
+            const formData = {
+                owner_id: userId,
+                title: "Write your form title",
+                description: "Write your description",
+                fields: [
+                    {
+                        field_id: 1,
+                        question_name: "",
+                        question_type: "",
+                        question: "",
+                        required_field: false,
+                    },
+                ],
+            };
 
             const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    title: "Write your form title",
-                    description: "Write your description",
-                    fields: [
-                        {
-                            field_id: 1,
-                            question_name: "",
-                            question_type: "",
-                            question: "",
-                            required_field: false,
-                        },
-                    ],
-                }),
+                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
-                const formData = await response.json();
-                // Refresh FormsList component after successful form creation
-                router.push(`/Form/${formData.id}`);
+                const responseData = await response.json();
                 window.dispatchEvent(new CustomEvent("formCreated"));
+                router.push(`/Form/${responseData.id}`);
             } else {
                 console.error("Error creating form");
             }
