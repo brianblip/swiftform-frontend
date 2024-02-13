@@ -18,6 +18,8 @@ import { FormFieldModel } from "./FormFieldModel";
 
 export default function DynamicForm({
     id,
+    user_id,
+    owner_id,
     title,
     titleInput,
     description,
@@ -85,7 +87,10 @@ export default function DynamicForm({
         }
     };
 
-    const handleFormSubmit = async (formData: FormDataModel) => {
+    const handleFormSubmit = async (
+        formData: FormDataModel,
+        ownerId: string,
+    ) => {
         try {
             // Convert "required_field": ["on"] to "required_field": true
             // and "required_field": [] to "required_field": false
@@ -97,8 +102,8 @@ export default function DynamicForm({
             }));
 
             const response = await axios.patch(
-                `${process.env.NEXT_PUBLIC_API_URL}/${id}`,
-                formData,
+                `${process.env.NEXT_PUBLIC_FRONTEND_API_URL}/Form/${id}`,
+                { ...formData, owner_id: ownerId }, // Include owner_id in the request body
             );
             console.log("Form submitted successfully:", response.data);
             window.dispatchEvent(new CustomEvent("formCreated"));
@@ -190,7 +195,7 @@ export default function DynamicForm({
     };
 
     useEffect(() => {
-        setValue("title", title);
+        setValue("title", titleInput);
 
         formFields.forEach((field, index) => {
             const initialQuestionType = getValues(
@@ -219,11 +224,18 @@ export default function DynamicForm({
                 }
             }
         });
-    }, [title, setValue, getValues, formFields]);
+    }, [titleInput, setValue, getValues, formFields]);
+
+    // Check if user_id and owner_id are not matched
+    if (user_id !== owner_id) {
+        return <p>You are not authorized to access this form.</p>;
+    }
 
     return (
         <form
-            onSubmit={handleSubmit(handleFormSubmit)}
+            onSubmit={handleSubmit((formData) =>
+                handleFormSubmit(formData, owner_id),
+            )}
             className="flex w-3/4 flex-col items-center gap-10 border border-zinc-500 p-5"
         >
             <div className="flex w-4/5 flex-col items-center gap-3 p-5">
