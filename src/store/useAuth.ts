@@ -34,19 +34,20 @@ const useAuthStoreBase = create<AuthState>((set) => ({
     isAuthenticated: false,
     isLoading: true,
     initialize: ({
-        user,
-        isLoading,
-        error,
-        isAuthenticated,
-    }: InitializeProps) => {
+        user = null,
+        isLoading = false,
+        error = null,
+        isAuthenticated = false,
+    }: Partial<InitializeProps>) => {
         set((state) => ({
             ...state,
-            user,
+            user: user || state.user,
             isLoading,
             error,
             isAuthenticated,
         }));
     },
+
     login: async ({ email, password }: LoginProps) => {
         try {
             // Perform login logic, e.g., axios request
