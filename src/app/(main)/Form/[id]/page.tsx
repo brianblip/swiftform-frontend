@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import DynamicForm from "@/components/FormBuilderComponents/DynamicForm";
 import ResponseComponent from "@/components/ResponseComponent";
 import { Edit } from "@mui/icons-material";
+import useUserId from "@/store/useUserId";
 
 interface FormData {
     title: string;
+    owner_id: number;
     description: string;
     fields: {
         field_id: number;
@@ -27,7 +29,7 @@ interface FormParam {
 const fetchFormDataById = async (id: number): Promise<FormData> => {
     try {
         const apiUrl = process.env.NEXT_PUBLIC_FRONTEND_API_URL;
-        const response = await fetch(`${apiUrl}/${id}`);
+        const response = await fetch(`${apiUrl}/Form/${id}`);
         if (!response.ok) {
             throw new Error("Failed to fetch form data");
         }
@@ -41,10 +43,12 @@ const fetchFormDataById = async (id: number): Promise<FormData> => {
 
 export default function Form({ params }: { params: FormParam }) {
     const { id } = params;
+    const userId = useUserId();
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [formData, setFormData] = useState<FormData | null>(null);
     const [isLoadingVisible, setLoadingVisible] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isAuthorized, setIsAuthorized] = useState<boolean>(true); // Add state to track authorization
 
     // Use titleInput state to manage the input value
     const [titleInput, setTitleInput] = useState<string>("");
@@ -56,6 +60,7 @@ export default function Form({ params }: { params: FormParam }) {
                 setFormData(data);
                 setTitleInput(data?.title || ""); // Update titleInput when formData changes
                 setLoadingVisible(false);
+                setIsAuthorized(data?.owner_id === userId); // Check authorization
             } catch (error) {
                 setLoadingVisible(false);
                 setError("Error loading form data. Please try again.");
@@ -63,7 +68,7 @@ export default function Form({ params }: { params: FormParam }) {
         };
 
         fetchData();
-    }, [id]);
+    }, [id, userId]); // Include userId in dependencies array
 
     const onClickOpenQuestionSection = () => {
         setIsQuestionSectionOpen(true);
@@ -94,6 +99,15 @@ export default function Form({ params }: { params: FormParam }) {
     }
 
     const title = formData?.title || "Loading";
+
+    if (!isAuthorized) {
+        // Check if user is authorized
+        return (
+            <main className={mainClassNames}>
+                You are not authorized to access this form.
+            </main>
+        );
+    }
 
     return (
         <main className={mainClassNames}>
@@ -127,6 +141,8 @@ export default function Form({ params }: { params: FormParam }) {
             {isQuestionSectionOpen ? (
                 <DynamicForm
                     id={params.id}
+                    user_id={userId}
+                    owner_id={formData?.owner_id}
                     title={title}
                     titleInput={titleInput}
                     description={formData?.description}
@@ -134,7 +150,10 @@ export default function Form({ params }: { params: FormParam }) {
                     onSubmit={handleFormSubmission}
                 />
             ) : (
-                <ResponseComponent />
+                <ResponseComponent
+                    user_id={userId}
+                    owner_id={formData?.owner_id}
+                />
             )}
         </main>
     );
