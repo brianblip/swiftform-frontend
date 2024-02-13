@@ -1,5 +1,7 @@
 export interface FormDataModel {
     id: number;
+    user_id: number;
+    owner_id: number;
     title: string;
     description: string;
     fields: FormFieldModel[];
