@@ -12,7 +12,7 @@ export default function Home() {
         setLoadingVisible(true);
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+            const apiUrl = process.env.NEXT_PUBLIC_FRONTEND_API_URL;
             if (!apiUrl) {
                 throw new Error("You need to set PUBLIC_API_URL first.");
             }

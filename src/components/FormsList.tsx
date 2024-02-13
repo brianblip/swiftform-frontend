@@ -20,7 +20,7 @@ export default function FormsList({ formId }: FormListID) {
         const fetchData = async () => {
             setLoadingVisible(true);
             try {
-                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                const apiUrl = process.env.NEXT_PUBLIC_FRONTEND_API_URL;
                 if (!apiUrl) {
                     throw new Error("API URL is not defined");
                 }

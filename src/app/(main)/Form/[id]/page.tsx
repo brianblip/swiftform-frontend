@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import DynamicForm from "@/components/DynamicForm";
-import QuestionComponent from "@/components/QuestionComponent";
+import DynamicForm from "@/components/FormBuilderComponents/DynamicForm";
 import ResponseComponent from "@/components/ResponseComponent";
 import { Edit } from "@mui/icons-material";
 
@@ -27,7 +26,7 @@ interface FormParam {
 
 const fetchFormDataById = async (id: number): Promise<FormData> => {
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        const apiUrl = process.env.NEXT_PUBLIC_FRONTEND_API_URL;
         const response = await fetch(`${apiUrl}/${id}`);
         if (!response.ok) {
             throw new Error("Failed to fetch form data");
@@ -83,41 +82,30 @@ export default function Form({ params }: { params: FormParam }) {
         setTitleInput(event.target.value);
     };
 
+    const mainClassNames =
+        "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
+
     if (isLoadingVisible) {
-        return (
-            <main
-                className={`flex min-h-[calc(100vh-57.0667px)] w-dvw flex-col gap-8 px-4 py-8`}
-            >
-                Loading...
-            </main>
-        );
+        return <main className={mainClassNames}>Loading...</main>;
     }
 
     if (error) {
-        return (
-            <main
-                className={`flex min-h-[calc(100vh-57.0667px)] w-dvw flex-col gap-8 px-4 py-8`}
-            >
-                Error: {error}
-            </main>
-        );
+        return <main className={mainClassNames}>Error: {error}</main>;
     }
 
     const title = formData?.title || "Loading";
 
     return (
-        <main
-            className={`flex min-h-[calc(100vh-57.0667px)] w-dvw flex-col gap-8 px-4 py-8 sm:items-center sm:px-8 sm:py-12`}
-        >
+        <main className={mainClassNames}>
             <div className="flex w-full flex-col items-center gap-y-4">
-                <div className="relative flex w-3/4 flex-col items-center justify-center">
+                <div className="flex w-full items-center justify-center">
                     <input
                         autoFocus
                         value={titleInput}
                         onChange={handleTitleChange}
-                        className=" w-full truncate border-none bg-transparent p-2 pr-10 text-center text-2xl"
+                        className="w-1/4 border-none bg-transparent p-2 text-center text-3xl"
                     />
-                    <Edit className="absolute right-0 mr-2" />
+                    <Edit className="text-3xl" />
                 </div>
                 <div className="flex w-full gap-x-4 border-b border-b-primary-white">
                     <button

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
-import "./globals.css";
-import TopBar from "@/components/TopBar";
-import Sidebar from "@/components/SideBar";
+import "../globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 
 const sora = Sora({ subsets: ["latin"] });
@@ -22,11 +20,7 @@ export default function RootLayout({
             <body
                 className={`${sora.className} bg-primary-neutral text-primary-white md:flex`}
             >
-                <AuthProvider>
-                    <TopBar />
-                    <Sidebar />
-                    {children}
-                </AuthProvider>
+                <AuthProvider>{children}</AuthProvider>
             </body>
         </html>
     );
