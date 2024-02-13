@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DeleteForeverOutlined, MoreHoriz } from "@mui/icons-material";
+import useUserId from "@/store/useUserId"; // Import useUserId hook
 
 interface FormData {
     id: number;
     title: string;
+    owner_id: number; // Add owner_id property to FormData interface
 }
 
 interface FormListID {
@@ -15,6 +17,7 @@ export default function FormsList({ formId }: FormListID) {
     const [forms, setForms] = useState<FormData[] | null>(null);
     const [isLoadingVisible, setLoadingVisible] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const userId = useUserId(); // Get current user's ID
 
     useEffect(() => {
         const fetchData = async () => {
@@ -79,35 +82,40 @@ export default function FormsList({ formId }: FormListID) {
             ) : (
                 <ul className="flex h-full w-full flex-col gap-2 overflow-y-auto py-4">
                     {forms &&
-                        forms.map((form) => (
-                            <li key={form.id}>
-                                <Link
-                                    href={`/Form/${form.id}`}
-                                    className={`group relative flex items-center rounded p-2 hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
-                                >
-                                    <h2 className="truncate whitespace-nowrap rounded text-sm">
-                                        {form.title}
-                                    </h2>
-                                    <div className="absolute right-0 hidden rounded pr-2 group-hover:flex">
-                                        <button
-                                            onClick={() => console.log("hi")}
-                                        >
-                                            <MoreHoriz className="text-2xl hover:text-zinc-500" />
-                                        </button>
-                                        <button
-                                            onClick={() =>
-                                                handleDelete(
-                                                    form.id,
-                                                    form.title,
-                                                )
-                                            }
-                                        >
-                                            <DeleteForeverOutlined className="text-2xl hover:text-red-500" />
-                                        </button>
-                                    </div>
-                                </Link>
-                            </li>
-                        ))}
+                        forms
+                            // Filter forms based on userId
+                            .filter((form) => form.owner_id === userId)
+                            .map((form) => (
+                                <li key={form.id}>
+                                    <Link
+                                        href={`/Form/${form.id}`}
+                                        className={`group relative flex items-center rounded p-2 hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
+                                    >
+                                        <h2 className="truncate whitespace-nowrap rounded text-sm">
+                                            {form.title}
+                                        </h2>
+                                        <div className="absolute right-0 hidden rounded pr-2 group-hover:flex">
+                                            <button
+                                                onClick={() =>
+                                                    console.log("hi")
+                                                }
+                                            >
+                                                <MoreHoriz className="text-2xl hover:text-zinc-500" />
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(
+                                                        form.id,
+                                                        form.title,
+                                                    )
+                                                }
+                                            >
+                                                <DeleteForeverOutlined className="text-2xl hover:text-red-500" />
+                                            </button>
+                                        </div>
+                                    </Link>
+                                </li>
+                            ))}
                 </ul>
             )}
         </>
