@@ -348,41 +348,41 @@ export default function DynamicForm({
                             <button
                                 type="button"
                                 onClick={() => handleMoveField(index, "up")}
-                                className="ml-2 h-7 w-7 place-content-center"
+                                className="ml-2 size-7 place-content-center"
                             >
                                 <ArrowUpwardRounded
                                     titleAccess="Move Up"
-                                    className={`h-full w-full text-white transition-colors duration-300 hover:text-green-600`}
+                                    className={`size-full text-white transition-colors duration-300 hover:text-green-600`}
                                 />
                             </button>
                             <button
                                 type="button"
                                 onClick={() => handleMoveField(index, "down")}
-                                className="ml-2 h-7 w-7 place-content-center"
+                                className="ml-2 size-7 place-content-center"
                             >
                                 <ArrowDownwardRounded
                                     titleAccess="Move Down"
-                                    className={`h-full w-full text-white transition-colors duration-300 hover:text-green-600`}
+                                    className={`size-full text-white transition-colors duration-300 hover:text-green-600`}
                                 />
                             </button>
                             <button
                                 type="button"
                                 onClick={() => handleDuplicateField(index)}
-                                className="ml-2 h-7 w-7 place-content-center"
+                                className="ml-2 size-7 place-content-center"
                             >
                                 <CopyAllOutlined
                                     titleAccess="Duplicate Question"
-                                    className={`h-full w-full text-white transition-colors duration-300 hover:text-blue-600`}
+                                    className={`size-full text-white transition-colors duration-300 hover:text-blue-600`}
                                 />
                             </button>
                             <button
                                 type="button"
                                 onClick={() => remove(index)}
-                                className="ml-2 h-7 w-7 place-content-center"
+                                className="ml-2 size-7 place-content-center"
                             >
                                 <Delete
                                     titleAccess="Delete Question"
-                                    className={`h-full w-full text-white transition-colors duration-300 hover:text-red-600`}
+                                    className={`size-full text-white transition-colors duration-300 hover:text-red-600`}
                                 />
                             </button>
                         </div>

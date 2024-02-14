@@ -29,7 +29,7 @@ export default function Login() {
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-white text-black">
             <div className="flex flex-col items-center">
-                <div className="mb-8 h-28 w-28 overflow-hidden rounded-full">
+                <div className="mb-8 size-28 overflow-hidden rounded-full">
                     <Image src={Birdie} alt="SwiftForm logo" />
                 </div>
 
@@ -45,7 +45,7 @@ export default function Login() {
                         <input
                             type="email"
                             required
-                            className="focus:shadow-outline rounded border border-black px-3 py-3"
+                            className="rounded border border-black p-3"
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -62,7 +62,7 @@ export default function Login() {
                         <input
                             type="password"
                             required
-                            className="focus:shadow-outline rounded border border-black px-3 py-3"
+                            className="focus:shadow-outline rounded border border-black p-3"
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
