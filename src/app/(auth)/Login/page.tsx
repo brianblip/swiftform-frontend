@@ -1,20 +1,21 @@
 "use client";
 
-import { useState } from "react"; // Import useState hook
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
 import useAuth from "@/store/useAuth";
-import { NextRequest, NextResponse } from "next/server";
 import Link from "next/link";
 
-export default function Login(req: NextRequest, res: NextResponse) {
+export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = async (e: { preventDefault: () => void }) => {
+    const handleLogin = async (e: FormEvent) => {
+        e.preventDefault();
+
         const success = await login({
             email: email,
             password: password,
