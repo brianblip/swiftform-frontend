@@ -67,7 +67,7 @@ export default function SideBar() {
                         <p>My Account</p>
                     </button>
                     <div
-                        className={`absolute left-[calc(100%+theme(spacing.4))] flex w-full flex-col bg-primary-secondary p-2 ${isProfileOpen ? "scale-100" : "scale-0"}`}
+                        className={`absolute left-[calc(100%+theme(spacing.4))] top-0 w-full bg-primary-secondary p-2 ${isProfileOpen ? "scale-100" : "scale-0"}`}
                     >
                         <Link
                             href="/Profile"
