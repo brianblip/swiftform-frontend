@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import DynamicForm from "@/components/FormBuilderComponents/DynamicForm";
 import ResponseComponent from "@/components/ResponseComponent";
 import { Edit } from "@mui/icons-material";
+import { FormFieldModel } from "@/components/FormBuilderComponents/FormFieldModel";
 
 interface FormData {
     title: string;
@@ -130,8 +131,12 @@ export default function Form({ params }: { params: FormParam }) {
                     id={params.id}
                     title={title}
                     titleInput={titleInput}
-                    description={formData?.description}
-                    fields={formData?.fields}
+                    description={formData?.description ?? ""}
+                    fields={
+                        (formData?.fields as FormFieldModel[]) ?? [
+                            new FormFieldModel(),
+                        ]
+                    }
                     onSubmit={handleFormSubmission}
                 />
             ) : (
