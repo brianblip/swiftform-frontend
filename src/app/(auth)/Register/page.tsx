@@ -9,11 +9,11 @@ export default function Signup() {
 
     return (
         <div className="flex h-[100vh] w-screen min-w-[352px] items-center justify-center bg-white">
-            <div className="flex h-[93%] max-h-[1300px] w-[80%] flex-col items-center justify-center gap-9 rounded-lg border border-gray-300 md:w-[50%]">
+            <div className="flex h-[93%] max-h-[1300px] w-[80%] flex-col items-center justify-center gap-9 rounded-lg border border-gray-300 md:w-[60%]">
                 <div className="h-36 w-28 overflow-hidden rounded-full">
                     <Image src={Birdie} alt="Swift form logo" />
                 </div>
-                <p className="text-center text-4xl font-extrabold text-black">
+                <p className="text-center text-2xl font-extrabold text-black sm:text-3xl md:text-4xl">
                     Create your account
                 </p>
                 <form className="flex w-full flex-col items-center justify-center">
