@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState, useEffect } from "react";
 import DynamicForm from "@/components/FormBuilderComponents/DynamicForm";
 import ResponseComponent from "@/components/ResponseComponent";
