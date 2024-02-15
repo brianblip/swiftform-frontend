@@ -1,11 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/useAuth";
 import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
+import { useState } from "react";
 
 export default function Signup() {
     const router = useRouter();
+    const { register } = useAuthStore();
 
     return (
         <div className="flex h-[100vh] w-screen min-w-[352px] items-center justify-center bg-white">
