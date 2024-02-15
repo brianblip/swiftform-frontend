@@ -27,15 +27,13 @@ export default function Login() {
     };
 
     return (
-        <div className="flex min-h-screen w-full items-center justify-center bg-white text-black">
-            <div className="flex flex-col items-center">
-                <div className="mb-8 size-28 overflow-hidden rounded-full">
+        <main className="flex min-h-dvh w-dvw items-center justify-center bg-white text-primary-black">
+            <div className="flex flex-col items-center gap-8">
+                <div className="size-28 overflow-hidden rounded-full">
                     <Image src={Birdie} alt="SwiftForm logo" />
                 </div>
 
-                <h1 className="mb-8 text-xl font-bold md:text-2xl">
-                    Welcome back
-                </h1>
+                <h1 className="text-xl font-bold md:text-2xl">Welcome back</h1>
 
                 <form onSubmit={handleLogin} className="grid gap-4">
                     <div className="grid gap-1">
@@ -69,23 +67,22 @@ export default function Login() {
                         />
                     </div>
 
-                    <a href="#" className="mb-4 text-sm font-medium">
+                    <a href="#" className="w-fit text-sm font-medium">
                         Forgot password?
                     </a>
 
                     <button
                         type="submit"
-                        className="mb-4 w-full rounded bg-black py-3 text-white"
+                        className="w-full rounded bg-primary-black p-3 text-white"
                     >
                         Continue
                     </button>
-
-                    <Link href="/register" className="text-center text-sm">
-                        Don&rsquo;t have an account?
-                        <span className="ml-1 font-medium">Sign up</span>
-                    </Link>
                 </form>
+                <Link href="/Register" className="w-fit text-sm">
+                    Don&rsquo;t have an account?
+                    <span className="font-medium"> Sign up</span>
+                </Link>
             </div>
-        </div>
+        </main>
     );
 }
