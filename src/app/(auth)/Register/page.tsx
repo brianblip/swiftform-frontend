@@ -10,6 +10,35 @@ export default function Signup() {
     const router = useRouter();
     const { register } = useAuthStore();
 
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            // Check if passwords match
+            if (formData.password !== formData.confirmPassword) {
+                console.error("Passwords do not match");
+                return;
+            }
+
+            // Call register function
+            await register({
+                email: formData.email,
+                password: formData.password,
+                name: "",
+                avatar_url: "",
+            });
+
+            router.push("/"); // Redirect to homepage
+        } catch (error) {
+            console.error("Error registering:", error);
+        }
+    };
+
     return (
         <div className="flex h-[100vh] w-screen min-w-[352px] items-center justify-center bg-white">
             <div className="flex h-[93%] max-h-[1300px] w-[80%] flex-col items-center justify-center gap-9 rounded-lg border border-gray-300 md:w-[60%]">
@@ -19,7 +48,10 @@ export default function Signup() {
                 <p className="text-center text-2xl font-extrabold text-black sm:text-3xl md:text-4xl">
                     Create your account
                 </p>
-                <form className="flex w-full flex-col items-center justify-center">
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex w-full flex-col items-center justify-center"
+                >
                     <div className="mb-4 w-[60%] max-w-md">
                         <label
                             className="block text-sm font-bold text-black"
@@ -32,6 +64,13 @@ export default function Signup() {
                             id="email"
                             placeholder="Email address"
                             type="email"
+                            value={formData.email}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    email: e.target.value,
+                                })
+                            }
                             required
                         />
                     </div>
@@ -46,6 +85,13 @@ export default function Signup() {
                             className="h-[52px] w-full rounded-[4px] border border-black px-3 py-2 leading-tight text-gray-700"
                             type="password"
                             placeholder="********"
+                            value={formData.password}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    password: e.target.value,
+                                })
+                            }
                             id="password"
                             required
                         />
@@ -53,7 +99,7 @@ export default function Signup() {
                     <div className="mb-4 w-[60%] max-w-md">
                         <label
                             className="block text-sm font-bold text-black"
-                            htmlFor="password"
+                            htmlFor="confirmPassword"
                         >
                             Confirm Password
                         </label>
@@ -61,7 +107,14 @@ export default function Signup() {
                             className="h-[52px] w-full rounded-[4px] border border-black px-3 py-2 leading-tight text-gray-700"
                             type="password"
                             placeholder="********"
-                            id="password"
+                            id="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    confirmPassword: e.target.value,
+                                })
+                            }
                             required
                         />
                     </div>
