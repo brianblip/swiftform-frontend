@@ -6,12 +6,15 @@ import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
 import useAuth from "@/contexts/auth";
 import Link from "next/link";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
@@ -25,6 +28,10 @@ export default function Login() {
             router.push("/");
         }
     };
+
+    function onClickToggleVisibility() {
+        setIsPasswordVisible(!isPasswordVisible);
+    }
 
     return (
         <main className="flex min-h-dvh w-dvw items-center justify-center bg-white text-primary-black">
@@ -56,9 +63,24 @@ export default function Login() {
                             className="text-sm font-medium"
                         >
                             Password
+                            {isPasswordVisible ? (
+                                <button
+                                    onClick={onClickToggleVisibility}
+                                    className="ml-1 hover:text-primary-secondary"
+                                >
+                                    <VisibilityOffIcon />
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={onClickToggleVisibility}
+                                    className="ml-1 hover:text-primary-secondary"
+                                >
+                                    <VisibilityIcon />
+                                </button>
+                            )}
                         </label>
                         <input
-                            type="password"
+                            type={isPasswordVisible ? "text" : "password"}
                             required
                             className="rounded border border-black p-3"
                             id="password"
