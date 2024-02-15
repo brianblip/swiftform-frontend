@@ -15,6 +15,7 @@ export default function Login(req: NextRequest, res: NextResponse) {
     const [password, setPassword] = useState("");
 
     const handleLogin = async (e: { preventDefault: () => void }) => {
+        e.preventDefault();
         const success = await login({
             email: email,
             password: password,
