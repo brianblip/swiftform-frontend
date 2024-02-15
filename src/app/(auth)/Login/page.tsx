@@ -80,10 +80,13 @@ export default function Login(req: NextRequest, res: NextResponse) {
                         Continue
                     </button>
 
-                    <Link href="" className="text-center text-sm">
+                    <button
+                        onClick={() => router.push("/Register")}
+                        className="text-center text-sm"
+                    >
                         Don&rsquo;t have an account?
                         <span className="ml-1 font-medium">Sign up</span>
-                    </Link>
+                    </button>
                 </form>
             </div>
         </div>
