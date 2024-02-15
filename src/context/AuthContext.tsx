@@ -11,6 +11,7 @@ export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
+    const pathname = usePathname();
     const { data: userData, error: userError } = useSWR<User>(
         `/users/me`,
         fetcher,
@@ -35,7 +36,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (userError) {
         console.error("Error fetching user data", userError);
-        const pathname = usePathname();
         if (pathname !== "/Register") {
             router.push("/Login");
         }
