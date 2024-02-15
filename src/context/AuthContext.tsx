@@ -5,7 +5,7 @@ import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { User } from "@/types/user";
 import useAuth from "@/store/useAuth";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export const AuthContext = createContext(null);
 
@@ -35,7 +35,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (userError) {
         console.error("Error fetching user data", userError);
-        router.push("/Login");
+        const pathname = usePathname();
+        if (pathname !== "/Register") {
+            router.push("/Login");
+        }
     }
 
     return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
