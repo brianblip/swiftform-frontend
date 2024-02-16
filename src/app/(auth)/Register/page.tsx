@@ -5,11 +5,11 @@ import useAuthStore from "@/store/useAuth";
 import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
 import { useState } from "react";
-
+import { Alert, AlertTitle } from "@mui/material";
 export default function Signup() {
     const router = useRouter();
     const { register } = useAuthStore();
-
+    const [passwordsDoNotMatch, setPasswordsDoNotMatch] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -22,6 +22,7 @@ export default function Signup() {
             // Check if passwords match
             if (formData.password !== formData.confirmPassword) {
                 console.error("Passwords do not match");
+                setPasswordsDoNotMatch(true);
                 return;
             }
 
@@ -41,7 +42,7 @@ export default function Signup() {
 
     return (
         <div className="flex h-[100vh] w-screen min-w-[352px] items-center justify-center bg-white">
-            <div className="flex h-[93%] max-h-[1300px] w-[80%] flex-col items-center justify-center gap-9 rounded-lg border border-gray-300 md:w-[60%]">
+            <div className="flex h-[93%] max-h-[1300px] w-[80%] flex-col items-center justify-center gap-9 rounded-lg md:w-[60%]">
                 <div className="h-36 w-28 overflow-hidden rounded-full">
                     <Image src={Birdie} alt="Swift form logo" />
                 </div>
@@ -132,6 +133,15 @@ export default function Signup() {
                     Already have an account? Login
                 </p>
             </div>
+            {passwordsDoNotMatch && (
+                <Alert
+                    severity="error"
+                    className="fixed bottom-5 left-5 z-50 border border-black"
+                >
+                    <AlertTitle>Password do not match</AlertTitle>
+                    Please double check your password
+                </Alert>
+            )}
         </div>
     );
 }
