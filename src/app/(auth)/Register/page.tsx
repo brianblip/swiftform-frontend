@@ -9,7 +9,7 @@ import { Alert, AlertTitle } from "@mui/material";
 export default function Signup() {
     const router = useRouter();
     const { register } = useAuthStore();
-    const [passwordsDoNotMatch, setPasswordsDoNotMatch] = useState(false);
+    const [isPasswordsMismatch, setPasswordsMismatch] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -22,7 +22,7 @@ export default function Signup() {
             // Check if passwords match
             if (formData.password !== formData.confirmPassword) {
                 console.error("Passwords do not match");
-                setPasswordsDoNotMatch(true);
+                setPasswordsMismatch(true);
                 return;
             }
 
@@ -66,12 +66,13 @@ export default function Signup() {
                             placeholder="Email address"
                             type="email"
                             value={formData.email}
-                            onChange={(e) =>
+                            onChange={(e) => {
                                 setFormData({
                                     ...formData,
                                     email: e.target.value,
-                                })
-                            }
+                                });
+                                setPasswordsMismatch(false);
+                            }}
                             required
                         />
                     </div>
@@ -87,12 +88,13 @@ export default function Signup() {
                             type="password"
                             placeholder="********"
                             value={formData.password}
-                            onChange={(e) =>
+                            onChange={(e) => {
                                 setFormData({
                                     ...formData,
                                     password: e.target.value,
-                                })
-                            }
+                                });
+                                setPasswordsMismatch(false);
+                            }}
                             id="password"
                             required
                         />
@@ -110,12 +112,13 @@ export default function Signup() {
                             placeholder="********"
                             id="confirmPassword"
                             value={formData.confirmPassword}
-                            onChange={(e) =>
+                            onChange={(e) => {
                                 setFormData({
                                     ...formData,
                                     confirmPassword: e.target.value,
-                                })
-                            }
+                                });
+                                setPasswordsMismatch(false);
+                            }}
                             required
                         />
                     </div>
@@ -133,7 +136,7 @@ export default function Signup() {
                     Already have an account? Login
                 </p>
             </div>
-            {passwordsDoNotMatch && (
+            {isPasswordsMismatch && (
                 <Alert
                     severity="error"
                     className="fixed bottom-5 left-5 z-50 border border-black"
