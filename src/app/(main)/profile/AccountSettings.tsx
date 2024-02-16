@@ -2,17 +2,17 @@ import Input from "../../../components/Input";
 
 export default function AccountSettings() {
     return (
-        <form className="flex w-full flex-col gap-4">
+        <form className="grid w-full gap-4 sm:w-11/12 md:w-full lg:w-[640px]">
             <p className="text-xl font-medium">Account Setting</p>
-            <div className="flex flex-col gap-4">
-                <Input
-                    type="password"
-                    id="password"
-                    label="Password"
-                    placeholder="Password"
-                    size="full"
-                    required={true}
-                />
+            <Input
+                type="password"
+                id="password"
+                label="Password"
+                placeholder="Password"
+                size="full"
+                required={true}
+            />
+            <div className="mb-4">
                 <Input
                     label="New Password"
                     id="newPassword"
@@ -22,7 +22,7 @@ export default function AccountSettings() {
                     required={true}
                 />
             </div>
-            <button className="w-fit rounded bg-primary-secondary px-8 py-2">
+            <button className=" rounded bg-primary-secondary px-8 py-2">
                 Save Changes
             </button>
         </form>
