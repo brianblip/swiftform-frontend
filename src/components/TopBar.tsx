@@ -68,11 +68,11 @@ export default function TopBar() {
                 >
                     <button
                         onClick={onClickCloseMenu}
-                        className="absolute right-full top-0 mx-2 my-2 p-2 hover:bg-primary-secondary"
+                        className="absolute right-full top-0 m-2 p-2 hover:bg-primary-secondary"
                     >
                         <CloseIcon />
                     </button>
-                    <div className="flex h-full w-full flex-col justify-between gap-2">
+                    <div className="flex size-full flex-col justify-between gap-2">
                         <FormsList formId={currentFormId} />
                         <div className="flex flex-col gap-2">
                             <div className="relative">

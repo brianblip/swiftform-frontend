@@ -74,7 +74,7 @@ export default function FormsList({ formId }: FormListID) {
     return (
         <>
             {isLoadingVisible ? (
-                <section className="flex h-full w-full animate-pulse flex-col gap-2 overflow-y-auto py-4">
+                <section className="flex size-full animate-pulse flex-col gap-2 overflow-y-auto py-4">
                     {Array.from({ length: 3 }, (_, i) => (
                         <div
                             key={i}
@@ -85,7 +85,7 @@ export default function FormsList({ formId }: FormListID) {
             ) : error ? (
                 <ErrorPage />
             ) : (
-                <ul className="flex h-full w-full flex-col gap-2 overflow-y-auto py-4">
+                <ul className="flex size-full flex-col gap-2 overflow-y-auto py-4">
                     {forms &&
                         forms.map((form) => (
                             <li key={form.id}>

@@ -61,7 +61,7 @@ export default function Signup() {
                             Email
                         </label>
                         <input
-                            className="focus:shadow-outline h-[52px] w-full rounded-[4px] border border-black px-3 py-2 leading-tight  text-gray-700"
+                            className="h-[52px] w-full rounded-[4px] border border-black px-3 py-2 leading-tight  text-gray-700"
                             id="email"
                             placeholder="Email address"
                             type="email"
