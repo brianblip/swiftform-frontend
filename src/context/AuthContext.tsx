@@ -32,15 +32,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }, [data, initialize]);
 
-    if (!data && !error) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        console.error("Error fetching user data", error);
-        router.push("/login");
-    }
-
     return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
 }
 
