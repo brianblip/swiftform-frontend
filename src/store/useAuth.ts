@@ -1,4 +1,4 @@
-import axios from "@/lib/axios";
+import api from "@/lib/api";
 import { create } from "zustand";
 import { User } from "@/types/user";
 import { createSelectorHooks } from "auto-zustand-selectors-hook";
@@ -50,7 +50,7 @@ const useAuthStoreBase = create<AuthState>((set) => ({
     login: async ({ email, password }: LoginProps) => {
         try {
             // Perform login logic, e.g., axios request
-            const response = await axios.post("/auth/login", {
+            const response = await api.post("/auth/login", {
                 email,
                 password,
             });
@@ -70,7 +70,7 @@ const useAuthStoreBase = create<AuthState>((set) => ({
     },
     logout: async () => {
         try {
-            const response = await axios.post("/auth/logout");
+            const response = await api.post("/auth/logout");
 
             set({ user: null });
             return response.data;
@@ -82,7 +82,7 @@ const useAuthStoreBase = create<AuthState>((set) => ({
     register: async ({ name, email, password, avatar_url }: RegisterProps) => {
         try {
             // Perform registration logic, e.g., axios request
-            const response = await axios.post("/auth/register", {
+            const response = await api.post("/auth/register", {
                 name,
                 email,
                 password,
