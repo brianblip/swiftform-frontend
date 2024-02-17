@@ -4,7 +4,7 @@ import { createContext, ReactNode, useEffect } from "react";
 import useSWR from "swr";
 import api from "@/lib/api";
 import { User } from "@/types/user";
-import useAuth from "@/store/useAuth";
+import useAuth from "@/store/auth";
 import { useRouter } from "next/navigation";
 
 export const AuthContext = createContext(null);
