@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import "../globals.css";
-import { AuthProvider } from "@/context/auth";
+import { AuthProvider } from "@/contexts/auth";
 
 const sora = Sora({ subsets: ["latin"] });
 
