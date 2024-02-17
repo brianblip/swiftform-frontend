@@ -33,75 +33,67 @@ const useAuthStoreBase = create<AuthState>((set) => ({
     user: null,
     isAuthenticated: false,
     isLoading: true,
-    initialize: ({
-        user,
-        isLoading,
-        error,
-        isAuthenticated,
-    }: InitializeProps) => {
+
+    initialize: (props: InitializeProps) => {
         set((state) => ({
             ...state,
-            user,
-            isLoading,
-            error,
-            isAuthenticated,
+            ...props,
         }));
     },
+
+    /**
+     * Sends login request
+     */
     login: async ({ email, password }: LoginProps) => {
-        try {
-            // Perform login logic, e.g., axios request
-            const response = await api.post("/auth/login", {
-                email,
-                password,
-            });
-            const user = response.data;
+        const response = await api.post("/auth/login", {
+            email,
+            password,
+        });
+        const user = response.data;
 
-            set((state) => ({
-                ...state,
-                isAuthenticated: true,
-                user,
-            }));
+        set((state) => ({
+            ...state,
+            isAuthenticated: true,
+            user,
+        }));
 
-            return user;
-        } catch (error) {
-            console.error("Error logging in", error);
-            throw error; // Propagate the error to the caller
-        }
+        return user;
     },
+
+    /**
+     * Sends logout request and invalidates user store
+     */
     logout: async () => {
-        try {
-            const response = await api.post("/auth/logout");
+        const response = await api.post("/auth/logout");
 
-            set({ user: null });
-            return response.data;
-        } catch (error) {
-            console.error("Error logging out", error);
-            throw error; // Propagate the error to the caller
-        }
+        set({ user: null });
+        return response.data;
     },
+
+    /**
+     * Sends registration request
+     */
     register: async ({ name, email, password, avatar_url }: RegisterProps) => {
-        try {
-            // Perform registration logic, e.g., axios request
-            const response = await api.post("/auth/register", {
-                name,
-                email,
-                password,
-                avatar_url,
-            });
-            const user = response.data;
+        const response = await api.post("/auth/register", {
+            name,
+            email,
+            password,
+            avatar_url,
+        });
+        const user = response.data;
 
-            set((state) => ({
-                ...state,
-                isAuthenticated: true,
-                user,
-            }));
+        set((state) => ({
+            ...state,
+            isAuthenticated: true,
+            user,
+        }));
 
-            return user;
-        } catch (error) {
-            console.error("Error registering", error);
-            throw error; // Propagate the error to the caller
-        }
+        return user;
     },
+
+    /**
+     * Sets loading state to false
+     */
     stopLoading: () => {
         set((state) => ({
             ...state,
