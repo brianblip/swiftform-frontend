@@ -62,7 +62,7 @@ export default function Login() {
                         <input
                             type="password"
                             required
-                            className="focus:shadow-outline rounded border border-black p-3"
+                            className="rounded border border-black p-3"
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -80,7 +80,7 @@ export default function Login() {
                         Continue
                     </button>
 
-                    <Link href="" className="text-center text-sm">
+                    <Link href="/register" className="text-center text-sm">
                         Don&rsquo;t have an account?
                         <span className="ml-1 font-medium">Sign up</span>
                     </Link>
