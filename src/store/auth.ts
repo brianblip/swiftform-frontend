@@ -1,7 +1,7 @@
 import api from "@/lib/api";
 import { create } from "zustand";
-import { User } from "@/types/user";
 import { createSelectorHooks } from "auto-zustand-selectors-hook";
+import { User } from "@@/types";
 
 type AuthState = {
     user: User | null;
