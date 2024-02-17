@@ -11,5 +11,8 @@
             "files": ["*.ts", "*.tsx", "*.js"],
             "parser": "@typescript-eslint/parser"
         }
-    ]
+    ],
+    "rules": {
+        "no-unused-vars": "off"
+    }
 }
