@@ -5,12 +5,13 @@ import useSWR from "swr";
 import api from "@/lib/api";
 import { User } from "@@/types";
 import useAuth from "@/store/auth";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
+    const pathname = usePathname();
 
     const fetcher = async (url: string) => {
         const { data } = await api.get(url);
