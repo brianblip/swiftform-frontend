@@ -5,7 +5,7 @@ import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useAuthStore from "@/store/useAuth";
+import useAuthStore from "@/store/auth";
 
 export default function RegistrationPage() {
     const router = useRouter();
