@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, useEffect } from "react";
 import useSWR from "swr";
-import api from "@/lib/api";
+import api from "@/services/api";
 import { User } from "@@/types";
 import useAuth from "@/store/auth";
 import { usePathname, useRouter } from "next/navigation";

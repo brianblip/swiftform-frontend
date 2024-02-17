@@ -1,4 +1,4 @@
-import api from "@/lib/api";
+import api from "@/services/api";
 import { create } from "zustand";
 import { createSelectorHooks } from "auto-zustand-selectors-hook";
 import { User } from "@@/types";
