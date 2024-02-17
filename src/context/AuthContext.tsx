@@ -17,31 +17,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return data;
     };
 
-    const { data: userData, error: userError } = useSWR<User>(
-        `/users/me`,
-        fetcher,
-    );
+    const { data, error } = useSWR<User>(`/users/me`, fetcher);
 
     const { initialize } = useAuth();
 
     useEffect(() => {
-        if (userData) {
+        if (data) {
             initialize({
-                user: userData,
+                user: data,
                 isLoading: false,
                 error: null,
                 isAuthenticated: true,
             });
         }
-    }, [userData, initialize]);
+    }, [data, initialize]);
 
-    if (!userData && !userError) {
+    if (!data && !error) {
         return <div>Loading...</div>;
     }
 
-    if (userError) {
-        console.error("Error fetching user data", userError);
-        router.push("/Login");
+    if (error) {
+        console.error("Error fetching user data", error);
+        router.push("/login");
     }
 
     return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
