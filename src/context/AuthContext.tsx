@@ -3,7 +3,7 @@
 import { createContext, ReactNode, useEffect } from "react";
 import useSWR from "swr";
 import api from "@/lib/api";
-import { User } from "@/types/user";
+import { User } from "@@/types";
 import useAuth from "@/store/auth";
 import { useRouter } from "next/navigation";
 
