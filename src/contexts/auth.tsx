@@ -12,7 +12,7 @@ export const AuthContext = createContext(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
     const fetcher = async (url: string) => {
         const { data } = await api.get(url);
-        return data;
+        return data.data || data;
     };
 
     const { data, error } = useSWR<User>(`/users/me`, fetcher);
