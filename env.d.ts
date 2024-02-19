@@ -1,5 +1,5 @@
 namespace NodeJS {
     interface ProcessEnv {
-        SWIFTFORM_API_URL: string;
+        NEXT_PUBLIC_SWIFTFORM_API_URL: string;
     }
 }
