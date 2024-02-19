@@ -34,7 +34,7 @@ const Input = ({
                 <p className="text-sm font-bold">{label}</p>
             </label>
             <input
-                className="focus:shadow-outline w-full rounded bg-primary-secondary p-4 leading-tight text-white"
+                className="w-full rounded bg-primary-secondary p-4 leading-tight text-white"
                 id={id}
                 placeholder={placeholder}
                 type={type}
