@@ -8,9 +8,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { createStore, StoreApi } from "zustand";
 
 type AuthState = {
-    user: User | null;
+    user?: User | null;
     isAuthenticated: boolean;
     isLoading: boolean;
+    error: string | null;
     stopLoading: () => void;
     initialize: (props: InitializeProps) => void;
     login: (props: LoginProps) => Promise<User>;
@@ -34,10 +35,17 @@ interface LoginProps extends Pick<User, "email"> {
 }
 
 const useAuthStore = () => {
+    const fetcher = async (url: string) => {
+        const { data } = await api.get(url);
+        return data.data || data;
+    };
+
+    const { data: user, isLoading, error } = useSWR<User>(`/users/me`, fetcher);
+
     return createStore<AuthState>((set) => ({
-        user: null,
-        isAuthenticated: false,
-        isLoading: true,
+        user,
+        isLoading,
+        error,
 
         initialize: (props: InitializeProps) => {
             set((state) => ({
@@ -117,13 +125,6 @@ export const AuthContext =
     createContext<() => StoreApi<AuthState>>(useAuthStore);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const fetcher = async (url: string) => {
-        const { data } = await api.get(url);
-        return data.data || data;
-    };
-
-    const { data, error } = useSWR<User>(`/users/me`, fetcher);
-
     const { initialize } = useAuth();
 
     useEffect(() => {
