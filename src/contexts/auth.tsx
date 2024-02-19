@@ -1,10 +1,9 @@
 "use client";
 
-import { createContext, ReactNode, useEffect } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import useSWR from "swr";
 import api from "@/services/api";
 import { User } from "@@/types";
-import { usePathname, useRouter } from "next/navigation";
 import { createStore, StoreApi } from "zustand";
 
 type AuthState = {
@@ -102,7 +101,13 @@ export const AuthContext =
     createContext<() => StoreApi<AuthState>>(useAuthStore);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={useAuthStore}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
-export default AuthContext;
+const useAuth = () => useContext(AuthContext)().getInitialState();
+
+export default useAuth;
