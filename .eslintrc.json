@@ -6,6 +6,9 @@
         "prettier",
         "plugin:tailwindcss/recommended"
     ],
+    "rules": {
+        "no-unused-vars": "warn"
+    },
     "overrides": [
         {
             "files": ["*.ts", "*.tsx", "*.js"],

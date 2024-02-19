@@ -1,3 +1,5 @@
+import { SubmitHandler } from "react-hook-form";
+
 export interface FormDataModel {
     id: number;
     title: string;

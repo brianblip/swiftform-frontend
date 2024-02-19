@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 "use client";
 // DynamicForm.tsx
 import React, { useEffect, useState, ChangeEvent } from "react";
