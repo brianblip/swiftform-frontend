@@ -36,7 +36,12 @@ const useAuthStore = () => {
         return data.data || data;
     };
 
-    const { data: user, isLoading, error } = useSWR<User>(`/users/me`, fetcher);
+    const {
+        data: user,
+        isLoading,
+        error,
+        mutate,
+    } = useSWR<User | null>(`/users/me`, fetcher);
 
     return createStore<AuthState>((set) => ({
         user,
@@ -47,28 +52,26 @@ const useAuthStore = () => {
          * Sends login request
          */
         login: async ({ email, password }: LoginProps) => {
-            const response = await api.post("/auth/login", {
+            const { data } = await api.post("/auth/login", {
                 email,
                 password,
             });
-            const user = response.data;
 
-            set((state) => ({
-                ...state,
-                user,
-            }));
+            const user = data.data;
+            await mutate(user);
 
-            return user;
+            return data;
         },
 
         /**
          * Sends logout request and invalidates user store
          */
         logout: async () => {
-            const response = await api.post("/auth/logout");
+            const { data } = await api.post("/auth/logout");
 
-            set({ user: null });
-            return response.data;
+            await mutate(null);
+
+            return data;
         },
 
         /**
@@ -80,21 +83,17 @@ const useAuthStore = () => {
             password,
             avatar_url,
         }: RegisterProps) => {
-            const response = await api.post("/auth/register", {
+            const { data } = await api.post("/auth/register", {
                 name,
                 email,
                 password,
                 avatar_url,
             });
-            const user = response.data;
 
-            set((state) => ({
-                ...state,
-                isAuthenticated: true,
-                user,
-            }));
+            const newUser = data.data;
+            await mutate(newUser);
 
-            return user;
+            return data;
         },
     }));
 };
