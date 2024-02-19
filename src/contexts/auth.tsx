@@ -10,9 +10,6 @@ import { usePathname, useRouter } from "next/navigation";
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const router = useRouter();
-    const pathname = usePathname();
-
     const fetcher = async (url: string) => {
         const { data } = await api.get(url);
         return data;
