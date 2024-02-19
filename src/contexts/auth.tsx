@@ -9,11 +9,8 @@ import { createStore, StoreApi } from "zustand";
 
 type AuthState = {
     user?: User | null;
-    isAuthenticated: boolean;
     isLoading: boolean;
     error: string | null;
-    stopLoading: () => void;
-    initialize: (props: InitializeProps) => void;
     login: (props: LoginProps) => Promise<User>;
     logout: () => Promise<void>;
     register: (props: RegisterProps) => Promise<User>;
@@ -23,7 +20,6 @@ interface InitializeProps {
     user?: User | null;
     isLoading: boolean;
     error: string | null;
-    isAuthenticated: boolean;
 }
 
 interface RegisterProps extends Omit<User, "id"> {
@@ -47,13 +43,6 @@ const useAuthStore = () => {
         isLoading,
         error,
 
-        initialize: (props: InitializeProps) => {
-            set((state) => ({
-                ...state,
-                ...props,
-            }));
-        },
-
         /**
          * Sends login request
          */
@@ -66,7 +55,6 @@ const useAuthStore = () => {
 
             set((state) => ({
                 ...state,
-                isAuthenticated: true,
                 user,
             }));
 
@@ -108,16 +96,6 @@ const useAuthStore = () => {
 
             return user;
         },
-
-        /**
-         * Sets loading state to false
-         */
-        stopLoading: () => {
-            set((state) => ({
-                ...state,
-                isLoading: false,
-            }));
-        },
     }));
 };
 
@@ -125,19 +103,6 @@ export const AuthContext =
     createContext<() => StoreApi<AuthState>>(useAuthStore);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const { initialize } = useAuth();
-
-    useEffect(() => {
-        if (data) {
-            initialize({
-                user: data,
-                isLoading: false,
-                error: null,
-                isAuthenticated: true,
-            });
-        }
-    }, [data, initialize]);
-
     return <AuthContext.Provider value={null}>{children}</AuthContext.Provider>;
 }
 
