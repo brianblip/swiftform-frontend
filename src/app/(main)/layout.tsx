@@ -4,7 +4,7 @@ import { Sora } from "next/font/google";
 import "../globals.css";
 import TopBar from "@/components/TopBar";
 import Sidebar from "@/components/SideBar";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider } from "@/contexts/auth";
 
 const sora = Sora({ subsets: ["latin"] });
 
