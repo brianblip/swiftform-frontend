@@ -6,6 +6,8 @@ import Birdie from "@/assets/Birdie.png";
 import Link from "next/link";
 import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 export default function RegistrationPage() {
     const router = useRouter();
@@ -16,6 +18,7 @@ export default function RegistrationPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const handleFormSubmit = async () => {
         try {
@@ -31,6 +34,10 @@ export default function RegistrationPage() {
             console.error(error);
         }
     };
+
+    function onClickToggleVisibility() {
+        setIsPasswordVisible(!isPasswordVisible);
+    }
 
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-white text-black">
@@ -78,9 +85,24 @@ export default function RegistrationPage() {
                             className="text-sm font-medium"
                         >
                             Password
+                            {isPasswordVisible ? (
+                                <button
+                                    onClick={onClickToggleVisibility}
+                                    className="ml-1 hover:text-primary-secondary"
+                                >
+                                    <VisibilityOffIcon />
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={onClickToggleVisibility}
+                                    className="ml-1 hover:text-primary-secondary"
+                                >
+                                    <VisibilityIcon />
+                                </button>
+                            )}
                         </label>
                         <input
-                            type="password"
+                            type={isPasswordVisible ? "text" : "password"}
                             required
                             className="rounded border border-black p-3"
                             id="password"
@@ -95,9 +117,24 @@ export default function RegistrationPage() {
                             className="text-sm font-medium"
                         >
                             Re-enter your password
+                            {isPasswordVisible ? (
+                                <button
+                                    onClick={onClickToggleVisibility}
+                                    className="ml-1 hover:text-primary-secondary"
+                                >
+                                    <VisibilityOffIcon />
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={onClickToggleVisibility}
+                                    className="ml-1 hover:text-primary-secondary"
+                                >
+                                    <VisibilityIcon />
+                                </button>
+                            )}
                         </label>
                         <input
-                            type="password"
+                            type={isPasswordVisible ? "text" : "password"}
                             required
                             className="rounded border border-black p-3"
                             id="confirm_password"
