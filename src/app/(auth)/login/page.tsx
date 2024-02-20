@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
-import useAuth from "@/store/auth";
+import useAuth from "@/contexts/auth";
 import Link from "next/link";
 
 export default function Login() {

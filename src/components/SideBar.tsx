@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import useAuth from "@/store/auth";
+import useAuth from "@/contexts/auth";
 
 export default function SideBar() {
     const pathname = usePathname();
