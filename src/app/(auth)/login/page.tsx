@@ -100,7 +100,7 @@ export default function Login() {
                         Continue
                     </button>
                 </form>
-                <Link href="/Register" className="w-fit text-sm">
+                <Link href="/register" className="w-fit text-sm">
                     Don&rsquo;t have an account?
                     <span className="font-medium"> Sign up</span>
                 </Link>
