@@ -40,7 +40,7 @@ export default function Home() {
             if (response.ok) {
                 const formData = await response.json();
                 // Refresh FormsList component after successful form creation
-                router.push(`/Form/${formData.id}`);
+                router.push(`/form/${formData.id}`);
                 window.dispatchEvent(new CustomEvent("formCreated"));
             } else {
                 console.error("Error creating form");
