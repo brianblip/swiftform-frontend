@@ -29,9 +29,9 @@ const Input = ({
         }
     };
     return (
-        <div className={`${getSize()} max-w-md`}>
-            <label className="flex flex-col gap-2" htmlFor={id}>
-                <p className="text-sm font-bold">{label}</p>
+        <div className={`grid gap-1`}>
+            <label className="text-sm font-bold" htmlFor={id}>
+                {label}
             </label>
             <input
                 className="w-full rounded bg-primary-secondary p-4 leading-tight text-white"

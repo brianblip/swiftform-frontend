@@ -35,8 +35,12 @@ const config: Config = {
             keyframes: {
                 loading: {
                     "0%": { transform: "rotate(0deg)" },
+                    "1%": { transform: "rotate(-10deg)" },
+                    "24%": { transform: "rotate(190deg)" },
                     "25%": { transform: "rotate(180deg)" },
                     "50%": { transform: "rotate(181deg)" },
+                    "51%": { transform: "rotate(170deg)" },
+                    "74%": { transform: "rotate(370deg)" },
                     "75%": { transform: "rotate(359deg)" },
                     "100%": { transform: "rotate(360deg)" },
                 },

@@ -70,7 +70,7 @@ export default function SideBar() {
                         className={`absolute left-[calc(100%+theme(spacing.4))] top-0 w-full bg-primary-secondary p-2 ${isProfileOpen ? "scale-100" : "scale-0"}`}
                     >
                         <Link
-                            href="/Profile"
+                            href="/profile"
                             className={`w-full p-2 text-start hover:bg-primary-neutral`}
                         >
                             Edit Profile
