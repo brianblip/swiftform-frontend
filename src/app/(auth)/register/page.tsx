@@ -150,12 +150,11 @@ export default function RegistrationPage() {
                     >
                         Continue
                     </button>
-
-                    <Link href="/login" className="text-center text-sm">
-                        Already have an account?
-                        <span className="ml-1 font-medium">Log in</span>
-                    </Link>
                 </form>
+                <Link href="/login" className="w-fit text-sm">
+                    Already have an account?
+                    <span className="font-medium"> Log in</span>
+                </Link>
             </div>
         </div>
     );
