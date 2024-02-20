@@ -9,7 +9,7 @@ import { createStore, StoreApi } from "zustand";
 type AuthState = {
     user?: User | null;
     isLoading: boolean;
-    error: string | null;
+    error: Error | null;
     login: (props: LoginProps) => Promise<User>;
     logout: () => Promise<void>;
     register: (props: RegisterProps) => Promise<User>;
