@@ -5,7 +5,6 @@ import useSWR from "swr";
 import api from "@/services/api";
 import { User } from "@@/types";
 import { createStore, StoreApi } from "zustand";
-import LoadingPage from "@/components/LoadingPage";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -18,12 +17,6 @@ type AuthState = {
     logout: () => Promise<void>;
     register: (props: RegisterProps) => Promise<User>;
 };
-
-interface InitializeProps {
-    user?: User | null;
-    isLoading: boolean;
-    error: string | null;
-}
 
 interface RegisterProps extends Omit<User, "id"> {
     password: string;
