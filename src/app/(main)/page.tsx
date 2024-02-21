@@ -7,12 +7,22 @@ import { useState, useEffect } from "react";
 import SuggestionButton from "@/components/SuggestionButton";
 import { Form } from "@@/types";
 import { CreateFormData } from "@/contexts/singleForm";
+import useSWR from "swr";
+import { fetcher } from "@/utils";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { Form as FormType } from "@@/types";
 
 export default function Home() {
     const [isLoadingVisible, setLoadingVisible] = useState(false);
     const router = useRouter();
     const { user } = useAuth();
     const { createForm } = useForm(0);
+
+    const {
+        data: forms,
+        isLoading: isFormsLoading,
+        error: formsError,
+    } = useSWR<FormType[]>(`/forms`, fetcher);
 
     const handleCreateForm = async () => {
         setLoadingVisible(true);
@@ -34,25 +44,41 @@ export default function Home() {
     };
 
     return (
-        <main className="grid h-[calc(100dvh-57.0667px)] w-dvw place-items-center p-4 sm:p-8 md:h-dvh">
-            <div className="flex w-full flex-col items-center gap-y-4 md:gap-y-6">
-                <h1 className="text-3xl font-bold md:text-4xl">Forms</h1>
-                <div className="flex w-full flex-col items-center gap-y-6 md:gap-y-9 lg:w-[720px] xl:w-[820px]">
-                    <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
-                        <SuggestionButton />
-                        <SuggestionButton />
-                        <SuggestionButton />
-                        <SuggestionButton />
+        <ErrorBoundary isLoading={isFormsLoading} error={formsError}>
+            <main className="grid h-[calc(100dvh-57.0667px)] w-dvw place-items-center p-4 sm:p-8 md:h-dvh">
+                <div className="flex w-full flex-col items-center gap-y-4 md:gap-y-6">
+                    <h1 className="text-3xl font-bold md:text-4xl">Forms</h1>
+                    <div className="flex w-full flex-col items-center gap-y-6 md:gap-y-9 lg:w-[720px] xl:w-[820px]">
+                        <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
+                            {forms?.map((form) => (
+                                <Form key={form.id} form={form} />
+                            ))}
+                        </div>
+                        <button
+                            onClick={handleCreateForm}
+                            className="w-full bg-primary-white px-2 py-3 text-primary-black"
+                            disabled={isLoadingVisible}
+                        >
+                            {isLoadingVisible
+                                ? "Creating..."
+                                : "Create new form"}
+                        </button>
                     </div>
-                    <button
-                        onClick={handleCreateForm}
-                        className="w-full bg-primary-white px-2 py-3 text-primary-black"
-                        disabled={isLoadingVisible}
-                    >
-                        {isLoadingVisible ? "Creating..." : "Create new form"}
-                    </button>
                 </div>
-            </div>
-        </main>
+            </main>
+        </ErrorBoundary>
+    );
+}
+
+interface FormProps {
+    form: FormType;
+}
+
+function Form({ form }: FormProps) {
+    return (
+        <button className="bg-primary-secondary px-2 py-3">
+            <h1 className="font-semibold">{form.name}</h1>
+            <p>{form.description || "No description"}</p>
+        </button>
     );
 }
