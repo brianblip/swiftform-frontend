@@ -90,7 +90,7 @@ export default function FormsList({ formId }: FormListID) {
                         forms.map((form) => (
                             <li key={form.id}>
                                 <Link
-                                    href={`/Form/${form.id}`}
+                                    href={`/form/${form.id}`}
                                     className={`group relative flex items-center rounded p-2 hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
                                 >
                                     <h2 className="truncate whitespace-nowrap rounded text-sm">
