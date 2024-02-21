@@ -91,30 +91,32 @@ export default function RegistrationPage() {
                             className="text-sm font-medium"
                         >
                             Password
+                        </label>
+                        <div className="relative flex items-center">
+                            <input
+                                type={isPasswordVisible ? "text" : "password"}
+                                required
+                                className="rounded border border-black p-3 pr-10"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                             {isPasswordVisible ? (
                                 <button
-                                    onClick={onClickToggleVisibility}
-                                    className="ml-1 hover:text-primary-secondary"
+                                    onClick={onClickTogglePasswordVisibility}
+                                    className="absolute right-0 mr-2 hover:text-primary-secondary"
                                 >
                                     <VisibilityOffIcon />
                                 </button>
                             ) : (
                                 <button
-                                    onClick={onClickToggleVisibility}
-                                    className="ml-1 hover:text-primary-secondary"
+                                    onClick={onClickTogglePasswordVisibility}
+                                    className="absolute right-0 mr-2 hover:text-primary-secondary"
                                 >
                                     <VisibilityIcon />
                                 </button>
                             )}
-                        </label>
-                        <input
-                            type={isPasswordVisible ? "text" : "password"}
-                            required
-                            className="rounded border border-black p-3"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        </div>
                     </div>
 
                     <div className="mb-4 grid gap-1">
@@ -123,30 +125,34 @@ export default function RegistrationPage() {
                             className="text-sm font-medium"
                         >
                             Re-enter your password
-                            {isPasswordVisible ? (
+                        </label>
+                        <div className="relative flex items-center">
+                            <input
+                                type={isReenterPasswordVisible ? "text" : "password"}
+                                required
+                                className="rounded border border-black p-3 pr-10"
+                                id="confirm_password"
+                                value={confirmPassword}
+                                onChange={(e) =>
+                                    setConfirmPassword(e.target.value)
+                                }
+                            />
+                            {isReenterPasswordVisible ? (
                                 <button
-                                    onClick={onClickToggleVisibility}
-                                    className="ml-1 hover:text-primary-secondary"
+                                    onClick={onClickToggleReenterPasswordVisibility}
+                                    className="absolute right-0 mr-2 hover:text-primary-secondary"
                                 >
                                     <VisibilityOffIcon />
                                 </button>
                             ) : (
                                 <button
-                                    onClick={onClickToggleVisibility}
-                                    className="ml-1 hover:text-primary-secondary"
+                                    onClick={onClickToggleReenterPasswordVisibility}
+                                    className="absolute right-0 mr-2 hover:text-primary-secondary"
                                 >
                                     <VisibilityIcon />
                                 </button>
                             )}
-                        </label>
-                        <input
-                            type={isPasswordVisible ? "text" : "password"}
-                            required
-                            className="rounded border border-black p-3"
-                            id="confirm_password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
+                        </div>
                     </div>
 
                     <button
