@@ -37,8 +37,12 @@ export default function RegistrationPage() {
         }
     };
 
-    function onClickToggleVisibility() {
+    function onClickTogglePasswordVisibility() {
         setIsPasswordVisible(!isPasswordVisible);
+    }
+
+    function onClickToggleReenterPasswordVisibility() {
+        setIsReenterPasswordVisible(!isReenterPasswordVisible);
     }
 
     return (
