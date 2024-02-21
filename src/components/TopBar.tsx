@@ -87,7 +87,7 @@ export default function TopBar() {
                                     className={`absolute bottom-full left-0 mb-2 w-full flex-col items-start bg-primary-secondary p-2 ${isProfileOpen ? "flex" : "hidden"}`}
                                 >
                                     <Link
-                                        href="/Profile"
+                                        href="/profile"
                                         className="w-full p-2 text-start hover:bg-primary-neutral"
                                     >
                                         Edit Profile
