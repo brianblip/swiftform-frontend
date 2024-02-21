@@ -1,10 +1,14 @@
 "use client";
 
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useEffect } from "react";
 import useSWR from "swr";
 import api from "@/services/api";
 import { User } from "@@/types";
 import { createStore, StoreApi } from "zustand";
+import LoadingPage from "@/components/LoadingPage";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type AuthState = {
     user?: User | null;
@@ -32,7 +36,8 @@ interface LoginProps extends Pick<User, "email"> {
 const useAuthStore = () => {
     const fetcher = async (url: string) => {
         const { data } = await api.get(url);
-        return data.data || data;
+
+        return data.data;
     };
 
     const {
@@ -108,6 +113,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
 }
 
-const useAuth = () => useContext(AuthContext)().getInitialState();
+export function ProtectRoute({ children }: { children: ReactNode }) {
+    const { user, isLoading: isAuthLoading, error: authError } = useAuth();
+    const [protectRouteLoading, setProtectRouteLoading] = useState(true);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (isAuthLoading) return;
+
+        // if auth is not loading and user is not present, redirect to login
+        if (!user) {
+            router.push("/Login");
+        } else {
+            setProtectRouteLoading(false);
+        }
+    }, [isAuthLoading, router, user]);
+
+    return (
+        <ErrorBoundary isLoading={protectRouteLoading} error={authError}>
+            {children}
+        </ErrorBoundary>
+    );
+}
+
+const useAuth = () => useContext(AuthContext)().getState();
 
 export default useAuth;
