@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
 import Link from "next/link";
@@ -17,7 +17,8 @@ export default function RegistrationPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleFormSubmit = async () => {
+    const handleFormSubmit = async (e: FormEvent) => {
+        e.preventDefault();
         try {
             await register({
                 name: name,
