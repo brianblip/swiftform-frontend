@@ -4,7 +4,7 @@ import { Sora } from "next/font/google";
 import "../globals.css";
 import TopBar from "@/components/TopBar";
 import Sidebar from "@/components/SideBar";
-import { AuthProvider } from "@/contexts/auth";
+import { AuthProvider, ProtectRoute } from "@/contexts/auth";
 
 const sora = Sora({ subsets: ["latin"] });
 
@@ -23,11 +23,13 @@ export default function RootLayout({
             <body
                 className={`${sora.className} bg-primary-neutral text-primary-white md:flex`}
             >
-                <AuthProvider>
-                    <TopBar />
-                    <Sidebar />
-                    {children}
-                </AuthProvider>
+                <ProtectRoute>
+                    <AuthProvider>
+                        <TopBar />
+                        <Sidebar />
+                        {children}
+                    </AuthProvider>
+                </ProtectRoute>
             </body>
         </html>
     );
