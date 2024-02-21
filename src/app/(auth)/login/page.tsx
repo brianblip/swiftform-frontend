@@ -63,30 +63,32 @@ export default function Login() {
                             className="text-sm font-medium"
                         >
                             Password
+                        </label>
+                        <div className="relative flex items-center">
+                            <input
+                                type={isPasswordVisible ? "text" : "password"}
+                                required
+                                className="rounded border border-black p-3 pr-10"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                             {isPasswordVisible ? (
                                 <button
                                     onClick={onClickToggleVisibility}
-                                    className="ml-1 hover:text-primary-secondary"
+                                    className="absolute right-0 mr-2 hover:text-primary-secondary"
                                 >
                                     <VisibilityOffIcon />
                                 </button>
                             ) : (
                                 <button
                                     onClick={onClickToggleVisibility}
-                                    className="ml-1 hover:text-primary-secondary"
+                                    className="absolute right-0 mr-2 hover:text-primary-secondary"
                                 >
                                     <VisibilityIcon />
                                 </button>
                             )}
-                        </label>
-                        <input
-                            type={isPasswordVisible ? "text" : "password"}
-                            required
-                            className="rounded border border-black p-3"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        </div>
                     </div>
 
                     <a href="#" className="w-fit text-sm font-medium">
