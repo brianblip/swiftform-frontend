@@ -19,6 +19,7 @@ export default function RegistrationPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isReenterPasswordVisible, setIsReenterPasswordVisible] = useState(false);
 
     const handleFormSubmit = async (e: FormEvent) => {
         e.preventDefault();
