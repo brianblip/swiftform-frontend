@@ -8,6 +8,13 @@ import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form"
 
+interface RegisterForm {
+    name:string
+    email: string
+    password: string
+    confirmPassword: string
+}
+
 export default function RegistrationPage() {
     const router = useRouter();
 
