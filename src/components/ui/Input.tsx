@@ -7,10 +7,11 @@ export const Input = forwardRef<HTMLInputElement, TextFieldProps>(
             <TextField
                 {...props}
                 inputRef={ref}
-                style={{
-                    backgroundColor: "#fff",
-                    borderRadius: "4px",
-                    ...props.style,
+                InputProps={{
+                    style: {
+                        backgroundColor: "#fff",
+                        ...props.InputProps?.style,
+                    },
                 }}
                 size="small"
                 fullWidth
