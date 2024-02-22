@@ -25,10 +25,6 @@ export default function RegistrationPage() {
         watch,
         formState: { errors },
     } = useForm<RegisterForm>()
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleFormSubmit = async (data: RegisterForm) => {
         try {
@@ -66,8 +62,6 @@ export default function RegistrationPage() {
                             required
                             className="rounded border border-black p-3"
                             id="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
                         />
                     </div>
 
@@ -80,8 +74,6 @@ export default function RegistrationPage() {
                             required
                             className="rounded border border-black p-3"
                             id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -97,8 +89,6 @@ export default function RegistrationPage() {
                             required
                             className="rounded border border-black p-3"
                             id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
@@ -114,8 +104,6 @@ export default function RegistrationPage() {
                             required
                             className="rounded border border-black p-3"
                             id="confirm_password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                     </div>
 
