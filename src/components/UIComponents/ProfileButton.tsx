@@ -1,16 +1,38 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import Link from "next/link";
 
 const ProfileButton = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const profileRef = useRef<HTMLDivElement>(null);
 
     function onClickToggleProfile() {
         setIsProfileOpen(!isProfileOpen);
     }
 
+    useEffect(() => {
+        function handleCloseProfile(e: MouseEvent) {
+            if (
+                profileRef.current &&
+                !profileRef.current.contains(e.target as Node)
+            ) {
+                setIsProfileOpen(false);
+            }
+        }
+
+        if (isProfileOpen) {
+            window.addEventListener("click", handleCloseProfile);
+        } else {
+            window.removeEventListener("click", handleCloseProfile);
+        }
+
+        return () => {
+            window.removeEventListener("click", handleCloseProfile);
+        };
+    }, [isProfileOpen]);
+
     return (
-        <div>
+        <div ref={profileRef}>
             <button
                 onClick={onClickToggleProfile}
                 className={`flex w-full gap-2 p-2 hover:bg-primary-secondary ${isProfileOpen ? "bg-primary-secondary" : ""}`}
