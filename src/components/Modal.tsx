@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import MuiModal, { ModalProps as MuiModalProps } from "@mui/material/Modal";
+import { ReactNode } from "react";
 
 const style = {
     position: "absolute" as "absolute",
@@ -14,25 +15,29 @@ const style = {
     p: 4,
 };
 
-interface ModalProps extends MuiModalProps {
-    title?: string;
+interface ModalProps extends Omit<MuiModalProps, "children"> {
+    children: ReactNode[];
 }
 
-export default function Modal({ title, children, ...props }: ModalProps) {
+export default function Modal({ children, ...props }: ModalProps) {
     return (
         <MuiModal {...props}>
-            <Box sx={style}>
-                {title && (
-                    <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
-                    >
-                        {title}
-                    </Typography>
-                )}
-                <Box sx={{ mt: 2 }}>{children}</Box>
-            </Box>
+            <Box sx={style}>{children}</Box>
         </MuiModal>
     );
 }
+
+function Title({ children }: { children: ReactNode }) {
+    return (
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+            {children}
+        </Typography>
+    );
+}
+
+function Section({ children }: { children: ReactNode }) {
+    return <Box sx={{ my: 2 }}>{children}</Box>;
+}
+
+Modal.Title = Title;
+Modal.Section = Section;
