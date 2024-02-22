@@ -21,7 +21,7 @@ const style = {
 };
 
 interface ModalProps extends Omit<MuiModalProps, "children"> {
-    children: ReactNode[];
+    children: ReactNode | ReactNode[];
 }
 
 export default function Modal({ children, ...props }: ModalProps) {
