@@ -30,13 +30,12 @@ export default function RegistrationPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleFormSubmit = async (e: FormEvent) => {
-        e.preventDefault();
+    const handleFormSubmit = async (data: RegisterForm) => {
         try {
             await register({
-                name: name,
-                email: email,
-                password: password,
+                name: data.name,
+                email: data.email,
+                password: data.password,
                 avatar_url: "",
             });
             router.push("/");
@@ -57,7 +56,7 @@ export default function RegistrationPage() {
                     Create your account
                 </h1>
 
-                <form onSubmit={handleFormSubmit} className="grid gap-4">
+                <form onSubmit={handleSubmit(handleFormSubmit)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="name" className="text-sm font-medium">
                             Name
