@@ -10,7 +10,7 @@ import { CreateFormData } from "@/contexts/singleForm";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { Form as FormType } from "@@/types";
+import { Form as FormType, ApiResponse } from "@@/types";
 import api from "@/services/api";
 import { createForm, CreateFormOptions } from "@/services";
 import Modal from "@/components/Modal";
@@ -36,10 +36,17 @@ export default function Home() {
     } = useSWR<FormType[]>(`/forms`, fetcher);
 
     const handleCreateForm = createFormHandleSubmit(async (data) => {
-        console.log(data);
-        return;
         try {
             setIsCreatingForm(true);
+
+            const response = await api.post<ApiResponse<FormType>>(
+                `/forms`,
+                data,
+            );
+
+            const newForm = response.data.data;
+
+            router.push(`/Form/${newForm?.id}`);
         } catch (e) {
             alert(e);
         } finally {
@@ -61,11 +68,9 @@ export default function Home() {
                         </div>
                         <button
                             onClick={() => setCreateFormModalOpened(true)}
-                            // onClick={handleCreateForm}
                             className="w-full bg-primary-white px-2 py-3 text-primary-black"
-                            // disabled={isCreatingForm}
                         >
-                            {isCreatingForm ? "Creating..." : "Create new form"}
+                            Create new form
                         </button>
                     </div>
                 </div>
