@@ -22,7 +22,7 @@ export default function Login() {
         watch,
         formState: { errors },
     } = useForm<LoginForm>()
- 
+
 
     const handleLogin = async (data: LoginForm) => {
 
@@ -53,10 +53,15 @@ export default function Login() {
                         </label>
                         <input
                             type="email"
-                            required
                             className="rounded border border-black p-3"
                             id="email"
-                            {...register("email")}
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid email address"
+                                }
+                            })}
                         />
                     </div>
 
@@ -72,7 +77,13 @@ export default function Login() {
                             required
                             className="rounded border border-black p-3"
                             id="password"
-                            {...register("password")}
+                            {...register("password", {
+                                required: "Password is required",
+                                minLength: {
+                                    value: 8,
+                                    message: "Password must be at least 8 characters long"
+                                }
+                            })}
                         />
                     </div>
 
