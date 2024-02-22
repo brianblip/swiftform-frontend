@@ -14,6 +14,7 @@ import { Form as FormType } from "@@/types";
 import api from "@/services/api";
 import { createForm } from "@/services";
 import Modal from "@/components/Modal";
+import { Input, Button } from "@/components";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -61,9 +62,14 @@ export default function Home() {
                 <Modal
                     open={createFormModalOpened}
                     onClose={() => setCreateFormModalOpened(false)}
-                    title="Create Form"
                 >
-                    <div>Test</div>
+                    <Modal.Title>Create Form</Modal.Title>
+                    <Modal.Section>
+                        <Input label="Form Name" />
+                    </Modal.Section>
+                    <Modal.Footer>
+                        <Button disabled={isCreatingForm}>Create a Form</Button>
+                    </Modal.Footer>
                 </Modal>
             </main>
         </ErrorBoundary>
