@@ -6,6 +6,7 @@ import Birdie from "@/assets/Birdie.png";
 import Link from "next/link";
 import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
+import { useForm, SubmitHandler } from "react-hook-form"
 
 export default function RegistrationPage() {
     const router = useRouter();
