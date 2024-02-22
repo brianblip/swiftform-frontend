@@ -8,9 +8,16 @@ import useAuth from "@/contexts/auth";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form"
 
+
 export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
