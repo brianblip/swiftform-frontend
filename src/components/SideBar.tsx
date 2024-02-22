@@ -12,7 +12,7 @@ import useAuth from "@/contexts/auth";
 export default function SideBar() {
     const pathname = usePathname();
     const router = useRouter();
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
     const currentFormId = Number(pathname.split("/Form/")[1]);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function SideBar() {
         await logout();
         setIsLoggedOut(true);
     };
-    /* function for toggling the notification panel */
+
     function onClickToggleNotification() {
         setIsNotificationOpen(!isNotificationOpen);
     }
@@ -64,7 +64,7 @@ export default function SideBar() {
                         className={`flex w-full gap-2 p-2 hover:bg-primary-secondary ${isProfileOpen ? "bg-primary-secondary" : ""}`}
                     >
                         <PermIdentityOutlinedIcon />
-                        <p>My Account</p>
+                        {user ? <p>{user?.name}</p> : <p>My Account</p>}
                     </button>
                     <div
                         className={`absolute left-[calc(100%+theme(spacing.4))] top-0 w-full bg-primary-secondary p-2 ${isProfileOpen ? "scale-100" : "scale-0"}`}
