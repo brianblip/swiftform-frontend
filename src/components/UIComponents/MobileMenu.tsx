@@ -1,5 +1,5 @@
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import FormsList from "../FormsList";
@@ -9,6 +9,7 @@ const MobileMenu = () => {
     // Extract form ID from the pathname
     const currentFormId = Number(pathname.split("/Form/")[1]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const parentRef = useRef<HTMLDivElement>(null);
 
     function onToggleOpenMenu() {
         setIsMenuOpen(!isMenuOpen);
@@ -18,8 +19,29 @@ const MobileMenu = () => {
         setIsMenuOpen(false);
     }
 
+    useEffect(() => {
+        function handleCloseMenu(e: MouseEvent) {
+            if (
+                parentRef.current &&
+                !parentRef.current.contains(e.target as Node)
+            ) {
+                setIsMenuOpen(false);
+            }
+        }
+
+        if (isMenuOpen) {
+            window.addEventListener("click", handleCloseMenu);
+        } else {
+            window.removeEventListener("click", handleCloseMenu);
+        }
+
+        return () => {
+            window.removeEventListener("click", handleCloseMenu);
+        };
+    }, [isMenuOpen]);
+
     return (
-        <div>
+        <div ref={parentRef}>
             <button
                 onClick={onToggleOpenMenu}
                 className={`p-4 hover:bg-primary-secondary ${isMenuOpen ? "bg-primary-secondary" : ""}`}
