@@ -6,6 +6,7 @@ import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
 import useAuth from "@/contexts/auth";
 import Link from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form"
 
 export default function Login() {
     const router = useRouter();
