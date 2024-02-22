@@ -32,7 +32,7 @@ const ProfileButton = () => {
     }, [isProfileOpen]);
 
     return (
-        <div ref={profileRef}>
+        <div ref={profileRef} className="relative md:flex md:items-center">
             <button
                 onClick={onClickToggleProfile}
                 className={`flex w-full gap-2 p-2 hover:bg-primary-secondary ${isProfileOpen ? "bg-primary-secondary" : ""}`}
@@ -41,7 +41,7 @@ const ProfileButton = () => {
                 <p>My Account</p>
             </button>
             <div
-                className={`absolute bottom-full mb-2 w-full flex-col items-start bg-primary-secondary p-2 ${isProfileOpen ? "flex" : "hidden"}`}
+                className={`absolute bottom-full mb-2 w-full flex-col items-start bg-primary-secondary p-2 md:bottom-auto md:left-[calc(100%+theme(spacing.4))] md:mb-0 md:max-h-40 md:overflow-y-auto ${isProfileOpen ? "flex" : "hidden"}`}
             >
                 <Link
                     href="/profile"
