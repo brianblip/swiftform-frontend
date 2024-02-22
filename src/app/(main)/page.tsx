@@ -11,12 +11,14 @@ import useSWR from "swr";
 import { fetcher } from "@/utils";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { Form as FormType } from "@@/types";
+import api from "@/services/api";
+import { createForm } from "@/services";
+import Modal from "@/components/Modal";
 
 export default function Home() {
-    const [isLoadingVisible, setLoadingVisible] = useState(false);
+    const [isCreatingForm, setIsCreatingForm] = useState(false);
     const router = useRouter();
-    const { user } = useAuth();
-    const { createForm } = useForm(0);
+    const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
 
     const {
         data: forms,
@@ -25,21 +27,12 @@ export default function Home() {
     } = useSWR<FormType[]>(`/forms`, fetcher);
 
     const handleCreateForm = async () => {
-        setLoadingVisible(true);
         try {
-            const newForm: CreateFormData = {
-                id: 0,
-                name: `${user?.name}'s Form`,
-                description: "Write your description",
-                user_id: user!.id,
-                sections: [],
-            };
-            const createdForm = await createForm(newForm); // Capture the newly created form
-            router.push(`/Form/${createdForm.id}`); // Redirect to the newly created form's ID
-        } catch (error) {
-            console.error("Error creating form", error);
+            setIsCreatingForm(true);
+        } catch (e) {
+            alert(e);
         } finally {
-            setLoadingVisible(false);
+            setIsCreatingForm(false);
         }
     };
 
@@ -55,16 +48,23 @@ export default function Home() {
                             ))}
                         </div>
                         <button
-                            onClick={handleCreateForm}
+                            onClick={() => setCreateFormModalOpened(true)}
+                            // onClick={handleCreateForm}
                             className="w-full bg-primary-white px-2 py-3 text-primary-black"
-                            disabled={isLoadingVisible}
+                            // disabled={isCreatingForm}
                         >
-                            {isLoadingVisible
-                                ? "Creating..."
-                                : "Create new form"}
+                            {isCreatingForm ? "Creating..." : "Create new form"}
                         </button>
                     </div>
                 </div>
+
+                <Modal
+                    open={createFormModalOpened}
+                    onClose={() => setCreateFormModalOpened(false)}
+                    title="Create Form"
+                >
+                    <div>Test</div>
+                </Modal>
             </main>
         </ErrorBoundary>
     );
