@@ -32,15 +32,16 @@ const NotificationButton = () => {
     }, [isNotificationOpen]);
 
     return (
-        <div ref={parentRef}>
+        <div className="md:relative md:flex md:items-center" ref={parentRef}>
             <button
                 onClick={onClickToggleNotification}
-                className={`p-4 hover:bg-primary-secondary ${isNotificationOpen ? "bg-primary-secondary" : ""}`}
+                className={`p-4 hover:bg-primary-secondary md:flex md:w-full md:gap-2 md:p-2 ${isNotificationOpen ? "bg-primary-secondary" : ""}`}
             >
                 <NotificationsOutlinedIcon />
+                <p className="hidden md:block">Notification</p>
             </button>
             <div
-                className={`absolute w-full bg-primary-secondary p-2 ${isNotificationOpen ? "scale-100" : "scale-0"} `}
+                className={`absolute w-full bg-primary-secondary p-2 md:bottom-0 md:left-[calc(100%+theme(spacing.4))] md:flex md:max-h-40 md:w-full md:flex-col md:overflow-y-auto ${isNotificationOpen ? "scale-100" : "scale-0"} `}
             >
                 <h1 className="p-2">No Notifications</h1>
             </div>
