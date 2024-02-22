@@ -48,7 +48,7 @@ export default function Login() {
                     Welcome back
                 </h1>
 
-                <form onSubmit={handleLogin} className="grid gap-4">
+                <form onSubmit={handleSubmit(handleLogin)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
                             Email
