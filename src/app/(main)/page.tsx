@@ -12,9 +12,11 @@ import { fetcher } from "@/utils";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { Form as FormType } from "@@/types";
 import api from "@/services/api";
-import { createForm } from "@/services";
+import { createForm, CreateFormOptions } from "@/services";
 import Modal from "@/components/Modal";
 import { Input, Button } from "@/components";
+import SuggestionButton from "@/components/SuggestionButton";
+import { useForm } from "react-hook-form";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -22,12 +24,20 @@ export default function Home() {
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
 
     const {
+        register: createFormRegister,
+        handleSubmit: createFormHandleSubmit,
+        formState: { errors: createFormErrors },
+    } = useForm<CreateFormOptions>();
+
+    const {
         data: forms,
         isLoading: isFormsLoading,
         error: formsError,
     } = useSWR<FormType[]>(`/forms`, fetcher);
 
-    const handleCreateForm = async () => {
+    const handleCreateForm = createFormHandleSubmit(async (data) => {
+        console.log(data);
+        return;
         try {
             setIsCreatingForm(true);
         } catch (e) {
@@ -35,7 +45,7 @@ export default function Home() {
         } finally {
             setIsCreatingForm(false);
         }
-    };
+    });
 
     return (
         <ErrorBoundary isLoading={isFormsLoading} error={formsError}>
@@ -44,9 +54,10 @@ export default function Home() {
                     <h1 className="text-3xl font-bold md:text-4xl">Forms</h1>
                     <div className="flex w-full flex-col items-center gap-y-6 md:gap-y-9 lg:w-[720px] xl:w-[820px]">
                         <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
-                            {forms?.map((form) => (
-                                <Form key={form.id} form={form} />
-                            ))}
+                            <SuggestionButton />
+                            <SuggestionButton />
+                            <SuggestionButton />
+                            <SuggestionButton />
                         </div>
                         <button
                             onClick={() => setCreateFormModalOpened(true)}
@@ -63,13 +74,33 @@ export default function Home() {
                     open={createFormModalOpened}
                     onClose={() => setCreateFormModalOpened(false)}
                 >
-                    <Modal.Title>Create Form</Modal.Title>
-                    <Modal.Section>
-                        <Input label="Form Name" />
-                    </Modal.Section>
-                    <Modal.Footer>
-                        <Button disabled={isCreatingForm}>Create a Form</Button>
-                    </Modal.Footer>
+                    <form onSubmit={handleCreateForm}>
+                        <Modal.Title>Create Form</Modal.Title>
+                        <Modal.Section>
+                            <Input
+                                label="Form Name"
+                                required
+                                {...createFormRegister("name", {
+                                    required: "Name is required",
+                                })}
+                                error={createFormErrors.name?.message}
+                            />
+
+                            <Input
+                                label="Description"
+                                sx={{
+                                    mt: 4,
+                                }}
+                                {...createFormRegister("description")}
+                                error={createFormErrors.description?.message}
+                            />
+                        </Modal.Section>
+                        <Modal.Footer>
+                            <Button type="submit" disabled={isCreatingForm}>
+                                Create a Form
+                            </Button>
+                        </Modal.Footer>
+                    </form>
                 </Modal>
             </main>
         </ErrorBoundary>
