@@ -8,6 +8,10 @@ import useAuth from "@/contexts/auth";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form"
 
+interface LoginForm {
+    email: string
+    password: string
+}
 
 export default function Login() {
     const router = useRouter();
