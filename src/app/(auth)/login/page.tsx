@@ -21,16 +21,15 @@ export default function Login() {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm()
+    } = useForm<LoginForm>()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = async (e: FormEvent) => {
-        e.preventDefault();
+    const handleLogin = async (data: LoginForm) => {
 
         const success = await login({
-            email: email,
-            password: password,
+            email: data.email,
+            password: data.password,
         });
 
         if (success) {
