@@ -22,8 +22,7 @@ export default function Login() {
         watch,
         formState: { errors },
     } = useForm<LoginForm>()
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+ 
 
     const handleLogin = async (data: LoginForm) => {
 
@@ -31,7 +30,6 @@ export default function Login() {
             email: data.email,
             password: data.password,
         });
-
         if (success) {
             router.push("/");
         }
@@ -59,7 +57,6 @@ export default function Login() {
                             className="rounded border border-black p-3"
                             id="email"
                             {...register("email")}
-                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -76,7 +73,6 @@ export default function Login() {
                             className="rounded border border-black p-3"
                             id="password"
                             {...register("password")}
-                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
