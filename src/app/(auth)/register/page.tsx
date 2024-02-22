@@ -18,7 +18,7 @@ interface RegisterForm {
 export default function RegistrationPage() {
     const router = useRouter();
 
-    const { register } = useAuth();
+    const { register: authRegister } = useAuth();
     const {
         register: formRegister,
         handleSubmit,
@@ -28,7 +28,8 @@ export default function RegistrationPage() {
 
     const handleFormSubmit = async (data: RegisterForm) => {
         try {
-            await register({
+            console.log(data.name, data.email, data.password)
+            await authRegister({
                 name: data.name,
                 email: data.email,
                 password: data.password,
@@ -62,6 +63,7 @@ export default function RegistrationPage() {
                             required
                             className="rounded border border-black p-3"
                             id="name"
+                            {...formRegister("name")}
                         />
                     </div>
 
@@ -74,6 +76,7 @@ export default function RegistrationPage() {
                             required
                             className="rounded border border-black p-3"
                             id="email"
+                            {...formRegister("email")}
                         />
                     </div>
 
@@ -89,6 +92,7 @@ export default function RegistrationPage() {
                             required
                             className="rounded border border-black p-3"
                             id="password"
+                            {...formRegister("password")}
                         />
                     </div>
 
@@ -104,6 +108,7 @@ export default function RegistrationPage() {
                             required
                             className="rounded border border-black p-3"
                             id="confirm_password"
+                            {...formRegister("confirmPassword")}
                         />
                     </div>
 
