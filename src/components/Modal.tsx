@@ -1,7 +1,12 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import MuiModal, { ModalProps as MuiModalProps } from "@mui/material/Modal";
+
+import {
+    Modal as MuiModal,
+    ModalProps as MuiModalProps,
+    BoxProps,
+} from "@mui/material";
 import { ReactNode } from "react";
 
 const style = {
@@ -35,8 +40,12 @@ function Title({ children }: { children: ReactNode }) {
     );
 }
 
-function Section({ children }: { children: ReactNode }) {
-    return <Box sx={{ my: 2 }}>{children}</Box>;
+function Section({ children, ...props }: BoxProps) {
+    return (
+        <Box sx={{ my: 4 }} {...props}>
+            {children}
+        </Box>
+    );
 }
 
 Modal.Title = Title;
