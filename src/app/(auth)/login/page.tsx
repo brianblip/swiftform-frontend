@@ -58,7 +58,7 @@ export default function Login() {
                             required
                             className="rounded border border-black p-3"
                             id="email"
-                            value={email}
+                            {...register("email")}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
@@ -75,7 +75,7 @@ export default function Login() {
                             required
                             className="rounded border border-black p-3"
                             id="password"
-                            value={password}
+                            {...register("password")}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
