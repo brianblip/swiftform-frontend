@@ -48,5 +48,14 @@ function Section({ children, ...props }: BoxProps) {
     );
 }
 
+function Footer({ children, ...props }: BoxProps) {
+    return (
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }} {...props}>
+            {children}
+        </Box>
+    );
+}
+
 Modal.Title = Title;
 Modal.Section = Section;
+Modal.Footer = Footer;
