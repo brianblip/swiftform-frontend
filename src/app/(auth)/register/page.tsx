@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form"
 
 interface RegisterForm {
-    name:string
+    name: string
     email: string
     password: string
     confirmPassword: string
@@ -19,7 +19,12 @@ export default function RegistrationPage() {
     const router = useRouter();
 
     const { register } = useAuth();
-
+    const {
+        register: formRegister,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<RegisterForm>()
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
