@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import FormsList from "../FormsList";
+import ProfileButton from "./ProfileButton";
+import LogoutButton from "./LogoutButton";
 
 const MobileMenu = () => {
     const pathname = usePathname();
@@ -60,6 +62,8 @@ const MobileMenu = () => {
                 <div className="flex size-full flex-col justify-between gap-2">
                     <FormsList formId={currentFormId} />
                     <div className="flex flex-col gap-2">
+                        <ProfileButton />
+                        <LogoutButton />
                     </div>
                 </div>
             </div>
