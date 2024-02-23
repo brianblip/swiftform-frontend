@@ -25,7 +25,7 @@ export default function RegistrationPage() {
         watch,
         formState: { errors },
     } = useForm<RegisterForm>()
-
+    const password = watch("password", ""); // Get the value of the password field
     const handleFormSubmit = async (data: RegisterForm) => {
         try {
             await authRegister({
@@ -55,27 +55,54 @@ export default function RegistrationPage() {
                 <form onSubmit={handleSubmit(handleFormSubmit)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="name" className="text-sm font-medium">
-                            Name
+                            {errors.name ? (
+                                <span className="text-red-500">
+                                    {errors.name.message}
+                                </span>
+                            ) : "Name"}
                         </label>
                         <input
                             type="text"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.name ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="name"
-                            {...formRegister("name")}
+                            {...formRegister("name", {
+                                required: "Name is required",
+                                minLength: {
+                                    value: 2,
+                                    message: "At least 2 characters long"
+                                },
+                                maxLength: {
+                                    value: 50,
+                                    message: "Name should not exceed 50 characters"
+                                }
+                            })}
+                            aria-invalid={errors.name ? "true" : "false"}
+
                         />
                     </div>
 
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
-                            Email
+                            {errors.email ? (
+                                <span className="text-red-500">
+                                    {errors.email.message}
+                                </span>
+                            ) : "Email"}
                         </label>
                         <input
                             type="email"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.email ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="email"
-                            {...formRegister("email")}
+                            {...formRegister("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid email address"
+                                },
+                            })}
+                            aria-invalid={errors.email ? "true" : "false"}
                         />
                     </div>
 
@@ -84,14 +111,21 @@ export default function RegistrationPage() {
                             htmlFor="password"
                             className="text-sm font-medium"
                         >
-                            Password
+                            {errors.password ? (
+                                <span className="text-red-500">
+                                    {errors.password.message}
+                                </span>
+                            ) : "Password"}
                         </label>
                         <input
                             type="password"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.password ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="password"
-                            {...formRegister("password")}
+                            {...formRegister("password", {
+                                required: "Password is required"
+                            })}
+                            aria-invalid={errors.password ? "true" : "false"}
                         />
                     </div>
 
@@ -100,14 +134,25 @@ export default function RegistrationPage() {
                             htmlFor="confirm_password"
                             className="text-sm font-medium"
                         >
-                            Re-enter your password
+                            {errors.confirmPassword ? (
+                                <span className="text-red-500">
+                                    {errors.confirmPassword.message}
+                                </span>
+                            ) : "Re-enter your password"}
+
                         </label>
                         <input
                             type="password"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.confirmPassword ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="confirm_password"
-                            {...formRegister("confirmPassword")}
+                            {...formRegister("confirmPassword", {
+                                required: "Please re-enter your password",
+                                validate: (value) =>
+                                    value === password || "Passwords do not match"
+                            })}
+                            aria-invalid={errors.confirmPassword || password ? "true" : "false"}
+
                         />
                     </div>
 
