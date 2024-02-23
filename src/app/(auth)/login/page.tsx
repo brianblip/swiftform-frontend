@@ -22,10 +22,8 @@ export default function Login() {
         watch,
         formState: { errors },
     } = useForm<LoginForm>()
-    const [isSubmit, setSubmit] = useState(false)
 
     const handleLogin = async (data: LoginForm) => {
-        setSubmit(true)
         const success = await login({
             email: data.email,
             password: data.password,
@@ -50,14 +48,14 @@ export default function Login() {
                 <form onSubmit={handleSubmit(handleLogin)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
-                            {errors.email && isSubmit ? (
+                            {errors.email ? (
                                 <span className="text-red-500">
                                     {errors.email.message}
                                 </span>
                             ) : "Email"}
                         </label>
                         <input
-                            // type="email"
+                            type="email"
                             className={`rounded border ${errors.email ? "border-red-500" : "border-black"
                                 } p-3`}
                             id="email"
@@ -66,8 +64,9 @@ export default function Login() {
                                 pattern: {
                                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                                     message: "Invalid email address"
-                                }
+                                },
                             })}
+                            aria-invalid={errors.email ? "true" : "false"}
                         />
                     </div>
 
@@ -76,20 +75,27 @@ export default function Login() {
                             htmlFor="password"
                             className="text-sm font-medium"
                         >
-                            Password
+                            {errors.password ? (
+                                <span className="text-red-500">
+                                    {errors.password.message}
+                                </span>
+                            ) : "Password"}
                         </label>
                         <input
                             type="password"
                             required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.password ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="password"
                             {...register("password", {
                                 required: "Password is required",
                                 minLength: {
                                     value: 8,
-                                    message: "Password must be at least 8 characters long"
+                                    message: "Password must be 8 characters"
                                 }
                             })}
+                            aria-invalid={errors.password ? "true" : "false"}
+
                         />
                     </div>
 
