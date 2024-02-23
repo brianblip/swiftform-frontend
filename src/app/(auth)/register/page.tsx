@@ -123,7 +123,11 @@ export default function RegistrationPage() {
                                 } p-3`}
                             id="password"
                             {...formRegister("password", {
-                                required: "Password is required"
+                                required: "Password is required",
+                                minLength: {
+                                    value: 8,
+                                    message: "Password must be 8 characters"
+                                }
                             })}
                             aria-invalid={errors.password ? "true" : "false"}
                         />
@@ -148,6 +152,10 @@ export default function RegistrationPage() {
                             id="confirm_password"
                             {...formRegister("confirmPassword", {
                                 required: "Please re-enter your password",
+                                minLength: {
+                                    value: 8,
+                                    message: "Password must be 8 characters"
+                                },
                                 validate: (value) =>
                                     value === password || "Passwords do not match"
                             })}
