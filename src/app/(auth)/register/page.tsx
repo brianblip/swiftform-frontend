@@ -28,7 +28,6 @@ export default function RegistrationPage() {
 
     const handleFormSubmit = async (data: RegisterForm) => {
         try {
-            console.log(data.name, data.email, data.password)
             await authRegister({
                 name: data.name,
                 email: data.email,
