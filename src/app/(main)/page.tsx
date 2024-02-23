@@ -1,50 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import useForm from "@/contexts/singleForm";
+import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import SuggestionButton from "@/components/SuggestionButton";
+import { Form } from "@@/types";
 
 export default function Home() {
     const [isLoadingVisible, setLoadingVisible] = useState(false);
     const router = useRouter();
+    const { user } = useAuth();
+    const { createForm } = useForm(0);
 
     const handleCreateForm = async () => {
         setLoadingVisible(true);
-
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_FRONTEND_API_URL;
-            if (!apiUrl) {
-                throw new Error("You need to set PUBLIC_API_URL first.");
-            }
-
-            const response = await fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    title: "Write your form title",
-                    description: "Write your description",
-                    fields: [
-                        {
-                            field_id: 1,
-                            question_name: "",
-                            question_type: "",
-                            question: "",
-                            required_field: false,
-                        },
-                    ],
-                }),
-            });
-
-            if (response.ok) {
-                const formData = await response.json();
-                // Refresh FormsList component after successful form creation
-                router.push(`/form/${formData.id}`);
-                window.dispatchEvent(new CustomEvent("formCreated"));
-            } else {
-                console.error("Error creating form");
-            }
+            const newForm: Form = {
+                id: 0,
+                name: `${user?.name}'s Form`,
+                description: "Write your description",
+                user_id: user?.id || null,
+                sections: [],
+            };
+            const createdForm = await createForm(newForm); // Capture the newly created form
+            router.push(`/Form/${createdForm.id}`); // Redirect to the newly created form's ID
         } catch (error) {
             console.error("Error creating form", error);
         } finally {
