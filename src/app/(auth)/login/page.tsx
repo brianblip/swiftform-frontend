@@ -24,12 +24,17 @@ export default function Login() {
     } = useForm<LoginForm>()
 
     const handleLogin = async (data: LoginForm) => {
-        const success = await login({
-            email: data.email,
-            password: data.password,
-        });
-        if (success) {
-            router.push("/");
+        try {
+            const success = await login({
+                email: data.email,
+                password: data.password,
+            });
+            if (success) {
+                router.push("/");
+            }
+        } catch (error) {
+            // TODO: Display form errors
+            console.log(error)
         }
 
     };
