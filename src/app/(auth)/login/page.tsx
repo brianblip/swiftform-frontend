@@ -22,10 +22,10 @@ export default function Login() {
         watch,
         formState: { errors },
     } = useForm<LoginForm>()
-
+    const [isSubmit, setSubmit] = useState(false)
 
     const handleLogin = async (data: LoginForm) => {
-
+        setSubmit(true)
         const success = await login({
             email: data.email,
             password: data.password,
@@ -33,6 +33,7 @@ export default function Login() {
         if (success) {
             router.push("/");
         }
+
     };
 
     return (
@@ -49,11 +50,16 @@ export default function Login() {
                 <form onSubmit={handleSubmit(handleLogin)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
-                            Email
+                            {errors.email && isSubmit ? (
+                                <span className="text-red-500">
+                                    {errors.email.message}
+                                </span>
+                            ) : "Email"}
                         </label>
                         <input
-                            type="email"
-                            className="rounded border border-black p-3"
+                            // type="email"
+                            className={`rounded border ${errors.email ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="email"
                             {...register("email", {
                                 required: "Email is required",
