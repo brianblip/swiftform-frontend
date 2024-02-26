@@ -1,51 +1,20 @@
 import Link from "next/link";
+import useForm from "@/contexts/allForms";
 import { useEffect, useState } from "react";
-import { DeleteForeverOutlined, MoreHoriz } from "@mui/icons-material";
 import ErrorPage from "@/components/ErrorPage";
-
-interface FormData {
-    id: number;
-    title: string;
-}
+import { DeleteForeverOutlined, MoreHoriz } from "@mui/icons-material";
 
 interface FormListID {
     formId: number;
 }
 
 export default function FormsList({ formId }: FormListID) {
-    const [forms, setForms] = useState<FormData[] | null>(null);
-    const [isLoadingVisible, setLoadingVisible] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const { forms, isLoading, error, fetchForms, deleteForm } = useForm();
+    
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoadingVisible(true);
-            try {
-                const apiUrl = process.env.NEXT_PUBLIC_FRONTEND_API_URL;
-                if (!apiUrl) {
-                    throw new Error("API URL is not defined");
-                }
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error(`HTTP error ${response.status}`);
-                }
-                const data: FormData[] = await response.json();
-                setForms(data);
-            } catch (error) {
-                setError(String(error));
-            } finally {
-                setLoadingVisible(false);
-            }
-        };
-
-        fetchData();
-
-        window.addEventListener("formCreated", fetchData);
-
-        return () => {
-            window.removeEventListener("formCreated", fetchData);
-        };
-    }, []);
+        fetchForms();
+    }, [fetchForms]);
 
     const handleDelete = async (id: number, title: string) => {
         const isConfirmed = window.confirm(
@@ -57,13 +26,7 @@ export default function FormsList({ formId }: FormListID) {
         }
 
         try {
-            const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${id}`;
-            const response = await fetch(apiUrl, { method: "DELETE" });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error ${response.status}`);
-            }
-
+            await deleteForm(id);
             // Trigger a refetch after deletion
             window.dispatchEvent(new CustomEvent("formCreated"));
         } catch (error) {
@@ -73,7 +36,7 @@ export default function FormsList({ formId }: FormListID) {
 
     return (
         <>
-            {isLoadingVisible ? (
+            {isLoading ? (
                 <section className="flex size-full animate-pulse flex-col gap-2 overflow-y-auto py-4">
                     {Array.from({ length: 3 }, (_, i) => (
                         <div
@@ -90,11 +53,11 @@ export default function FormsList({ formId }: FormListID) {
                         forms.map((form) => (
                             <li key={form.id}>
                                 <Link
-                                    href={`/form/${form.id}`}
+                                    href={`/Form/${form.id}`}
                                     className={`group relative flex items-center rounded p-2 hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
                                 >
                                     <h2 className="truncate whitespace-nowrap rounded text-sm">
-                                        {form.title}
+                                        {form.name}
                                     </h2>
                                     <div className="absolute right-0 hidden rounded pr-2 group-hover:flex">
                                         <button
@@ -103,12 +66,9 @@ export default function FormsList({ formId }: FormListID) {
                                             <MoreHoriz className="text-2xl hover:text-zinc-500" />
                                         </button>
                                         <button
-                                            onClick={() =>
-                                                handleDelete(
-                                                    form.id,
-                                                    form.title,
-                                                )
-                                            }
+                                        onClick={() =>
+                                            handleDelete(form.id, form.name)
+                                        }
                                         >
                                             <DeleteForeverOutlined className="text-2xl hover:text-red-500" />
                                         </button>
