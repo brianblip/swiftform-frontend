@@ -86,14 +86,22 @@ export interface FormChoice {
     question_id: number;
 }
 
+export type ApiResponse<T = undefined> = {
+    data?: T;
+    message?: string;
+};
+
+// todo: use ApiResponse instead of this
 export interface ErrorResponse {
     message: string;
 }
 
+// todo: use ApiResponse instead of this
 export type FormResponse = {
     data: Form;
 };
 
+// todo: use ApiResponse instead of this
 export type FormsResponse = {
     data: Form[];
 };
