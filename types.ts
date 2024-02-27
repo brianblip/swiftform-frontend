@@ -109,8 +109,3 @@ export type FormsResponse = {
 export interface FormParam {
     id: number;
 }
-
-export type ApiResponse<T = undefined> = {
-    data?: T;
-    info?: string;
-};
