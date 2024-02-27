@@ -6,7 +6,8 @@ import ResponseComponent from "@/components/ResponseComponent";
 import useSWR from "swr";
 import { Form } from "@@/types";
 import { fetcher } from "@/utils";
-import { ErrorBoundary, Button } from "@/components";
+import { ErrorBoundary, Button, Input } from "@/components";
+import { useForm } from "react-hook-form";
 
 export default function FormPage({ params }: { params: { formId: string } }) {
     const { formId } = params;
@@ -15,6 +16,12 @@ export default function FormPage({ params }: { params: { formId: string } }) {
         isLoading,
         error,
     } = useSWR<Form>(`/forms/${formId}`, fetcher);
+
+    const {
+        register: generateFormRegister,
+        handleSubmit: generateFormHandleSubmit,
+        formState: { errors: generateFormErrors },
+    } = useForm<{ description: string }>();
 
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
@@ -44,10 +51,27 @@ export default function FormPage({ params }: { params: { formId: string } }) {
     const mainClassNames =
         "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
 
+    const handleGenerateForm = generateFormHandleSubmit(async (data) => {
+        console.log(data);
+    });
+
     return (
         <ErrorBoundary isLoading={isLoading} error={error}>
             <main className={mainClassNames}>
-                <Button>Generate Form</Button>
+                <form onSubmit={handleGenerateForm}>
+                    <Input
+                        label="Describe the form you want to generate..."
+                        multiline
+                        minRows={4}
+                        error={generateFormErrors.description?.message}
+                        {...generateFormRegister("description", {
+                            required: "Please provide a description for form.",
+                        })}
+                    />
+                    <Button className="mt-4" type="submit">
+                        Generate Form
+                    </Button>
+                </form>
                 <div className="flex w-full flex-col items-center gap-y-4">
                     <div className="flex w-full items-center justify-center">
                         <input
