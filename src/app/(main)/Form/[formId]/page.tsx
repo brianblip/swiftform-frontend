@@ -6,7 +6,7 @@ import ResponseComponent from "@/components/ResponseComponent";
 import useSWR from "swr";
 import { Form } from "@@/types";
 import { fetcher } from "@/utils";
-import { ErrorBoundary } from "@/components";
+import { ErrorBoundary, Button } from "@/components";
 
 export default function FormPage({ params }: { params: { formId: string } }) {
     const { formId } = params;
@@ -47,6 +47,7 @@ export default function FormPage({ params }: { params: { formId: string } }) {
     return (
         <ErrorBoundary isLoading={isLoading} error={error}>
             <main className={mainClassNames}>
+                <Button>Generate Form</Button>
                 <div className="flex w-full flex-col items-center gap-y-4">
                     <div className="flex w-full items-center justify-center">
                         <input
