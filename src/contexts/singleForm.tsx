@@ -4,12 +4,14 @@ import api from "@/services/api";
 import { createStore, StoreApi } from "zustand";
 import { createContext, ReactNode, useContext } from "react";
 
+export type CreateFormData = Omit<Form, "created_at" | "updated_at">;
+
 type FormState = {
     form?: Form | null;
     isLoading: boolean;
     error: string | null;
     fetchForm: (formId: number) => Promise<Form>;
-    createForm: (formData: Form) => Promise<Form>;
+    createForm: (formData: CreateFormData) => Promise<Form>;
     updateForm: (formId: number, formData: Form) => Promise<Form>;
     deleteForm: (formId: number) => Promise<void>;
 };
@@ -47,7 +49,7 @@ const useFormStore = (defaultFormId: number | null) => {
             }
         },
 
-        createForm: async (formData: Form) => {
+        createForm: async (formData: CreateFormData) => {
             try {
                 const { data } = await api.post("/forms", formData);
                 await mutate(data.data);
@@ -82,7 +84,9 @@ const useFormStore = (defaultFormId: number | null) => {
 };
 
 export const FormContext =
-    createContext<(defaultFormId: number | null) => StoreApi<FormState>>(useFormStore);
+    createContext<(defaultFormId: number | null) => StoreApi<FormState>>(
+        useFormStore,
+    );
 
 export function FormProvider({ children }: { children: ReactNode }) {
     return (

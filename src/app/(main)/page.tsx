@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import SuggestionButton from "@/components/SuggestionButton";
 import { Form } from "@@/types";
+import { CreateFormData } from "@/contexts/singleForm";
 
 export default function Home() {
     const [isLoadingVisible, setLoadingVisible] = useState(false);
@@ -16,11 +17,11 @@ export default function Home() {
     const handleCreateForm = async () => {
         setLoadingVisible(true);
         try {
-            const newForm: Form = {
+            const newForm: CreateFormData = {
                 id: 0,
                 name: `${user?.name}'s Form`,
                 description: "Write your description",
-                user_id: user?.id || null,
+                user_id: user!.id,
                 sections: [],
             };
             const createdForm = await createForm(newForm); // Capture the newly created form
