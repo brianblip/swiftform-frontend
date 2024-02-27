@@ -7,22 +7,22 @@ import ResponseComponent from "@/components/ResponseComponent";
 import { FormParam } from "@@/types";
 
 export default function FormPage({ params }: { params: FormParam }) {
-    const { id } = params;
-    const { form, isLoading, error, fetchForm } = useForm(id);
+    const { formId } = params;
+    const { form, isLoading, error, fetchForm } = useForm(formId);
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await fetchForm(id);
+                await fetchForm(formId);
             } catch (error) {
                 console.error("Error fetching form data:", error);
             }
         };
 
         fetchData();
-    }, [fetchForm, id]);
+    }, [fetchForm, formId]);
 
     useEffect(() => {
         if (form) {
@@ -93,7 +93,7 @@ export default function FormPage({ params }: { params: FormParam }) {
                 {isQuestionSectionOpen ? (
                     <>
                         <h1>
-                            {form.id} {form.name}
+                            {form.formId} {form.name}
                         </h1>
                         <p>{form.description}</p>
                     </>
