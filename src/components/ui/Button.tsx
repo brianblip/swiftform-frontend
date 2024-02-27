@@ -1,6 +1,6 @@
 import { Button as MuiButton, ButtonProps } from "@mui/material";
 
-export const Button = ({ children, ...props }: ButtonProps) => {
+const Button = ({ children, ...props }: ButtonProps) => {
     return (
         <MuiButton
             variant="contained"
@@ -15,3 +15,5 @@ export const Button = ({ children, ...props }: ButtonProps) => {
         </MuiButton>
     );
 };
+
+export default Button;

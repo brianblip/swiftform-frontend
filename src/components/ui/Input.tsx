@@ -6,7 +6,7 @@ interface Props extends Omit<TextFieldProps, "error" | "required"> {
     required?: boolean;
 }
 
-export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
+const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
     return (
         <TextField
             size="small"
@@ -28,3 +28,5 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 });
 
 Input.displayName = "Input";
+
+export default Input;
