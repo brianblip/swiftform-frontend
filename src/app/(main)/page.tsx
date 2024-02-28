@@ -1,37 +1,45 @@
 "use client";
 
-import useForm from "@/contexts/singleForm";
 import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { Form as FormType, ApiResponse } from "@@/types";
+import api from "@/services/api";
+import { CreateFormOptions } from "@/services";
+import Modal from "@/components/Modal";
+import { Input, Button } from "@/components";
 import SuggestionButton from "@/components/SuggestionButton";
-import { Form } from "@@/types";
-import { CreateFormData } from "@/contexts/singleForm";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function Home() {
-    const [isLoadingVisible, setLoadingVisible] = useState(false);
+    const [isCreatingForm, setIsCreatingForm] = useState(false);
     const router = useRouter();
-    const { user } = useAuth();
-    const { createForm } = useForm(0);
+    const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
 
-    const handleCreateForm = async () => {
-        setLoadingVisible(true);
+    const {
+        register: createFormRegister,
+        handleSubmit: createFormHandleSubmit,
+        formState: { errors: createFormErrors },
+    } = useForm<CreateFormOptions>();
+
+    const handleCreateForm = createFormHandleSubmit(async (data) => {
         try {
-            const newForm: CreateFormData = {
-                id: 0,
-                name: `${user?.name}'s Form`,
-                description: "Write your description",
-                user_id: user!.id,
-                sections: [],
-            };
-            const createdForm = await createForm(newForm); // Capture the newly created form
-            router.push(`/Form/${createdForm.id}`); // Redirect to the newly created form's ID
-        } catch (error) {
-            console.error("Error creating form", error);
+            setIsCreatingForm(true);
+
+            const response = await api.post<ApiResponse<FormType>>(
+                `/forms`,
+                data,
+            );
+
+            const newForm = response.data.data;
+
+            router.push(`/Form/${newForm?.id}`);
+        } catch (e) {
+            alert(e);
         } finally {
-            setLoadingVisible(false);
+            setIsCreatingForm(false);
         }
-    };
+    });
 
     return (
         <main className="grid h-[calc(100dvh-57.0667px)] w-dvw place-items-center p-4 sm:p-8 md:h-dvh">
@@ -45,14 +53,59 @@ export default function Home() {
                         <SuggestionButton />
                     </div>
                     <button
-                        onClick={handleCreateForm}
+                        onClick={() => setCreateFormModalOpened(true)}
                         className="w-full bg-primary-white px-2 py-3 text-primary-black"
-                        disabled={isLoadingVisible}
                     >
-                        {isLoadingVisible ? "Creating..." : "Create new form"}
+                        Create new form
                     </button>
                 </div>
             </div>
+
+            <Modal
+                open={createFormModalOpened}
+                onClose={() => setCreateFormModalOpened(false)}
+            >
+                <form onSubmit={handleCreateForm}>
+                    <Modal.Title>Create Form</Modal.Title>
+                    <Modal.Section>
+                        <Input
+                            label="Form Name"
+                            required
+                            {...createFormRegister("name", {
+                                required: "Name is required",
+                            })}
+                            error={createFormErrors.name?.message}
+                        />
+
+                        <Input
+                            label="Description"
+                            sx={{
+                                mt: 4,
+                            }}
+                            {...createFormRegister("description")}
+                            error={createFormErrors.description?.message}
+                        />
+                    </Modal.Section>
+                    <Modal.Footer>
+                        <Button type="submit" disabled={isCreatingForm}>
+                            Create a Form
+                        </Button>
+                    </Modal.Footer>
+                </form>
+            </Modal>
         </main>
+    );
+}
+
+interface FormProps {
+    form: FormType;
+}
+
+function Form({ form }: FormProps) {
+    return (
+        <button className="bg-primary-secondary px-2 py-3">
+            <h1 className="font-semibold">{form.name}</h1>
+            <p>{form.description || "No description"}</p>
+        </button>
     );
 }

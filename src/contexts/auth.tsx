@@ -8,6 +8,7 @@ import { createStore, StoreApi } from "zustand";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { fetcher } from "@/utils";
 
 type AuthState = {
     user?: User | null;
@@ -27,12 +28,6 @@ interface LoginProps extends Pick<User, "email"> {
 }
 
 const useAuthStore = () => {
-    const fetcher = async (url: string) => {
-        const { data } = await api.get(url);
-
-        return data.data;
-    };
-
     const {
         data: user,
         isLoading,
