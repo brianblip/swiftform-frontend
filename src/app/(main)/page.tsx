@@ -10,11 +10,19 @@ import { Input, Button } from "@/components";
 import SuggestionButton from "@/components/SuggestionButton";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { generateFormJson } from "@/services";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
     const router = useRouter();
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
+    const [isGeneratingForm, setIsGeneratingForm] = useState(false);
+
+    const {
+        register: generateFormRegister,
+        handleSubmit: generateFormHandleSubmit,
+        formState: { errors: generateFormErrors },
+    } = useForm<{ description: string }>();
 
     const {
         register: createFormRegister,
@@ -41,6 +49,20 @@ export default function Home() {
         }
     });
 
+    const handleGenerateForm = generateFormHandleSubmit(async (data) => {
+        try {
+            setIsGeneratingForm(true);
+
+            const response = await generateFormJson(data.description);
+
+            console.log(response.data);
+        } catch (e) {
+            alert(e);
+        } finally {
+            setIsGeneratingForm(false);
+        }
+    });
+
     return (
         <main className="grid h-[calc(100dvh-57.0667px)] w-dvw place-items-center p-4 sm:p-8 md:h-dvh">
             <div className="flex w-full flex-col items-center gap-y-4 md:gap-y-6">
@@ -58,6 +80,24 @@ export default function Home() {
                     >
                         Create new form
                     </button>
+
+                    <form onSubmit={handleGenerateForm}>
+                        <Input
+                            label="Describe the form you want to generate..."
+                            multiline
+                            minRows={4}
+                            error={generateFormErrors.description?.message}
+                            {...generateFormRegister("description", {
+                                required:
+                                    "Please provide a description for form.",
+                            })}
+                        />
+                        <Button className="mt-4" type="submit">
+                            {isGeneratingForm
+                                ? "Generating..."
+                                : "Generate Form"}
+                        </Button>
+                    </form>
                 </div>
             </div>
 
