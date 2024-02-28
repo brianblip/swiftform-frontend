@@ -10,7 +10,7 @@ interface alertParams {
     status: "success" | "error";
 }
 
-export default function CustomAlert({
+export default function Alert({
     message,
     status = "success",
 }: alertParams) {
