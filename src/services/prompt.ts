@@ -1,7 +1,7 @@
 import api from "./api";
 import { ApiResponse, Form, Section, Question } from "@@/types";
 
-interface GeneratedForm extends Pick<Form, "name" | "description"> {
+export interface GeneratedForm extends Pick<Form, "name" | "description"> {
     sections: GeneratedSection[];
 }
 
