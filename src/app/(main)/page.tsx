@@ -10,7 +10,7 @@ import { Input, Button } from "@/components";
 import SuggestionButton from "@/components/SuggestionButton";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { generateFormJson } from "@/services";
+import { generateFormJson, createNestedForm } from "@/services";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -54,8 +54,18 @@ export default function Home() {
             setIsGeneratingForm(true);
 
             const response = await generateFormJson(data.description);
+            const generatedFormJson = response.data;
 
-            console.log(response.data);
+            if (!generatedFormJson) {
+                throw new Error("Failed to generate form");
+            }
+
+            const nestedFormResponse =
+                await createNestedForm(generatedFormJson);
+
+            const newForm = nestedFormResponse.data;
+
+            router.push(`/Form/${newForm?.id}`);
         } catch (e) {
             alert(e);
         } finally {

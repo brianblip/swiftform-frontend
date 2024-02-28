@@ -41,12 +41,11 @@ export default function FormPage({ params }: { params: { formId: string } }) {
         setTitleInput(event.target.value);
     };
 
-    const mainClassNames =
-        "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
+    console.log(form);
 
     return (
         <ErrorBoundary isLoading={isLoading} error={error}>
-            <main className={mainClassNames}>
+            <main className="flex h-[calc(100vh-57.0667px)] w-screen flex-col items-center gap-10 overflow-scroll p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen">
                 <div className="flex w-full flex-col items-center gap-y-4">
                     <div className="flex w-full items-center justify-center">
                         <input
