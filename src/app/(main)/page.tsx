@@ -113,41 +113,58 @@ export default function Home() {
             </div>
 
             {createFormModalOpened && (
-                <section>
-                    <div>
-                        <button onClick={() => setCreateFormModalOpened(false)}>
+                <section className="fixed left-0 top-0 z-50 grid h-dvh w-dvw place-items-center bg-primary-black/50">
+                    <div className="relative w-10/12 rounded bg-primary-secondary p-4 sm:w-[500px]">
+                        <button
+                            className="absolute right-0 top-0 rounded hover:bg-primary-neutral"
+                            onClick={() => setCreateFormModalOpened(false)}
+                        >
                             <CloseIcon />
                         </button>
-                        <form onSubmit={handleCreateForm}>
-                            <h1>Create Form</h1>
-                            <fieldset>
-                                <div>
-                                    <label htmlFor="form Name">Form Name</label>
+                        <form
+                            className="grid gap-4"
+                            onSubmit={handleCreateForm}
+                        >
+                            <h1 className="text-xl font-bold">Create Form</h1>
+                            <fieldset className="grid gap-2">
+                                <div className="grid gap-1">
+                                    <label
+                                        className="text-sm font-semibold"
+                                        htmlFor="form Name"
+                                    >
+                                        Form Name
+                                    </label>
                                     <input
                                         id="form Name"
+                                        className={`w-full rounded border px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${createFormErrors.name ? "border-error focus:ring-error" : "border-transparent"}`}
                                         type="text"
                                         {...createFormRegister("name", {
                                             required: "Name is required",
                                         })}
                                     />
                                     {createFormErrors.name && (
-                                        <p>
+                                        <p className="mx-2 text-xs text-error">
                                             {createFormErrors.name.message}
                                         </p>
                                     )}
                                 </div>
-                                <div>
-                                    <label htmlFor="Description">
+                                <div className="mb-4 grid gap-1">
+                                    <label
+                                        className="text-sm font-semibold"
+                                        htmlFor="Description"
+                                    >
                                         Description
                                     </label>
                                     <input
                                         id="Description"
+                                        className="w-full rounded border px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         type="text"
                                         {...createFormRegister("description")}
                                     />
                                 </div>
                             </fieldset>
                             <button
+                                className="rounded bg-primary-neutral px-5 py-3 disabled:bg-primary-black disabled:text-primary-neutral"
                                 type="submit"
                                 disabled={isCreatingForm}
                             >
