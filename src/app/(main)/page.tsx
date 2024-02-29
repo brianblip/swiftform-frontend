@@ -20,6 +20,27 @@ export default function Home() {
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        const onClickCloseModal = (e: MouseEvent) => {
+            if (
+                modalRef.current &&
+                !modalRef.current.contains(e.target as Node)
+            ) {
+                setCreateFormModalOpened(false);
+            }
+        };
+
+        if (createFormModalOpened) {
+            document.addEventListener("click", onClickCloseModal);
+        } else {
+            document.removeEventListener("click", onClickCloseModal);
+        }
+
+        return () => {
+            document.removeEventListener("click", onClickCloseModal);
+        };
+    }, [createFormModalOpened]);
+
     const {
         register: generateFormRegister,
         handleSubmit: generateFormHandleSubmit,
