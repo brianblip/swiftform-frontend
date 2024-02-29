@@ -8,6 +8,7 @@ import { CreateFormOptions } from "@/services";
 import Modal from "@/components/Modal";
 import { Input, Button } from "@/components";
 import SuggestionButton from "@/components/SuggestionButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { generateFormJson, createNestedForm } from "@/services";
@@ -115,7 +116,7 @@ export default function Home() {
                 <section>
                     <div>
                         <button onClick={() => setCreateFormModalOpened(false)}>
-                            Close
+                            <CloseIcon />
                         </button>
                         <form onSubmit={handleCreateForm}>
                             <h1>Create Form</h1>
