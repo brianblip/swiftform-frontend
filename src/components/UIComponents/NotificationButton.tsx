@@ -21,13 +21,13 @@ const NotificationButton = () => {
         }
 
         if (isNotificationOpen) {
-            window.addEventListener("click", onClickCloseNotification);
+            document.addEventListener("click", onClickCloseNotification);
         } else {
-            window.removeEventListener("click", onClickCloseNotification);
+            document.removeEventListener("click", onClickCloseNotification);
         }
 
         return function () {
-            window.removeEventListener("click", onClickCloseNotification);
+            document.removeEventListener("click", onClickCloseNotification);
         };
     }, [isNotificationOpen]);
 
