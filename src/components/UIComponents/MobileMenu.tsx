@@ -32,13 +32,13 @@ const MobileMenu = () => {
         }
 
         if (isMenuOpen) {
-            window.addEventListener("click", handleCloseMenu);
+            document.addEventListener("click", handleCloseMenu);
         } else {
-            window.removeEventListener("click", handleCloseMenu);
+            document.removeEventListener("click", handleCloseMenu);
         }
 
         return () => {
-            window.removeEventListener("click", handleCloseMenu);
+            document.removeEventListener("click", handleCloseMenu);
         };
     }, [isMenuOpen]);
 
