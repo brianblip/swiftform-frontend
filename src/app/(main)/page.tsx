@@ -111,6 +111,52 @@ export default function Home() {
                 </div>
             </div>
 
+            {createFormModalOpened && (
+                <section>
+                    <div>
+                        <button onClick={() => setCreateFormModalOpened(false)}>
+                            Close
+                        </button>
+                        <form onSubmit={handleCreateForm}>
+                            <h1>Create Form</h1>
+                            <fieldset>
+                                <div>
+                                    <label htmlFor="form Name">Form Name</label>
+                                    <input
+                                        id="form Name"
+                                        type="text"
+                                        {...createFormRegister("name", {
+                                            required: "Name is required",
+                                        })}
+                                    />
+                                    {createFormErrors.name && (
+                                        <p>
+                                            {createFormErrors.name.message}
+                                        </p>
+                                    )}
+                                </div>
+                                <div>
+                                    <label htmlFor="Description">
+                                        Description
+                                    </label>
+                                    <input
+                                        id="Description"
+                                        type="text"
+                                        {...createFormRegister("description")}
+                                    />
+                                </div>
+                            </fieldset>
+                            <button
+                                type="submit"
+                                disabled={isCreatingForm}
+                            >
+                                Create a Form
+                            </button>
+                        </form>
+                    </div>
+                </section>
+            )}
+
             {/* <Modal
                 open={createFormModalOpened}
                 onClose={() => setCreateFormModalOpened(false)}
