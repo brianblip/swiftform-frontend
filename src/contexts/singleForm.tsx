@@ -9,7 +9,7 @@ export type CreateFormData = Omit<Form, "created_at" | "updated_at">;
 type FormState = {
     form?: Form | null;
     isLoading: boolean;
-    error: string | null;
+    error: Error | null;
     fetchForm: (formId: number) => Promise<Form>;
     createForm: (formData: CreateFormData) => Promise<Form>;
     updateForm: (formId: number, formData: Form) => Promise<Form>;
