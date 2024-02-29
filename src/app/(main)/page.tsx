@@ -10,7 +10,7 @@ import { Input, Button } from "@/components";
 import SuggestionButton from "@/components/SuggestionButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { generateFormJson, createNestedForm } from "@/services";
 
 export default function Home() {
@@ -18,6 +18,7 @@ export default function Home() {
     const router = useRouter();
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
+    const modalRef = useRef<HTMLDivElement>(null);
 
     const {
         register: generateFormRegister,
@@ -112,68 +113,68 @@ export default function Home() {
                 </div>
             </div>
 
-            {createFormModalOpened && (
-                <section className="fixed left-0 top-0 z-50 grid h-dvh w-dvw place-items-center bg-primary-black/50">
-                    <div className="relative w-10/12 rounded bg-primary-secondary p-4 sm:w-[500px]">
+            <section
+                className={`fixed left-0 top-0 z-50 h-dvh w-dvw place-items-center bg-primary-black/50 ${createFormModalOpened ? "grid" : "hidden"}`}
+            >
+                <div
+                    ref={modalRef}
+                    className="relative w-10/12 rounded bg-primary-secondary p-4 sm:w-[500px]"
+                >
+                    <button
+                        className="absolute right-0 top-0 rounded hover:bg-primary-neutral"
+                        onClick={() => setCreateFormModalOpened(false)}
+                    >
+                        <CloseIcon />
+                    </button>
+                    <form className="grid gap-4" onSubmit={handleCreateForm}>
+                        <h1 className="text-xl font-bold">Create Form</h1>
+                        <fieldset className="grid gap-2">
+                            <div className="grid gap-1">
+                                <label
+                                    className="text-sm font-semibold"
+                                    htmlFor="form Name"
+                                >
+                                    Form Name
+                                </label>
+                                <input
+                                    id="form Name"
+                                    className={`w-full rounded border px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${createFormErrors.name ? "border-error focus:ring-error" : "border-transparent"}`}
+                                    type="text"
+                                    {...createFormRegister("name", {
+                                        required: "Name is required",
+                                    })}
+                                />
+                                {createFormErrors.name && (
+                                    <p className="mx-2 text-xs text-error">
+                                        {createFormErrors.name.message}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="mb-4 grid gap-1">
+                                <label
+                                    className="text-sm font-semibold"
+                                    htmlFor="Description"
+                                >
+                                    Description
+                                </label>
+                                <input
+                                    id="Description"
+                                    className="w-full rounded border px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    type="text"
+                                    {...createFormRegister("description")}
+                                />
+                            </div>
+                        </fieldset>
                         <button
-                            className="absolute right-0 top-0 rounded hover:bg-primary-neutral"
-                            onClick={() => setCreateFormModalOpened(false)}
+                            className="rounded bg-primary-neutral px-5 py-3 disabled:bg-primary-black disabled:text-primary-neutral"
+                            type="submit"
+                            disabled={isCreatingForm}
                         >
-                            <CloseIcon />
+                            Create a Form
                         </button>
-                        <form
-                            className="grid gap-4"
-                            onSubmit={handleCreateForm}
-                        >
-                            <h1 className="text-xl font-bold">Create Form</h1>
-                            <fieldset className="grid gap-2">
-                                <div className="grid gap-1">
-                                    <label
-                                        className="text-sm font-semibold"
-                                        htmlFor="form Name"
-                                    >
-                                        Form Name
-                                    </label>
-                                    <input
-                                        id="form Name"
-                                        className={`w-full rounded border px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${createFormErrors.name ? "border-error focus:ring-error" : "border-transparent"}`}
-                                        type="text"
-                                        {...createFormRegister("name", {
-                                            required: "Name is required",
-                                        })}
-                                    />
-                                    {createFormErrors.name && (
-                                        <p className="mx-2 text-xs text-error">
-                                            {createFormErrors.name.message}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="mb-4 grid gap-1">
-                                    <label
-                                        className="text-sm font-semibold"
-                                        htmlFor="Description"
-                                    >
-                                        Description
-                                    </label>
-                                    <input
-                                        id="Description"
-                                        className="w-full rounded border px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        type="text"
-                                        {...createFormRegister("description")}
-                                    />
-                                </div>
-                            </fieldset>
-                            <button
-                                className="rounded bg-primary-neutral px-5 py-3 disabled:bg-primary-black disabled:text-primary-neutral"
-                                type="submit"
-                                disabled={isCreatingForm}
-                            >
-                                Create a Form
-                            </button>
-                        </form>
-                    </div>
-                </section>
-            )}
+                    </form>
+                </div>
+            </section>
 
             {/* <Modal
                 open={createFormModalOpened}
