@@ -2,27 +2,22 @@
 
 import { Edit } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
-import useForm, { FormProvider } from "@/contexts/singleForm";
 import ResponseComponent from "@/components/ResponseComponent";
-import { FormParam } from "@@/types";
+import useSWR from "swr";
+import { Form } from "@@/types";
+import { fetcher } from "@/utils";
+import { ErrorBoundary } from "@/components";
 
-export default function FormPage({ params }: { params: FormParam }) {
-    const { id } = params;
-    const { form, isLoading, error, fetchForm } = useForm(id);
+export default function FormPage({ params }: { params: { formId: string } }) {
+    const { formId } = params;
+    const {
+        data: form,
+        isLoading,
+        error,
+    } = useSWR<Form>(`/forms/${formId}`, fetcher);
+
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await fetchForm(id);
-            } catch (error) {
-                console.error("Error fetching form data:", error);
-            }
-        };
-
-        fetchData();
-    }, [fetchForm, id]);
 
     useEffect(() => {
         if (form) {
@@ -46,24 +41,11 @@ export default function FormPage({ params }: { params: FormParam }) {
         setTitleInput(event.target.value);
     };
 
-    const mainClassNames =
-        "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
-
-    if (isLoading) {
-        return <main className={mainClassNames}>Loading...</main>;
-    }
-
-    if (error) {
-        return <main className={mainClassNames}>Error: {error}</main>;
-    }
-
-    if (!form) {
-        return <main className={mainClassNames}>No form found.</main>;
-    }
+    console.log(form);
 
     return (
-        <FormProvider>
-            <main className={mainClassNames}>
+        <ErrorBoundary isLoading={isLoading} error={error}>
+            <main className="flex h-[calc(100vh-57.0667px)] w-screen flex-col items-center gap-10 overflow-scroll p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen">
                 <div className="flex w-full flex-col items-center gap-y-4">
                     <div className="flex w-full items-center justify-center">
                         <input
@@ -93,14 +75,14 @@ export default function FormPage({ params }: { params: FormParam }) {
                 {isQuestionSectionOpen ? (
                     <>
                         <h1>
-                            {form.id} {form.name}
+                            {form?.id} {form?.name}
                         </h1>
-                        <p>{form.description}</p>
+                        <p>{form?.description}</p>
                     </>
                 ) : (
                     <ResponseComponent />
                 )}
             </main>
-        </FormProvider>
+        </ErrorBoundary>
     );
 }
