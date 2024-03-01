@@ -29,7 +29,21 @@ export default function RegistrationPage() {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isReenterPasswordVisible, setIsReenterPasswordVisible] = useState(false);
 
-   
+    const handleFormSubmit = async (data: RegisterForm) => {
+        try {
+            await authRegister({
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                avatar_url: "",
+            });
+            router.push("/");
+
+        } catch (error) {
+            //TODO handle error
+            console.log(error)            
+        }
+    }
 
     function onClickTogglePasswordVisibility() {
         setIsPasswordVisible(!isPasswordVisible);
