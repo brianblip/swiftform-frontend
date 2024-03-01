@@ -8,6 +8,7 @@ import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useForm, SubmitHandler } from "react-hook-form"
 
 export default function RegistrationPage() {
     const router = useRouter();
