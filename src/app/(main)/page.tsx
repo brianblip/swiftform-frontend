@@ -6,7 +6,7 @@ import { Form as FormType, ApiResponse } from "@@/types";
 import api from "@/services/api";
 import { CreateFormOptions } from "@/services";
 import Modal from "@/components/Modal";
-import { Input, Button } from "@/components";
+import Input from "@/components/UIComponents/Input";
 import SuggestionButton from "@/components/SuggestionButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
@@ -117,13 +117,14 @@ export default function Home() {
                     <form onSubmit={handleGenerateForm}>
                         <Input
                             label="Describe the form you want to generate..."
-                            multiline
-                            minRows={4}
+                            type="text"
                             error={generateFormErrors.description?.message}
-                            {...generateFormRegister("description", {
+                            register={generateFormRegister}
+                            registerName="description"
+                            registerRequired={{
                                 required:
                                     "Please provide a description for form.",
-                            })}
+                            }}
                         />
                         <Button className="mt-4" type="submit">
                             {isGeneratingForm
@@ -150,41 +151,24 @@ export default function Home() {
                     <form className="grid gap-4" onSubmit={handleCreateForm}>
                         <h1 className="text-xl font-bold">Create Form</h1>
                         <fieldset className="grid gap-2">
-                            <div className="grid gap-1">
-                                <label
-                                    className="text-sm font-semibold"
-                                    htmlFor="form Name"
-                                >
-                                    Form Name
-                                </label>
-                                <input
-                                    id="form Name"
-                                    className={`w-full rounded border px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${createFormErrors.name ? "border-error focus:ring-error" : "border-transparent"}`}
-                                    type="text"
-                                    {...createFormRegister("name", {
-                                        required: "Name is required",
-                                    })}
-                                />
-                                {createFormErrors.name && (
-                                    <p className="mx-2 text-xs text-error">
-                                        {createFormErrors.name.message}
-                                    </p>
-                                )}
-                            </div>
-                            <div className="mb-4 grid gap-1">
-                                <label
-                                    className="text-sm font-semibold"
-                                    htmlFor="Description"
-                                >
-                                    Description
-                                </label>
-                                <input
-                                    id="Description"
-                                    className="w-full rounded border px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    type="text"
-                                    {...createFormRegister("description")}
-                                />
-                            </div>
+                            <Input
+                                label="Form Name"
+                                required
+                                type="input"
+                                register={createFormRegister}
+                                registerName="name"
+                                registerRequired={{
+                                    required: "Name is required",
+                                }}
+                                error={createFormErrors.name?.message}
+                            />
+                            <Input
+                                label="Description"
+                                type="input"
+                                register={createFormRegister}
+                                registerName="description"
+                                error={createFormErrors.description?.message}
+                            />
                         </fieldset>
                         <button
                             className="rounded bg-primary-neutral px-5 py-3 disabled:bg-primary-black disabled:text-primary-neutral"
