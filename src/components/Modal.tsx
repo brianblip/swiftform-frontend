@@ -1,5 +1,17 @@
 
 
+export default function Modal() {
+    return (
+        <section>
+            <div>
+                <button>
+                    Close
+                </button>
+            Modal
+            </div>
+        </section>
+    );
+}
 
 // import * as React from "react";
 // import Box from "@mui/material/Box";
