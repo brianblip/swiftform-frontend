@@ -114,7 +114,10 @@ export default function Home() {
                         Create new form
                     </button>
 
-                    <form onSubmit={handleGenerateForm}>
+                    <form
+                        className="grid w-full gap-6"
+                        onSubmit={handleGenerateForm}
+                    >
                         <Input
                             label="Describe the form you want to generate..."
                             type="text"
