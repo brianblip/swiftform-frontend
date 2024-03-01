@@ -18,22 +18,9 @@ interface LoginForm {
 export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-    const handleLogin = async (e: FormEvent) => {
-        e.preventDefault();
-
-        const success = await login({
-            email: email,
-            password: password,
-        });
-
-        if (success) {
-            router.push("/");
-        }
-    };
+    
 
     function onClickToggleVisibility() {
         setIsPasswordVisible(!isPasswordVisible);
