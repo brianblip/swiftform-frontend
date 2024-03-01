@@ -129,11 +129,15 @@ export default function Home() {
                                     "Please provide a description for form.",
                             }}
                         />
-                        <Button className="mt-4" type="submit">
+                        <button
+                            className="rounded bg-primary-secondary px-5 py-3 disabled:bg-primary-black disabled:text-primary-secondary"
+                            type="submit"
+                            disabled={isGeneratingForm}
+                        >
                             {isGeneratingForm
                                 ? "Generating..."
                                 : "Generate Form"}
-                        </Button>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -178,7 +182,7 @@ export default function Home() {
                             type="submit"
                             disabled={isCreatingForm}
                         >
-                            Create a Form
+                            {isCreatingForm ? "Creating..." : "Create a Form"}
                         </button>
                     </form>
                 </div>
