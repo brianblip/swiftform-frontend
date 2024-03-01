@@ -176,7 +176,7 @@ export default function RegistrationPage() {
                             <input
                                 type={isReenterPasswordVisible ? "text" : "password"}
                                 className={`rounded border ${errors.confirmPassword ? "border-red-500" : "border-black"
-                                    } p-3 pr10`}
+                                    } p-3 pr-10`}
                                 id="confirm_password"
                                 {...formRegister("confirmPassword", {
                                     required: "Please re-enter your password",
