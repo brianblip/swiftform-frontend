@@ -1,7 +1,8 @@
+import { ReactNode } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
 
-export default function Modal() {
+export default function Modal({ children }: { children: ReactNode}) {
     return (
         <section
             className={`fixed left-0 top-0 z-50 h-dvh w-dvw place-items-center bg-primary-black/50`}
@@ -10,7 +11,7 @@ export default function Modal() {
                 <button className="absolute right-0 top-0 rounded hover:bg-primary-neutral">
                     <CloseIcon />
                 </button>
-            Modal
+            {children}
             </div>
         </section>
     );
