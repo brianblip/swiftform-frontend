@@ -8,7 +8,12 @@ interface ModalProps {
     setCreateFormModalOpened: any;
 }
 
-export default function Modal({ children }: { children: ReactNode}) {
+export default function Modal({
+    children,
+    createFormModalOpened,
+    modalRef,
+    setCreateFormModalOpened,
+}: ModalProps) {
     return (
         <section
             className={`fixed left-0 top-0 z-50 h-dvh w-dvw place-items-center bg-primary-black/50`}
