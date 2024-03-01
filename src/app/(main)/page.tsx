@@ -141,52 +141,42 @@ export default function Home() {
                     </form>
                 </div>
             </div>
-
-            <section
-                className={`fixed left-0 top-0 z-50 h-dvh w-dvw place-items-center bg-primary-black/50 ${createFormModalOpened ? "grid" : "hidden"}`}
+            <Modal
+                createFormModalOpened={createFormModalOpened}
+                modalRef={modalRef}
+                setCreateFormModalOpened={setCreateFormModalOpened}
             >
-                <div
-                    ref={modalRef}
-                    className="relative w-10/12 rounded bg-primary-secondary p-4 sm:w-[500px]"
-                >
+                <form className="grid gap-4" onSubmit={handleCreateForm}>
+                    <h1 className="text-xl font-bold">Create Form</h1>
+                    <fieldset className="grid gap-2">
+                        <Input
+                            label="Form Name"
+                            required
+                            type="input"
+                            register={createFormRegister}
+                            registerName="name"
+                            registerRequired={{
+                                required: "Name is required",
+                            }}
+                            error={createFormErrors.name?.message}
+                        />
+                        <Input
+                            label="Description"
+                            type="input"
+                            register={createFormRegister}
+                            registerName="description"
+                            error={createFormErrors.description?.message}
+                        />
+                    </fieldset>
                     <button
-                        className="absolute right-0 top-0 rounded hover:bg-primary-neutral"
-                        onClick={() => setCreateFormModalOpened(false)}
+                        className="rounded bg-primary-neutral px-5 py-3 disabled:bg-primary-black disabled:text-primary-neutral"
+                        type="submit"
+                        disabled={isCreatingForm}
                     >
-                        <CloseIcon />
+                        {isCreatingForm ? "Creating..." : "Create a Form"}
                     </button>
-                    <form className="grid gap-4" onSubmit={handleCreateForm}>
-                        <h1 className="text-xl font-bold">Create Form</h1>
-                        <fieldset className="grid gap-2">
-                            <Input
-                                label="Form Name"
-                                required
-                                type="input"
-                                register={createFormRegister}
-                                registerName="name"
-                                registerRequired={{
-                                    required: "Name is required",
-                                }}
-                                error={createFormErrors.name?.message}
-                            />
-                            <Input
-                                label="Description"
-                                type="input"
-                                register={createFormRegister}
-                                registerName="description"
-                                error={createFormErrors.description?.message}
-                            />
-                        </fieldset>
-                        <button
-                            className="rounded bg-primary-neutral px-5 py-3 disabled:bg-primary-black disabled:text-primary-neutral"
-                            type="submit"
-                            disabled={isCreatingForm}
-                        >
-                            {isCreatingForm ? "Creating..." : "Create a Form"}
-                        </button>
-                    </form>
-                </div>
-            </section>
+                </form>
+            </Modal>
 
             {/* <Modal
                 open={createFormModalOpened}
