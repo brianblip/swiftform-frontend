@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close";
 
 
 export default function Modal() {
@@ -7,7 +8,7 @@ export default function Modal() {
         >
             <div className="relative w-10/12 rounded bg-primary-secondary p-4 sm:w-[500px]">
                 <button className="absolute right-0 top-0 rounded hover:bg-primary-neutral">
-                    Close
+                    <CloseIcon />
                 </button>
             Modal
             </div>
