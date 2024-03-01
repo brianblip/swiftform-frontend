@@ -8,7 +8,15 @@ interface InputProps {
     registerRequired?: {};
 }
 
-export default function Input() {
+export default function Input({
+    label,
+    required,
+    type,
+    error,
+    register,
+    registerName,
+    registerRequired,
+}: InputProps) {
     return (
         <div className="grid gap-1">
             <label
