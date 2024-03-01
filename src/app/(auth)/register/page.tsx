@@ -18,30 +18,11 @@ interface RegisterForm {
 export default function RegistrationPage() {
     const router = useRouter();
 
-    const { register } = useAuth();
-
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+ 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isReenterPasswordVisible, setIsReenterPasswordVisible] = useState(false);
 
-    const handleFormSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        try {
-            await register({
-                name: name,
-                email: email,
-                password: password,
-                avatar_url: "",
-            });
-            router.push("/");
-        } catch (error) {
-            // TODO: Display form errors
-            console.error(error);
-        }
-    };
+   
 
     function onClickTogglePasswordVisibility() {
         setIsPasswordVisible(!isPasswordVisible);
