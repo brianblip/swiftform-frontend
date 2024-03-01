@@ -9,7 +9,12 @@ import { useRouter } from "next/navigation";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useForm, SubmitHandler } from "react-hook-form"
-
+interface RegisterForm {
+    name: string
+    email: string
+    password: string
+    confirmPassword: string
+}
 export default function RegistrationPage() {
     const router = useRouter();
 
