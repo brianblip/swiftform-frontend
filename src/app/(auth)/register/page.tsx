@@ -121,16 +121,27 @@ export default function RegistrationPage() {
                             htmlFor="password"
                             className="text-sm font-medium"
                         >
-                            Password
+                            {errors.password ? (
+                                <span className="text-red-500">
+                                    {errors.password.message}
+                                </span>
+                            ) : "Password"}
                         </label>
                         <div className="relative flex items-center">
                             <input
                                 type={isPasswordVisible ? "text" : "password"}
                                 required
-                                className="rounded border border-black p-3 pr-10"
+                                className={`rounded border ${errors.password ? "border-red-500" : "border-black"
+                                    } p-3`}
                                 id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                {...formRegister("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be 8 characters"
+                                    }
+                                })}
+                                aria-invalid={errors.password ? "true" : "false"}
                             />
                             {isPasswordVisible ? (
                                 <button
@@ -155,18 +166,28 @@ export default function RegistrationPage() {
                             htmlFor="confirm_password"
                             className="text-sm font-medium"
                         >
-                            Re-enter your password
+                            {errors.confirmPassword ? (
+                                <span className="text-red-500">
+                                    {errors.confirmPassword.message}
+                                </span>
+                            ) : "Re-enter your password"}
                         </label>
                         <div className="relative flex items-center">
                             <input
                                 type={isReenterPasswordVisible ? "text" : "password"}
-                                required
-                                className="rounded border border-black p-3 pr-10"
+                                className={`rounded border ${errors.confirmPassword ? "border-red-500" : "border-black"
+                                    } p-3 pr10`}
                                 id="confirm_password"
-                                value={confirmPassword}
-                                onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                }
+                                {...formRegister("confirmPassword", {
+                                    required: "Please re-enter your password",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be 8 characters"
+                                    },
+                                    validate: (value) =>
+                                        value === password || "Passwords do not match"
+                                })}
+                                aria-invalid={errors.confirmPassword || password ? "true" : "false"}
                             />
                             {isReenterPasswordVisible ? (
                                 <button
