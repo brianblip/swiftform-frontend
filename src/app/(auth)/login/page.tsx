@@ -26,7 +26,7 @@ export default function Login() {
         watch,
         formState: { errors },
     } = useForm<LoginForm>()
-    
+
     const handleLogin = async (data: LoginForm) => {
         try {
             const success = await login({
@@ -55,18 +55,28 @@ export default function Login() {
 
                 <h1 className="text-xl font-bold md:text-2xl">Welcome back</h1>
 
-                <form onSubmit={handleLogin} className="grid gap-4">
+                <form onSubmit={handleSubmit(handleLogin)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
-                            Email
+                            {errors.email ? (
+                                <span className="text-red-500">
+                                    {errors.email.message}
+                                </span>
+                            ) : "Email"}
                         </label>
                         <input
                             type="email"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.email ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid email address"
+                                },
+                            })}
+                            aria-invalid={errors.email ? "true" : "false"}
                         />
                     </div>
 
