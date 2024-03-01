@@ -85,16 +85,25 @@ export default function Login() {
                             htmlFor="password"
                             className="text-sm font-medium"
                         >
-                            Password
-                        </label>
+                            {errors.password ? (
+                                <span className="text-red-500">
+                                    {errors.password.message}
+                                </span>
+                            ) : "Password"}                        </label>
                         <div className="relative flex items-center">
                             <input
                                 type={isPasswordVisible ? "text" : "password"}
-                                required
-                                className="rounded border border-black p-3 pr-10"
+                                className={`rounded border ${errors.password ? "border-red-500" : "border-black"
+                                    } p-3`}
                                 id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be 8 characters"
+                                    }
+                                })}
+                                aria-invalid={errors.password ? "true" : "false"}
                             />
                             {isPasswordVisible ? (
                                 <button
