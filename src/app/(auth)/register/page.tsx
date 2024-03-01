@@ -17,7 +17,14 @@ interface RegisterForm {
 }
 export default function RegistrationPage() {
     const router = useRouter();
-
+    const { register: authRegister } = useAuth();
+    const {
+        register: formRegister,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<RegisterForm>()
+    const password = watch("password", ""); // Get the value of the password field
  
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isReenterPasswordVisible, setIsReenterPasswordVisible] = useState(false);
