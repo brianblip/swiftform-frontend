@@ -10,6 +10,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useForm, SubmitHandler } from "react-hook-form"
 
+interface LoginForm {
+    email: string
+    password: string
+}
+
 export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
