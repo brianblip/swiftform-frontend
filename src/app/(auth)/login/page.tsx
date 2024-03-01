@@ -20,6 +20,12 @@ export default function Login() {
     const { login } = useAuth();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<LoginForm>()
     
 
     function onClickToggleVisibility() {
