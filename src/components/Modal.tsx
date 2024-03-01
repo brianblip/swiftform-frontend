@@ -1,6 +1,12 @@
 import { ReactNode } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
+interface ModalProps {
+    children: ReactNode;
+    createFormModalOpened: boolean;
+    modalRef: any;
+    setCreateFormModalOpened: any;
+}
 
 export default function Modal({ children }: { children: ReactNode}) {
     return (
