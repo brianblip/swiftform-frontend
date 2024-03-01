@@ -25,7 +25,7 @@ export default function RegistrationPage() {
         formState: { errors },
     } = useForm<RegisterForm>()
     const password = watch("password", ""); // Get the value of the password field
- 
+
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isReenterPasswordVisible, setIsReenterPasswordVisible] = useState(false);
 
@@ -41,7 +41,7 @@ export default function RegistrationPage() {
 
         } catch (error) {
             //TODO handle error
-            console.log(error)            
+            console.log(error)
         }
     }
 
@@ -64,18 +64,31 @@ export default function RegistrationPage() {
                     Create your account
                 </h1>
 
-                <form onSubmit={handleFormSubmit} className="grid gap-4">
+                <form onSubmit={handleSubmit(handleFormSubmit)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="name" className="text-sm font-medium">
-                            Name
-                        </label>
+                            {errors.name ? (
+                                <span className="text-red-500">
+                                    {errors.name.message}
+                                </span>
+                            ) : "Name"}                        </label>
                         <input
                             type="text"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.name ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            {...formRegister("name", {
+                                required: "Name is required",
+                                minLength: {
+                                    value: 2,
+                                    message: "At least 2 characters long"
+                                },
+                                maxLength: {
+                                    value: 50,
+                                    message: "Name should not exceed 50 characters"
+                                }
+                            })}
+                            aria-invalid={errors.name ? "true" : "false"}
                         />
                     </div>
 
