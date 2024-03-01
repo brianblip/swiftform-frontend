@@ -1,3 +1,13 @@
+interface InputProps {
+    label: string;
+    required?: boolean;
+    type: string;
+    error: any;
+    register: any;
+    registerName: string;
+    registerRequired?: {};
+}
+
 export default function Input() {
     return (
         <div className="grid gap-1">
