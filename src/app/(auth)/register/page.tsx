@@ -8,34 +8,42 @@ import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-
+import { useForm, SubmitHandler } from "react-hook-form"
+interface RegisterForm {
+    name: string
+    email: string
+    password: string
+    confirmPassword: string
+}
 export default function RegistrationPage() {
     const router = useRouter();
+    const { register: authRegister } = useAuth();
+    const {
+        register: formRegister,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<RegisterForm>()
+    const password = watch("password", ""); // Get the value of the password field
 
-    const { register } = useAuth();
-
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isReenterPasswordVisible, setIsReenterPasswordVisible] = useState(false);
 
-    const handleFormSubmit = async (e: FormEvent) => {
-        e.preventDefault();
+    const handleFormSubmit = async (data: RegisterForm) => {
         try {
-            await register({
-                name: name,
-                email: email,
-                password: password,
+            await authRegister({
+                name: data.name,
+                email: data.email,
+                password: data.password,
                 avatar_url: "",
             });
             router.push("/");
+
         } catch (error) {
-            // TODO: Display form errors
-            console.error(error);
+            //TODO handle error
+            console.log(error)
         }
-    };
+    }
 
     function onClickTogglePasswordVisibility() {
         setIsPasswordVisible(!isPasswordVisible);
@@ -56,32 +64,55 @@ export default function RegistrationPage() {
                     Create your account
                 </h1>
 
-                <form onSubmit={handleFormSubmit} className="grid gap-4">
+                <form onSubmit={handleSubmit(handleFormSubmit)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="name" className="text-sm font-medium">
-                            Name
-                        </label>
+                            {errors.name ? (
+                                <span className="text-red-500">
+                                    {errors.name.message}
+                                </span>
+                            ) : "Name"}                        </label>
                         <input
                             type="text"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.name ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            {...formRegister("name", {
+                                required: "Name is required",
+                                minLength: {
+                                    value: 2,
+                                    message: "At least 2 characters long"
+                                },
+                                maxLength: {
+                                    value: 50,
+                                    message: "Name should not exceed 50 characters"
+                                }
+                            })}
+                            aria-invalid={errors.name ? "true" : "false"}
                         />
                     </div>
 
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
-                            Email
+                            {errors.email ? (
+                                <span className="text-red-500">
+                                    {errors.email.message}
+                                </span>
+                            ) : "Email"}
                         </label>
                         <input
                             type="email"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.email ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...formRegister("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid email address"
+                                },
+                            })}
+                            aria-invalid={errors.email ? "true" : "false"}
                         />
                     </div>
 
@@ -90,16 +121,27 @@ export default function RegistrationPage() {
                             htmlFor="password"
                             className="text-sm font-medium"
                         >
-                            Password
+                            {errors.password ? (
+                                <span className="text-red-500">
+                                    {errors.password.message}
+                                </span>
+                            ) : "Password"}
                         </label>
                         <div className="relative flex items-center">
                             <input
                                 type={isPasswordVisible ? "text" : "password"}
                                 required
-                                className="rounded border border-black p-3 pr-10"
+                                className={`rounded border ${errors.password ? "border-red-500" : "border-black"
+                                    } p-3`}
                                 id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                {...formRegister("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be 8 characters"
+                                    }
+                                })}
+                                aria-invalid={errors.password ? "true" : "false"}
                             />
                             {isPasswordVisible ? (
                                 <button
@@ -124,18 +166,28 @@ export default function RegistrationPage() {
                             htmlFor="confirm_password"
                             className="text-sm font-medium"
                         >
-                            Re-enter your password
+                            {errors.confirmPassword ? (
+                                <span className="text-red-500">
+                                    {errors.confirmPassword.message}
+                                </span>
+                            ) : "Re-enter your password"}
                         </label>
                         <div className="relative flex items-center">
                             <input
                                 type={isReenterPasswordVisible ? "text" : "password"}
-                                required
-                                className="rounded border border-black p-3 pr-10"
+                                className={`rounded border ${errors.confirmPassword ? "border-red-500" : "border-black"
+                                    } p-3 pr-10`}
                                 id="confirm_password"
-                                value={confirmPassword}
-                                onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                }
+                                {...formRegister("confirmPassword", {
+                                    required: "Please re-enter your password",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be 8 characters"
+                                    },
+                                    validate: (value) =>
+                                        value === password || "Passwords do not match"
+                                })}
+                                aria-invalid={errors.confirmPassword || password ? "true" : "false"}
                             />
                             {isReenterPasswordVisible ? (
                                 <button

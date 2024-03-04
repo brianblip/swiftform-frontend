@@ -8,24 +8,37 @@ import useAuth from "@/contexts/auth";
 import Link from "next/link";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useForm, SubmitHandler } from "react-hook-form"
+
+interface LoginForm {
+    email: string
+    password: string
+}
 
 export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-    const handleLogin = async (e: FormEvent) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<LoginForm>()
 
-        const success = await login({
-            email: email,
-            password: password,
-        });
-
-        if (success) {
-            router.push("/");
+    const handleLogin = async (data: LoginForm) => {
+        try {
+            const success = await login({
+                email: data.email,
+                password: data.password,
+            });
+            if (success) {
+                router.push("/");
+            }
+        } catch (error) {
+            // TODO: Display form errors
+            console.log(error)
         }
     };
 
@@ -42,18 +55,28 @@ export default function Login() {
 
                 <h1 className="text-xl font-bold md:text-2xl">Welcome back</h1>
 
-                <form onSubmit={handleLogin} className="grid gap-4">
+                <form onSubmit={handleSubmit(handleLogin)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
-                            Email
+                            {errors.email ? (
+                                <span className="text-red-500">
+                                    {errors.email.message}
+                                </span>
+                            ) : "Email"}
                         </label>
                         <input
                             type="email"
-                            required
-                            className="rounded border border-black p-3"
+                            className={`rounded border ${errors.email ? "border-red-500" : "border-black"
+                                } p-3`}
                             id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid email address"
+                                },
+                            })}
+                            aria-invalid={errors.email ? "true" : "false"}
                         />
                     </div>
 
@@ -62,16 +85,25 @@ export default function Login() {
                             htmlFor="password"
                             className="text-sm font-medium"
                         >
-                            Password
-                        </label>
+                            {errors.password ? (
+                                <span className="text-red-500">
+                                    {errors.password.message}
+                                </span>
+                            ) : "Password"}                        </label>
                         <div className="relative flex items-center">
                             <input
                                 type={isPasswordVisible ? "text" : "password"}
-                                required
-                                className="rounded border border-black p-3 pr-10"
+                                className={`rounded border ${errors.password ? "border-red-500" : "border-black"
+                                    } p-3`}
                                 id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be 8 characters"
+                                    }
+                                })}
+                                aria-invalid={errors.password ? "true" : "false"}
                             />
                             {isPasswordVisible ? (
                                 <button
