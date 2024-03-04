@@ -120,7 +120,7 @@ export default function Home() {
                     >
                         <Input
                             label="Describe the form you want to generate..."
-                            type="text"
+                            type="textarea"
                             error={generateFormErrors.description?.message}
                             register={generateFormRegister}
                             registerName="description"
@@ -152,7 +152,7 @@ export default function Home() {
                         <Input
                             label="Form Name"
                             required
-                            type="input"
+                            type="text"
                             register={createFormRegister}
                             registerName="name"
                             registerRequired={{
@@ -162,7 +162,7 @@ export default function Home() {
                         />
                         <Input
                             label="Description"
-                            type="input"
+                            type="text"
                             register={createFormRegister}
                             registerName="description"
                             error={createFormErrors.description?.message}
