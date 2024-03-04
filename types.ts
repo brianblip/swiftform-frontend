@@ -18,7 +18,7 @@ export interface Form {
 export interface Section {
     id: number;
     form_id: number;
-    title: number;
+    title: string;
     questions: Question[];
     created_at: string;
     updated_at: string;
