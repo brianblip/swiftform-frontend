@@ -111,7 +111,7 @@ export function ProtectRoute({ children }: { children: ReactNode }) {
 
         // if auth is not loading and user is not present, redirect to login
         if (!user) {
-            router.push("/Login");
+            router.push("/login");
         } else {
             setProtectRouteLoading(false);
         }

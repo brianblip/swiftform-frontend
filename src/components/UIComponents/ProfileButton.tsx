@@ -21,13 +21,13 @@ const ProfileButton = () => {
         }
 
         if (isProfileOpen) {
-            window.addEventListener("click", handleCloseProfile);
+            document.addEventListener("click", handleCloseProfile);
         } else {
-            window.removeEventListener("click", handleCloseProfile);
+            document.removeEventListener("click", handleCloseProfile);
         }
 
         return () => {
-            window.removeEventListener("click", handleCloseProfile);
+            document.removeEventListener("click", handleCloseProfile);
         };
     }, [isProfileOpen]);
 

@@ -6,10 +6,11 @@ import { Form as FormType, ApiResponse } from "@@/types";
 import api from "@/services/api";
 import { CreateFormOptions } from "@/services";
 import Modal from "@/components/Modal";
-import { Input, Button } from "@/components";
+import Input from "@/components/UIComponents/Input";
 import SuggestionButton from "@/components/SuggestionButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { generateFormJson, createNestedForm } from "@/services";
 
 export default function Home() {
@@ -17,6 +18,28 @@ export default function Home() {
     const router = useRouter();
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
+    const modalRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const onClickCloseModal = (e: MouseEvent) => {
+            if (
+                modalRef.current &&
+                !modalRef.current.contains(e.target as Node)
+            ) {
+                setCreateFormModalOpened(false);
+            }
+        };
+
+        if (createFormModalOpened) {
+            document.addEventListener("click", onClickCloseModal);
+        } else {
+            document.removeEventListener("click", onClickCloseModal);
+        }
+
+        return () => {
+            document.removeEventListener("click", onClickCloseModal);
+        };
+    }, [createFormModalOpened]);
 
     const {
         register: generateFormRegister,
@@ -91,27 +114,71 @@ export default function Home() {
                         Create new form
                     </button>
 
-                    <form onSubmit={handleGenerateForm}>
+                    <form
+                        className="grid w-full gap-6"
+                        onSubmit={handleGenerateForm}
+                    >
                         <Input
                             label="Describe the form you want to generate..."
-                            multiline
-                            minRows={4}
+                            type="textarea"
                             error={generateFormErrors.description?.message}
-                            {...generateFormRegister("description", {
+                            register={generateFormRegister}
+                            registerName="description"
+                            registerRequired={{
                                 required:
                                     "Please provide a description for form.",
-                            })}
+                            }}
                         />
-                        <Button className="mt-4" type="submit">
+                        <button
+                            className="rounded bg-primary-secondary px-5 py-3 disabled:bg-primary-black disabled:text-primary-secondary"
+                            type="submit"
+                            disabled={isGeneratingForm}
+                        >
                             {isGeneratingForm
                                 ? "Generating..."
                                 : "Generate Form"}
-                        </Button>
+                        </button>
                     </form>
                 </div>
             </div>
-
             <Modal
+                createFormModalOpened={createFormModalOpened}
+                modalRef={modalRef}
+                setCreateFormModalOpened={setCreateFormModalOpened}
+            >
+                <form className="grid gap-4" onSubmit={handleCreateForm}>
+                    <h1 className="text-xl font-bold">Create Form</h1>
+                    <fieldset className="grid gap-2">
+                        <Input
+                            label="Form Name"
+                            required
+                            type="text"
+                            register={createFormRegister}
+                            registerName="name"
+                            registerRequired={{
+                                required: "Name is required",
+                            }}
+                            error={createFormErrors.name?.message}
+                        />
+                        <Input
+                            label="Description"
+                            type="text"
+                            register={createFormRegister}
+                            registerName="description"
+                            error={createFormErrors.description?.message}
+                        />
+                    </fieldset>
+                    <button
+                        className="rounded bg-primary-neutral px-5 py-3 disabled:bg-primary-black disabled:text-primary-neutral"
+                        type="submit"
+                        disabled={isCreatingForm}
+                    >
+                        {isCreatingForm ? "Creating..." : "Create a Form"}
+                    </button>
+                </form>
+            </Modal>
+
+            {/* <Modal
                 open={createFormModalOpened}
                 onClose={() => setCreateFormModalOpened(false)}
             >
@@ -142,7 +209,7 @@ export default function Home() {
                         </Button>
                     </Modal.Footer>
                 </form>
-            </Modal>
+            </Modal> */}
         </main>
     );
 }
