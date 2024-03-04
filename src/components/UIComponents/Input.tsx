@@ -1,7 +1,7 @@
 interface InputProps {
     label: string;
     required?: boolean;
-    type: string;
+    type: "text" | "textarea";
     error: any;
     register: any;
     registerName: string;
