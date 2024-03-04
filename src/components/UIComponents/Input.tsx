@@ -26,12 +26,19 @@ export default function Input({
                 {label}
                 {required ? "*" : ""}
             </label>
-            <input
-                id={label}
-                type={type}
-                className={`w-full rounded border-2 px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : "border-transparent"}`}
-                {...register(registerName, registerRequired)}
-            />
+            {type === "text" ? (
+                <input
+                    id={label}
+                    className={`w-full rounded border-2 px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : "border-transparent"}`}
+                    {...register(registerName, registerRequired)}
+                />
+            ) : (
+                <textarea
+                    id={label}
+                    className={`max-h-40 min-h-20 w-full rounded border-2 px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : "border-transparent"}`}
+                    {...register(registerName, registerRequired)}
+                />
+            )}
             {error && <p className="mx-2 text-xs text-error">{error}</p>}
         </div>
     );
