@@ -6,12 +6,12 @@ import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
 import useAuth from "@/contexts/auth";
 import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/UIComponents/Input";
 
 interface LoginForm {
-    email: string
-    password: string
+    email: string;
+    password: string;
 }
 
 export default function Login() {
@@ -24,7 +24,7 @@ export default function Login() {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm<LoginForm>()
+    } = useForm<LoginForm>();
 
     const handleLogin = async (data: LoginForm) => {
         try {
@@ -37,7 +37,7 @@ export default function Login() {
             }
         } catch (error) {
             // TODO: Display form errors
-            console.log(error)
+            console.log(error);
         }
     };
 
