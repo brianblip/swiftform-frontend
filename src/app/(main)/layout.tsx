@@ -23,13 +23,13 @@ export default function RootLayout({
             <body
                 className={`${sora.className} relative bg-primary-neutral text-primary-white md:flex`}
             >
-                {/* <ProtectRoute>
-                    <AuthProvider> */}
+                <ProtectRoute>
+                    <AuthProvider>
                 <TopBar />
                 <Sidebar />
                 {children}
-                {/* </AuthProvider>
-                </ProtectRoute> */}
+                </AuthProvider>
+                </ProtectRoute>
             </body>
         </html>
     );
