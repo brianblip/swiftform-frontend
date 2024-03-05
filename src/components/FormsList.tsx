@@ -1,5 +1,5 @@
 import Link from "next/link";
-import useForm from "@/contexts/allForms";
+import useForm from "@/contexts/forms";
 import { useEffect, useState } from "react";
 import ErrorPage from "@/components/ErrorPage";
 import { DeleteForeverOutlined, MoreHoriz } from "@mui/icons-material";
@@ -9,12 +9,7 @@ interface FormListID {
 }
 
 export default function FormsList({ formId }: FormListID) {
-    const { forms, isLoading, error, fetchForms, deleteForm } = useForm();
-    
-
-    useEffect(() => {
-        fetchForms();
-    }, [fetchForms]);
+    const { forms, isLoading, error, deleteForm } = useForm();
 
     const handleDelete = async (id: number, title: string) => {
         const isConfirmed = window.confirm(
@@ -27,7 +22,6 @@ export default function FormsList({ formId }: FormListID) {
 
         try {
             await deleteForm(id);
-            // Trigger a refetch after deletion
             window.dispatchEvent(new CustomEvent("formCreated"));
         } catch (error) {
             console.error("Error deleting form:", error);
@@ -66,9 +60,9 @@ export default function FormsList({ formId }: FormListID) {
                                             <MoreHoriz className="text-2xl hover:text-zinc-500" />
                                         </button>
                                         <button
-                                        onClick={() =>
-                                            handleDelete(form.id, form.name)
-                                        }
+                                            onClick={() =>
+                                                handleDelete(form.id, form.name)
+                                            }
                                         >
                                             <DeleteForeverOutlined className="text-2xl hover:text-red-500" />
                                         </button>
