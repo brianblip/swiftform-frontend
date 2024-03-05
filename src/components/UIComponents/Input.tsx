@@ -14,10 +14,12 @@ export default function Input({
     label,
     required,
     type,
-    error,
     register,
     registerName,
     registerRequired,
+    error,
+    isPasswordVisible,
+    setIsPasswordVisible,
 }: InputProps) {
     return (
         <div className="grid gap-1">
