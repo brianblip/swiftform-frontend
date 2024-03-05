@@ -128,7 +128,7 @@ export default function RegistrationPage() {
                                 value: 8,
                                 message: "Password must be 8 characters",
                             },
-                            validate: (value) =>
+                            validate: (value: string) =>
                                 value === password || "Passwords do not match",
                         }}
                         error={errors.confirmPassword?.message}
