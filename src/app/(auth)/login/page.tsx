@@ -45,7 +45,7 @@ export default function Login() {
                     setLoginError("")
                 }, 7000)
             }
-            console.log(error)
+            console.log(error);
 
         })
 
