@@ -132,7 +132,7 @@ export default function RegistrationPage() {
                                 type={isPasswordVisible ? "text" : "password"}
                                 required
                                 className={`rounded border ${errors.password ? "border-red-500" : "border-black"
-                                    } p-3`}
+                                    } p-3 pr-10`}
                                 id="password"
                                 {...formRegister("password", {
                                     required: "Password is required",
