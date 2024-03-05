@@ -6,13 +6,13 @@ import Birdie from "@/assets/Birdie.png";
 import Link from "next/link";
 import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/UIComponents/Input";
 interface RegisterForm {
-    name: string
-    email: string
-    password: string
-    confirmPassword: string
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
 }
 export default function RegistrationPage() {
     const router = useRouter();
@@ -23,11 +23,12 @@ export default function RegistrationPage() {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm<RegisterForm>()
+    } = useForm<RegisterForm>();
     const password = watch("password", ""); // Get the value of the password field
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [isReenterPasswordVisible, setIsReenterPasswordVisible] = useState(false);
+    const [isReenterPasswordVisible, setIsReenterPasswordVisible] =
+        useState(false);
 
     const handleFormSubmit = async (data: RegisterForm) => {
         try {
@@ -51,7 +52,7 @@ export default function RegistrationPage() {
                 console.log(error);
             }
         }
-    }
+    };
 
     return (
         <div className="flex min-h-dvh w-dvw items-center justify-center bg-white text-primary-black">
