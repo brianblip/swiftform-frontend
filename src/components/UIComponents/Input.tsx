@@ -27,8 +27,8 @@ export default function Input({
     return (
         <div className="grid gap-1">
             <label
-                className={`text-sm font-semibold ${error ? "text-error" : ""}`}
                 htmlFor={label}
+                className={`text-sm font-medium ${error ? "text-error" : ""}`}
             >
                 {label}
                 {required ? "*" : ""}
