@@ -1,11 +1,11 @@
 "use client";
 
-import { FormParam } from "@@/types";
+import { FormParam, Form } from "@@/types";
 import useAuth from "@/contexts/auth";
 import { Edit } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
-import { SectionProvider } from "@/contexts/formSection";
-import useForm, { FormProvider } from "@/contexts/singleForm";
+import { SectionProvider } from "@/contexts/sections";
+import useForm, { FormProvider } from "@/contexts/forms";
 import ResponseComponent from "@/components/ResponseComponent";
 import DynamicForm from "@/components/FormBuilder/DynamicForm";
 import { ErrorBoundary } from "@/components";
@@ -13,27 +13,16 @@ import { ErrorBoundary } from "@/components";
 export default function FormPage({ params }: { params: FormParam }) {
     const { id } = params;
     const { user } = useAuth();
-    const { form, isLoading, error, fetchForm } = useForm(id);
+    const { forms, isLoading, error } = useForm();
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await fetchForm(id);
-            } catch (error) {
-                console.error("Error fetching form data:", error);
-            }
-        };
-
-        fetchData();
-    }, [fetchForm, id]);
-
-    useEffect(() => {
-        if (form) {
-            setTitleInput(form.name || "");
+        console.log("Fetched Forms Array:", forms);
+        if (forms && forms.length > 0 && forms[id - 1]) {
+            setTitleInput(forms[id - 1].name || "");
         }
-    }, [form]);
+    }, [forms, id]);
 
     const onClickOpenQuestionSection = () => {
         setIsQuestionSectionOpen(true);
@@ -58,9 +47,11 @@ export default function FormPage({ params }: { params: FormParam }) {
         return <main className={mainClassNames}>Loading...</main>;
     }
 
-    if (!form) {
+    if (!forms || !forms[id - 1]) {
         return <main className={mainClassNames}>No form found.</main>;
     }
+
+    const currentForm = forms[id - 1];
 
     return (
         <ErrorBoundary isLoading={isLoading} error={error}>
@@ -95,12 +86,12 @@ export default function FormPage({ params }: { params: FormParam }) {
                     {isQuestionSectionOpen ? (
                         <SectionProvider>
                             <DynamicForm
-                                id={params.id}
+                                id={currentForm.id}
                                 user_id={user?.id || 0}
-                                title={form.name}
-                                sections={form.sections}
+                                title={currentForm.name}
+                                sections={currentForm.sections}
                                 titleInput={titleInput}
-                                description={form?.description ?? ""}
+                                description={currentForm?.description ?? ""}
                                 onSubmit={handleFormSubmission}
                             />
                         </SectionProvider>
