@@ -80,24 +80,25 @@ const useAuthStore = () => {
             password,
             avatar_url,
         }: RegisterProps) => {
-            // Check if email already exists
-            const { data: emailExists } = await api.get(`/auth/check-email?email=${email}`);
-            if (emailExists) {
-                throw new Error("Email already exists");
+            try {
+                const { data } = await api.post("/auth/register", {
+                    name,
+                    email,
+                    password,
+                    avatar_url,
+                });
+        
+                const newUser = data.data;
+                await mutate(newUser);
+        
+                return data;
+            } catch (error) {
+                if (error.response && error.response.data.message === "Email already exists") {
+                    throw new Error("Email already exists");
+                } else {
+                    throw new Error("Registration failed");
+                }
             }
-        
-            // If email does not exist, proceed with registration
-            const { data } = await api.post("/auth/register", {
-                name,
-                email,
-                password,
-                avatar_url,
-            });
-        
-            const newUser = data.data;
-            await mutate(newUser);
-        
-            return data;
         },
     }));
 };
