@@ -6,8 +6,6 @@ import Image from "next/image";
 import Birdie from "@/assets/Birdie.png";
 import useAuth from "@/contexts/auth";
 import Link from "next/link";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useForm, SubmitHandler } from "react-hook-form"
 import Input from "@/components/UIComponents/Input";
 
@@ -53,10 +51,6 @@ export default function Login() {
 
 
     };
-
-    function onClickToggleVisibility() {
-        setIsPasswordVisible(!isPasswordVisible);
-    }
 
     return (
         <main className="flex min-h-dvh w-dvw items-center justify-center bg-white text-primary-black">
