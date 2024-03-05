@@ -19,7 +19,7 @@ export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
+    const [loginError, setLoginError] = useState("")
     const {
         register,
         handleSubmit,
@@ -28,18 +28,29 @@ export default function Login() {
     } = useForm<LoginForm>()
 
     const handleLogin = async (data: LoginForm) => {
-        try {
-            const success = await login({
-                email: data.email,
-                password: data.password,
-            });
-            if (success) {
+
+        await login({
+            email: data.email,
+            password: data.password,
+        }).then(response => {
+            if (response.message === "Invalid email or password") {
+                throw Error(response.message)
+            } else if (response.data) {
                 router.push("/");
             }
-        } catch (error) {
-            // TODO: Display form errors
+            throw Error("there's something wrong...")
+        }).catch(error => {
+            if (error.message === "Invalid email or password") {
+                setLoginError(error.message)
+                setTimeout(() => {
+                    setLoginError("")
+                }, 7000)
+            }
             console.log(error)
-        }
+
+        })
+
+
     };
 
     function onClickToggleVisibility() {
@@ -58,7 +69,11 @@ export default function Login() {
                 <form onSubmit={handleSubmit(handleLogin)} className="grid gap-4">
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
-                            {errors.email ? (
+                            {loginError ? (
+                                <span className="text-red-500">
+                                    {loginError}
+                                </span>
+                            ) : errors.email ? (
                                 <span className="text-red-500">
                                     {errors.email.message}
                                 </span>
@@ -66,7 +81,7 @@ export default function Login() {
                         </label>
                         <input
                             type="email"
-                            className={`rounded border ${errors.email ? "border-red-500" : "border-black"
+                            className={`rounded border ${errors.email || loginError ? "border-red-500" : "border-black"
                                 } p-3`}
                             id="email"
                             {...register("email", {
@@ -85,15 +100,20 @@ export default function Login() {
                             htmlFor="password"
                             className="text-sm font-medium"
                         >
-                            {errors.password ? (
+                            {loginError ? (
                                 <span className="text-red-500">
-                                    {errors.password.message}
+                                    {loginError}
                                 </span>
-                            ) : "Password"}                        </label>
+                            ) : errors.email ? (
+                                <span className="text-red-500">
+                                    {errors.email.message}
+                                </span>
+                            ) : "Email"}
+                        </label>
                         <div className="relative flex items-center">
                             <input
                                 type={isPasswordVisible ? "text" : "password"}
-                                className={`rounded border ${errors.password ? "border-red-500" : "border-black"
+                                className={`rounded border ${errors.password || loginError ? "border-red-500" : "border-black"
                                     } p-3`}
                                 id="password"
                                 {...register("password", {
