@@ -17,6 +17,7 @@ interface RegisterForm {
 }
 export default function RegistrationPage() {
     const router = useRouter();
+    const [errorMessage, setErrorMessage] = useState("")
     const { register: authRegister } = useAuth();
     const {
         register: formRegister,
@@ -39,9 +40,17 @@ export default function RegistrationPage() {
             });
             router.push("/");
 
-        } catch (error) {
-            //TODO handle error
-            console.log(error)
+        } catch (error: any) {
+            if (error.message === "Email already exists") {
+                console.log(error.message)
+                setErrorMessage(error.message)
+                setTimeout(()=>{
+                    setErrorMessage("")
+                }, 7000)
+            } else {
+                // Other error handling logic
+                console.log(error);
+            }
         }
     }
 
@@ -94,7 +103,11 @@ export default function RegistrationPage() {
 
                     <div className="grid gap-1">
                         <label htmlFor="email" className="text-sm font-medium">
-                            {errors.email ? (
+                            {errorMessage ? (
+                                <span className="text-red-500">
+                                    {errorMessage}
+                                </span>
+                            ) : errors.email ? (
                                 <span className="text-red-500">
                                     {errors.email.message}
                                 </span>
@@ -102,7 +115,7 @@ export default function RegistrationPage() {
                         </label>
                         <input
                             type="email"
-                            className={`rounded border ${errors.email ? "border-red-500" : "border-black"
+                            className={`rounded border ${errors.email || errorMessage ? "border-red-500" : "border-black"
                                 } p-3`}
                             id="email"
                             {...formRegister("email", {
@@ -132,7 +145,7 @@ export default function RegistrationPage() {
                                 type={isPasswordVisible ? "text" : "password"}
                                 required
                                 className={`rounded border ${errors.password ? "border-red-500" : "border-black"
-                                    } p-3`}
+                                    } p-3 pr-10`}
                                 id="password"
                                 {...formRegister("password", {
                                     required: "Password is required",

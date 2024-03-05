@@ -1,4 +1,6 @@
 export interface User {
+    message?: string;
+    data?: any;
     id: number;
     name: string;
     email: string;

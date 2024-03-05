@@ -44,15 +44,20 @@ const useAuthStore = () => {
          * Sends login request
          */
         login: async ({ email, password }: LoginProps) => {
-            const { data } = await api.post("/auth/login", {
-                email,
-                password,
-            });
-
-            const user = data.data;
-            await mutate(user);
-
-            return data;
+            try {
+                const { data } = await api.post("/auth/login", {
+                    email,
+                    password,
+                });
+        
+                const user = data.data;
+                await mutate(user);
+        
+                return data;
+            } catch (error) {
+                // TODO: Handle login errors
+                throw new Error("Invalid email or password");
+            }
         },
 
         /**
@@ -75,16 +80,23 @@ const useAuthStore = () => {
             password,
             avatar_url,
         }: RegisterProps) => {
+            // Check if email already exists
+            const { data: emailExists } = await api.get(`/auth/check-email?email=${email}`);
+            if (emailExists) {
+                throw new Error("Email already exists");
+            }
+        
+            // If email does not exist, proceed with registration
             const { data } = await api.post("/auth/register", {
                 name,
                 email,
                 password,
                 avatar_url,
             });
-
+        
             const newUser = data.data;
             await mutate(newUser);
-
+        
             return data;
         },
     }));
