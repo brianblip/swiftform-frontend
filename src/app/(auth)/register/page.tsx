@@ -32,19 +32,24 @@ export default function RegistrationPage() {
 
     const handleFormSubmit = async (data: RegisterForm) => {
         try {
-            await authRegister({
+            const registered = await authRegister({
                 name: data.name,
                 email: data.email,
                 password: data.password,
                 avatar_url: "",
             });
+            console.log(registered)
+            if (registered.message === "User already exists.") {
+                throw Error(registered.message)
+            }
             router.push("/");
 
         } catch (error: any) {
-            if (error.message === "Email already exists") {
+            console.log(error)
+            if (error.message === "User already exists.") {
                 console.log(error.message)
                 setErrorMessage(error.message)
-                setTimeout(()=>{
+                setTimeout(() => {
                     setErrorMessage("")
                 }, 7000)
             } else {
