@@ -3,12 +3,11 @@
 import { mutate } from "swr";
 import { Section } from "@@/types";
 import React, { useState } from "react";
-import useSections from "@/contexts/formSection";
+import useSections from "@/contexts/sections";
 import { Button, TextField } from "@mui/material";
-import useForm, { FormContext } from "@/contexts/singleForm";
 
 type DynamicFormProps = {
-    id: number;
+    id: number | undefined;
     user_id: number;
     title: string | undefined;
     sections: Section[];
@@ -27,8 +26,7 @@ export default function DynamicForm({
     onSubmit,
 }: DynamicFormProps) {
     const [formData, setFormData] = useState<any>({});
-    const { createSection } = useSections();
-    const { fetchForm } = useForm(id);
+    const { createSection, deleteSection } = useSections();
 
     const handleChange = (fieldId: string, value: string) => {
         setFormData((prevData: any) => ({
@@ -39,23 +37,25 @@ export default function DynamicForm({
 
     const handleCreateSection = async () => {
         try {
-            const newSection = await createSection("New Section", id);
+            const newSection = await createSection("New Section", id || 0);
             console.log("New Section:", newSection);
-            mutateNewSection(newSection);
+            mutateFormsList();
         } catch (error) {
             console.error("Error creating section:", error);
         }
     };
 
-    const mutateNewSection = (newSection: Section) => {
-        const updatedSections = [...sections, newSection];
-        const updatedFormData = {
-            ...formData,
-            sections: updatedSections,
-        };
-        setFormData(updatedFormData);
-        fetchForm(id);
-        mutate(`/forms/${id}`, updatedFormData, false);
+    const handleDeleteSection = async (sectionId: number) => {
+        try {
+            await deleteSection(sectionId);
+            mutateFormsList();
+        } catch (error) {
+            console.error("Error deleting section:", error);
+        }
+    };
+
+    const mutateFormsList = () => {
+        mutate("/forms");
     };
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -86,16 +86,29 @@ export default function DynamicForm({
                     rows={4}
                     variant="outlined"
                     value={description}
-                    onChange={(e) => handleChange("description", e.target.value)}
+                    onChange={(e) =>
+                        handleChange("description", e.target.value)
+                    }
                 />
             </div>
-            {sections.map((section: Section) => (
-                <section key={section.id} className="mb-4">
-                    <h2>{section.title}</h2>
-                    <p>Form ID: {id}</p>
-                    <p>Section FormId:{section.form_id}</p>
-                </section>
-            ))}
+            {Array.isArray(sections) && sections.length > 0 ? (
+                sections.map((section: Section) => (
+                    <section key={section.id} className="mb-4">
+                        <h2>{section.title}</h2>
+                        <p>Form ID: {id}</p>
+                        <p>Section FormId:{section.form_id}</p>
+                        <Button
+                            onClick={() => handleDeleteSection(section.id)}
+                            variant="outlined"
+                            color="secondary"
+                        >
+                            Delete Section
+                        </Button>
+                    </section>
+                ))
+            ) : (
+                <p>No sections found.</p>
+            )}
             <Button
                 onClick={handleCreateSection}
                 variant="contained"
