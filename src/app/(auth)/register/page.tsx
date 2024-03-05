@@ -6,8 +6,6 @@ import Birdie from "@/assets/Birdie.png";
 import Link from "next/link";
 import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useForm, SubmitHandler } from "react-hook-form"
 import Input from "@/components/UIComponents/Input";
 interface RegisterForm {
@@ -53,14 +51,6 @@ export default function RegistrationPage() {
                 console.log(error);
             }
         }
-    }
-
-    function onClickTogglePasswordVisibility() {
-        setIsPasswordVisible(!isPasswordVisible);
-    }
-
-    function onClickToggleReenterPasswordVisibility() {
-        setIsReenterPasswordVisible(!isReenterPasswordVisible);
     }
 
     return (
