@@ -1,3 +1,4 @@
+"use client";
 import useSWR from "swr";
 import { Form } from "@@/types";
 import api from "@/services/api";
@@ -7,47 +8,31 @@ import { createContext, ReactNode, useContext } from "react";
 export type CreateFormData = Omit<Form, "created_at" | "updated_at">;
 
 type FormState = {
-    form?: Form | null;
+    forms: Form[];
     isLoading: boolean;
     error: Error | null;
-    fetchForm: (formId: number) => Promise<Form>;
     createForm: (formData: CreateFormData) => Promise<Form>;
     updateForm: (formId: number, formData: Form) => Promise<Form>;
     deleteForm: (formId: number) => Promise<void>;
 };
 
-const useFormStore = (defaultFormId: number | null) => {
+const useFormStore = () => {
     const fetcher = async (url: string) => {
         const { data } = await api.get(url);
         return data.data || data;
     };
 
     const {
-        data: form,
+        data: forms,
         isLoading,
         error,
         mutate,
-    } = useSWR<Form | null>(
-        defaultFormId ? `/forms/${defaultFormId}` : null,
-        fetcher,
-    );
+    } = useSWR<Form[]>("/forms", fetcher);
 
     return createStore<FormState>((set) => ({
-        form,
+        forms: forms || [],
         isLoading,
         error,
-
-        fetchForm: async (formId: number) => {
-            try {
-                const { data } = await api.get(`/forms/${formId}`);
-                console.log("Fetched form data:", data); // Log the fetched data
-                await mutate(data.data);
-                return data.data;
-            } catch (error) {
-                console.error("Error fetching form:", error);
-                throw error;
-            }
-        },
 
         createForm: async (formData: CreateFormData) => {
             try {
@@ -74,7 +59,7 @@ const useFormStore = (defaultFormId: number | null) => {
         deleteForm: async (formId: number) => {
             try {
                 await api.delete(`/forms/${formId}`);
-                await mutate(null);
+                await mutate([]);
             } catch (error) {
                 console.error("Error deleting form:", error);
                 throw error;
@@ -84,9 +69,7 @@ const useFormStore = (defaultFormId: number | null) => {
 };
 
 export const FormContext =
-    createContext<(defaultFormId: number | null) => StoreApi<FormState>>(
-        useFormStore,
-    );
+    createContext<() => StoreApi<FormState>>(useFormStore);
 
 export function FormProvider({ children }: { children: ReactNode }) {
     return (
@@ -96,8 +79,6 @@ export function FormProvider({ children }: { children: ReactNode }) {
     );
 }
 
-const useForm = (defaultFormId: number | null) => {
-    return useContext(FormContext)(defaultFormId).getState();
-};
+const useForm = () => useContext(FormContext)().getState();
 
 export default useForm;
