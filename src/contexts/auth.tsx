@@ -118,9 +118,11 @@ export function ProtectRoute({ children }: { children: ReactNode }) {
     }, [isAuthLoading, router, user]);
 
     return (
-        <ErrorBoundary isLoading={protectRouteLoading} error={authError}>
-            {children}
-        </ErrorBoundary>
+        <main className="grid min-h-dvh w-dvw place-items-center p-8">
+            <ErrorBoundary isLoading={protectRouteLoading} error={authError}>
+                {children}
+            </ErrorBoundary>
+        </main>
     );
 }
 
