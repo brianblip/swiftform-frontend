@@ -1,11 +1,13 @@
 interface InputProps {
     label: string;
     required?: boolean;
-    type: "text" | "textarea";
-    error: any;
+    type: "text" | "email" | "password" | "textarea";
     register: any;
     registerName: string;
     registerRequired?: {};
+    error: any;
+    isPasswordVisible?: boolean;
+    setIsPasswordVisible?: any;
 }
 
 export default function Input({
