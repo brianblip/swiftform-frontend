@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useForm, SubmitHandler } from "react-hook-form"
+import Input from "@/components/UIComponents/Input";
 interface RegisterForm {
     name: string
     email: string
