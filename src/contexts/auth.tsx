@@ -92,7 +92,7 @@ const useAuthStore = () => {
                 await mutate(newUser);
         
                 return data;
-            } catch (error) {
+            } catch (error:any) {
                 if (error.response && error.response.data.message === "Email already exists") {
                     throw new Error("Email already exists");
                 } else {
