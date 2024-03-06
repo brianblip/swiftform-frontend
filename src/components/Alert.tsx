@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 interface alertParams {
     message?: string;
-    status: "success" | "error";
+    status: "success" | "Error";
 }
 
 export default function Alert({
@@ -38,7 +38,7 @@ export default function Alert({
             >
                 <button
                     onClick={onClickCloseAlert}
-                    className={`absolute right-0.5 top-0.5 grid place-items-center rounded hover:bg-primary-black/10 ${status === "error" ? "text-primary-white" : ""}`}
+                    className={`absolute right-0.5 top-0.5 grid place-items-center rounded hover:bg-primary-black/10 ${status === "Error" ? "text-primary-white" : ""}`}
                 >
                     <CloseIcon className="text-sm" />
                 </button>
@@ -49,7 +49,7 @@ export default function Alert({
                 )}
                 <div className="flex gap-2 overflow-x-scroll whitespace-nowrap">
                     <h1
-                        className={`font-semibold ${status === "error" ? "text-primary-white" : ""}`}
+                        className={`font-semibold ${status === "Error" ? "text-primary-white" : ""}`}
                     >
                         {message}
                     </h1>
