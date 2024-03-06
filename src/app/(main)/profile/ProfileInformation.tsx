@@ -2,6 +2,7 @@ import Input from "../../../components/Input";
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import api from "@/services/api";
 
 export default function ProfileInformation() {
     const formRef = useRef<HTMLFormElement | null>(null);
@@ -20,6 +21,8 @@ export default function ProfileInformation() {
         }
     };
 
+    const backendURL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!formRef.current) return; // Check if formRef is null
@@ -28,19 +31,15 @@ export default function ProfileInformation() {
         if (file) formData.append("file", file);
 
         try {
-            const response = await axios.patch(
-                "http://localhost:5000/api/v1/upload",
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                    withCredentials: true,
+            const response = await api.patch("/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
                 },
-            );
+                withCredentials: true,
+            });
             const avatar_url = response.data.avatar_url;
             if (avatar_url) {
-                setImageSrc(`http://localhost:5000${response.data.avatar_url}`);
+                setImageSrc(`${backendURL}${response.data.avatar_url}`);
             }
             console.log("Success:");
         } catch (error) {
@@ -48,27 +47,24 @@ export default function ProfileInformation() {
         }
     };
 
-    const fetchUserProfile = async () => {
-        try {
-            const response = await axios.get(
-                "http://localhost:5000/api/v1/users/me",
-                {
-                    withCredentials: true,
-                },
-            );
-            const avatarUrl = response.data.data.avatar_url;
-            if (avatarUrl) {
-                setImageSrc(`http://localhost:5000${avatarUrl}`);
-            } else {
-                setImageSrc("");
-            }
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
-
     useEffect(() => {
-        fetchUserProfile();
+        const fetchData = async () => {
+            try {
+                const response = await api.get("/users/me", {
+                    withCredentials: true,
+                });
+                const avatar_url = response.data.data.avatar_url;
+                if (avatar_url) {
+                    setImageSrc(`${backendURL}${avatar_url}`);
+                } else {
+                    setImageSrc("");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     console.log("Current imageSrc:", imageSrc);
