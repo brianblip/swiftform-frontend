@@ -8,6 +8,7 @@ import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/UIComponents/Input";
+import Alert from "@/components/Alert";
 interface RegisterForm {
     name: string;
     email: string;
@@ -16,7 +17,7 @@ interface RegisterForm {
 }
 export default function RegistrationPage() {
     const router = useRouter();
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
     const { register: authRegister } = useAuth();
     const {
         register: formRegister,
@@ -38,22 +39,25 @@ export default function RegistrationPage() {
                 password: data.password,
                 avatar_url: "",
             });
-            console.log(registered)
+            console.log(registered);
             if (registered.message === "User already exists.") {
-                throw Error(registered.message)
+                throw Error(registered.message);
             }
             router.push("/");
-
         } catch (error: any) {
-            console.log(error)
+            console.log(error);
             if (error.message === "User already exists.") {
-                console.log(error.message)
-                setErrorMessage(error.message)
+                console.log(error.message);
+                setErrorMessage(error.message);
                 setTimeout(() => {
-                    setErrorMessage("")
-                }, 7000)
+                    setErrorMessage("");
+                }, 5000);
             } else {
                 // Other error handling logic
+                setErrorMessage(error.message);
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 5000);
                 console.log(error);
             }
         }
@@ -153,6 +157,7 @@ export default function RegistrationPage() {
                     <span className="font-medium"> Log in</span>
                 </Link>
             </div>
+            <Alert message={errorMessage} status="Error" />
         </div>
     );
 }
