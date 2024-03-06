@@ -14,9 +14,10 @@ type FormState = {
     createForm: (formData: CreateFormData) => Promise<Form>;
     updateForm: (formId: number, formData: Form) => Promise<Form>;
     deleteForm: (formId: number) => Promise<void>;
+    getForm: (formId: number) => Form | null;
 };
 
-const useFormStore = () => {
+const useFormStore = (formId?: number) => {
     const fetcher = async (url: string) => {
         const { data } = await api.get(url);
         return data.data || data;
@@ -33,7 +34,9 @@ const useFormStore = () => {
         forms: forms || [],
         isLoading,
         error,
-
+        getForm: (formId: number) => {
+            return forms?.find((form) => form.id === formId) || null;
+        },
         createForm: async (formData: CreateFormData) => {
             try {
                 const { data } = await api.post("/forms", formData);
