@@ -8,6 +8,7 @@ import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/UIComponents/Input";
+import Alert from "@/components/Alert";
 interface RegisterForm {
     name: string;
     email: string;
@@ -153,6 +154,7 @@ export default function RegistrationPage() {
                     <span className="font-medium"> Log in</span>
                 </Link>
             </div>
+            <Alert message={errorMessage} status="Error" />
         </div>
     );
 }
