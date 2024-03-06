@@ -15,10 +15,10 @@ export default function ErrorBoundary({
     children,
 }: ErrorBoundaryProps) {
     if (error) {
-        return <ErrorPage />;
+        return <main className="grid min-h-dvh w-dvw place-items-center p-8"><ErrorPage /></main>;
     }
 
-    if (isLoading) return <LoadingPage />;
+    if (isLoading) return <main className="grid min-h-dvh w-dvw place-items-center p-8"> <LoadingPage /> </main>;
 
     return <>{children}</>;
 }
