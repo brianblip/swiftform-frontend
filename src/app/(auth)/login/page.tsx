@@ -19,7 +19,7 @@ export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [loginError, setLoginError] = useState("")
+    const [loginError, setLoginError] = useState("");
     const {
         register,
         handleSubmit,
@@ -28,29 +28,27 @@ export default function Login() {
     } = useForm<LoginForm>();
 
     const handleLogin = async (data: LoginForm) => {
-
         await login({
             email: data.email,
             password: data.password,
-        }).then(response => {
-            if (response.message === "Invalid email or password") {
-                throw Error(response.message)
-            } else if (response.data) {
-                router.push("/");
-            }
-            throw Error("there's something wrong...")
-        }).catch(error => {
-            if (error.message === "Invalid email or password") {
-                setLoginError(error.message)
-                setTimeout(() => {
-                    setLoginError("")
-                }, 7000)
-            }
-            console.log(error);
-
         })
-
-
+            .then((response) => {
+                if (response.message === "Invalid email or password") {
+                    throw Error(response.message);
+                } else if (response.data) {
+                    router.push("/");
+                }
+                throw Error("there's something wrong...");
+            })
+            .catch((error) => {
+                if (error.message === "Invalid email or password") {
+                    setLoginError(error.message);
+                    setTimeout(() => {
+                        setLoginError("");
+                    }, 5000);
+                }
+                console.log(error);
+            });
     };
 
     return (
