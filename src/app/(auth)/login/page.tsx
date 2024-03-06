@@ -8,6 +8,7 @@ import useAuth from "@/contexts/auth";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/UIComponents/Input";
+import Alert from "@/components/Alert";
 
 interface LoginForm {
     email: string;
@@ -113,6 +114,7 @@ export default function Login() {
                     <span className="font-medium"> Sign up</span>
                 </Link>
             </div>
+            <Alert message={loginError} status="Error" />
         </main>
     );
 }
