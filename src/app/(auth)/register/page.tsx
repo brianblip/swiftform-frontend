@@ -51,10 +51,14 @@ export default function RegistrationPage() {
                 console.log(error.message)
                 setErrorMessage(error.message)
                 setTimeout(() => {
-                    setErrorMessage("")
-                }, 7000)
+                    setErrorMessage("");
+                }, 5000);
             } else {
                 // Other error handling logic
+                setErrorMessage(error.message);
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 5000);
                 console.log(error);
             }
         }
