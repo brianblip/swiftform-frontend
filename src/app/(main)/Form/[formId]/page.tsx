@@ -1,24 +1,36 @@
 "use client";
 
-import { FormParam, Form } from "@@/types";
 import useAuth from "@/contexts/auth";
 import { Edit } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import { SectionProvider } from "@/contexts/sections";
-import useForm, { FormProvider } from "@/contexts/forms";
+import useForm from "@/contexts/forms";
 import ResponseComponent from "@/components/ResponseComponent";
 import DynamicForm from "@/components/FormBuilder/DynamicForm";
 import { ErrorBoundary } from "@/components";
+import { useRouter } from "next/navigation";
 
 export default function FormPage({ params }: { params: { formId: number } }) {
     const { formId } = params;
     const { user } = useAuth();
     const { isLoading, error, getForm } = useForm();
+    const router = useRouter();
 
     const activeForm = getForm(Number(formId));
 
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
+
+    // if form is not found, redirect to 404. Else, set the default value for the title input
+    useEffect(() => {
+        if (isLoading) return;
+
+        if (!activeForm) {
+            router.push("/404");
+        } else {
+            setTitleInput(activeForm.name);
+        }
+    }, [activeForm, isLoading, router]);
 
     const onClickOpenQuestionSection = () => {
         setIsQuestionSectionOpen(true);
@@ -39,10 +51,8 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     const mainClassNames =
         "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
 
-    console.log(activeForm);
-
     return (
-        <ErrorBoundary isLoading={isLoading} error={error}>
+        <ErrorBoundary isLoading={isLoading || !activeForm} error={error}>
             <main className={mainClassNames}>
                 <div className="flex w-full flex-col items-center gap-y-4">
                     <div className="flex w-full items-center justify-center">

@@ -17,7 +17,7 @@ type FormState = {
     getForm: (formId: number) => Form | null;
 };
 
-const useFormStore = (formId?: number) => {
+const useFormStore = () => {
     const fetcher = async (url: string) => {
         const { data } = await api.get(url);
         return data.data || data;
