@@ -10,10 +10,7 @@ interface alertParams {
     status: "success" | "Error";
 }
 
-export default function Alert({
-    message,
-    status = "success",
-}: alertParams) {
+export default function Alert({ message, status = "success" }: alertParams) {
     const [isAlertVisible, setIsAlertVisible] = useState(Boolean);
 
     useEffect(() => {
