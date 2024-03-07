@@ -1,28 +1,21 @@
+// DynamicForm.tsx
 "use client";
 
 import { mutate } from "swr";
-import { Section } from "@@/types";
+import { Form, Section } from "@@/types";
 import React, { useState } from "react";
 import useSections from "@/contexts/sections";
 import { Button, TextField } from "@mui/material";
 
 type DynamicFormProps = {
-    id: number | undefined;
+    form: Form;
     user_id: number;
-    title: string | undefined;
-    sections: Section[];
-    titleInput: string;
-    description: string;
     onSubmit: (formData: any) => void;
 };
 
 export default function DynamicForm({
-    id,
+    form,
     user_id,
-    title,
-    sections,
-    titleInput,
-    description,
     onSubmit,
 }: DynamicFormProps) {
     const [formData, setFormData] = useState<any>({});
@@ -37,7 +30,7 @@ export default function DynamicForm({
 
     const handleCreateSection = async () => {
         try {
-            const newSection = await createSection("New Section", id || 0);
+            const newSection = await createSection("New Section", form.id);
             console.log("New Section:", newSection);
             mutateFormsList();
         } catch (error) {
@@ -68,35 +61,24 @@ export default function DynamicForm({
             <div className="mb-4">
                 <TextField
                     fullWidth
-                    id="titleInput"
-                    name="titleInput"
-                    label="Title"
-                    variant="outlined"
-                    value={titleInput}
-                    onChange={(e) => handleChange("titleInput", e.target.value)}
-                />
-            </div>
-            <div className="mb-4">
-                <TextField
-                    fullWidth
                     id="description"
                     name="description"
                     label="Description"
                     multiline
                     rows={4}
                     variant="outlined"
-                    value={description}
+                    value={form.description || ""}
                     onChange={(e) =>
                         handleChange("description", e.target.value)
                     }
                 />
             </div>
-            {Array.isArray(sections) && sections.length > 0 ? (
-                sections.map((section: Section) => (
+            {Array.isArray(form.sections) && form.sections.length > 0 ? (
+                form.sections.map((section: Section) => (
                     <section key={section.id} className="mb-4">
                         <h2>{section.title}</h2>
-                        <p>Form ID: {id}</p>
-                        <p>Section FormId:{section.form_id}</p>
+                        <p>Form ID: {form.id}</p>
+                        <p>Section Form ID: {section.form_id}</p>
                         <Button
                             onClick={() => handleDeleteSection(section.id)}
                             variant="outlined"
