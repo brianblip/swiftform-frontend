@@ -122,12 +122,10 @@ export default function Home() {
                             label="Describe the form you want to generate..."
                             type="textarea"
                             error={generateFormErrors.description?.message}
-                            register={generateFormRegister}
-                            registerName="description"
-                            registerRequired={{
+                            {...generateFormRegister("description", {
                                 required:
                                     "Please provide a description for form.",
-                            }}
+                            })}
                         />
                         <button
                             className="rounded bg-primary-secondary px-5 py-3 disabled:bg-primary-black disabled:text-primary-secondary"
@@ -153,18 +151,15 @@ export default function Home() {
                             label="Form Name"
                             required
                             type="text"
-                            register={createFormRegister}
-                            registerName="name"
-                            registerRequired={{
+                            {...createFormRegister("name", {
                                 required: "Name is required",
-                            }}
+                            })}
                             error={createFormErrors.name?.message}
                         />
                         <Input
                             label="Description"
                             type="text"
-                            register={createFormRegister}
-                            registerName="description"
+                            {...createFormRegister("description")}
                             error={createFormErrors.description?.message}
                         />
                     </fieldset>
