@@ -2,8 +2,7 @@
 
 import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
-import { Form as FormType, ApiResponse } from "@@/types";
-import api from "@/services/api";
+import { Form as FormType } from "@@/types";
 import { CreateFormOptions } from "@/services";
 import Modal from "@/components/Modal";
 import Input from "@/components/UIComponents/Input";
@@ -13,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { generateFormJson, createNestedForm } from "@/services";
 import { AxiosError } from "axios";
 import useFormData from "@/contexts/forms";
+import { useSWRConfig } from "swr";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -20,6 +20,7 @@ export default function Home() {
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
+    const { mutate } = useSWRConfig();
 
     const { createForm } = useFormData();
 
@@ -74,6 +75,7 @@ export default function Home() {
         try {
             setIsGeneratingForm(true);
 
+            // todo: add generate form to context instead
             const response = await generateFormJson(data.description);
             const generatedFormJson = response.data;
 
@@ -85,6 +87,8 @@ export default function Home() {
                 await createNestedForm(generatedFormJson);
 
             const newForm = nestedFormResponse.data;
+
+            await mutate("/forms");
 
             router.push(`/Form/${newForm?.id}`);
         } catch (e) {
