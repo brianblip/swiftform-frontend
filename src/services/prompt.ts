@@ -32,5 +32,6 @@ export const generateFormJson = async (description: string) => {
     const response = await api.post<ApiResponse<GeneratedForm>>("/prompt", {
         text: description,
     });
+
     return response.data;
 };
