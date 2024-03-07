@@ -8,10 +8,11 @@ import { CreateFormOptions } from "@/services";
 import Modal from "@/components/Modal";
 import Input from "@/components/UIComponents/Input";
 import SuggestionButton from "@/components/SuggestionButton";
-import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { generateFormJson, createNestedForm } from "@/services";
+import { AxiosError } from "axios";
+import useFormData from "@/contexts/forms";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -19,6 +20,8 @@ export default function Home() {
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
+
+    const { createForm } = useFormData();
 
     useEffect(() => {
         const onClickCloseModal = (e: MouseEvent) => {
@@ -57,12 +60,7 @@ export default function Home() {
         try {
             setIsCreatingForm(true);
 
-            const response = await api.post<ApiResponse<FormType>>(
-                `/forms`,
-                data,
-            );
-
-            const newForm = response.data.data;
+            const newForm = await createForm(data);
 
             router.push(`/Form/${newForm?.id}`);
         } catch (e) {
@@ -90,6 +88,9 @@ export default function Home() {
 
             router.push(`/Form/${newForm?.id}`);
         } catch (e) {
+            if (e instanceof AxiosError) {
+                return alert(e.response?.data.message || e.message);
+            }
             alert(e);
         } finally {
             setIsGeneratingForm(false);

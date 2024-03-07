@@ -4,8 +4,9 @@ import { Form } from "@@/types";
 import api from "@/services/api";
 import { createStore, StoreApi } from "zustand";
 import { createContext, ReactNode, useContext } from "react";
+import { ApiResponse } from "@@/types";
 
-export type CreateFormData = Omit<Form, "created_at" | "updated_at">;
+export type CreateFormData = Partial<Pick<Form, "name" | "description">>;
 
 type FormState = {
     forms: Form[];
@@ -39,9 +40,17 @@ const useFormStore = () => {
         },
         createForm: async (formData: CreateFormData) => {
             try {
-                const { data } = await api.post("/forms", formData);
-                await mutate(data.data);
-                return data.data;
+                const { data } = await api.post<ApiResponse<Form>>(
+                    "/forms",
+                    formData,
+                );
+
+                const newForm = data.data;
+
+                if (!newForm) throw new Error("Error creating form");
+
+                await mutate([...(forms as Form[]), newForm]);
+                return newForm;
             } catch (error) {
                 console.error("Error creating form:", error);
                 throw error;
