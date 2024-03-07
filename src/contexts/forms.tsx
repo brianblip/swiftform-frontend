@@ -12,10 +12,10 @@ type FormState = {
     forms: Form[];
     isLoading: boolean;
     error: Error | null;
+    getForm: (formId: number) => Form | null;
     createForm: (formData: CreateFormData) => Promise<Form>;
     updateForm: (formId: number, formData: Form) => Promise<Form>;
     deleteForm: (formId: number) => Promise<void>;
-    getForm: (formId: number) => Form | null;
 };
 
 const useFormStore = () => {
@@ -35,9 +35,11 @@ const useFormStore = () => {
         forms: forms || [],
         isLoading,
         error,
+
         getForm: (formId: number) => {
             return forms?.find((form) => form.id === formId) || null;
         },
+
         createForm: async (formData: CreateFormData) => {
             try {
                 const { data } = await api.post<ApiResponse<Form>>(
@@ -60,7 +62,10 @@ const useFormStore = () => {
         updateForm: async (formId: number, formData: Form) => {
             try {
                 const { data } = await api.put(`/forms/${formId}`, formData);
-                await mutate(data.data);
+                const updatedForms = forms?.map((form) =>
+                    form.id === formId ? data.data : form,
+                );
+                await mutate(updatedForms, false);
                 return data.data;
             } catch (error) {
                 console.error("Error updating form:", error);
