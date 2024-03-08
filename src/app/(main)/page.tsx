@@ -2,16 +2,17 @@
 
 import useAuth from "@/contexts/auth";
 import { useRouter } from "next/navigation";
-import { Form as FormType, ApiResponse } from "@@/types";
-import api from "@/services/api";
+import { Form as FormType } from "@@/types";
 import { CreateFormOptions } from "@/services";
 import Modal from "@/components/Modal";
 import Input from "@/components/UIComponents/Input";
 import SuggestionButton from "@/components/SuggestionButton";
-import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { generateFormJson, createNestedForm } from "@/services";
+import { AxiosError } from "axios";
+import useFormData from "@/contexts/forms";
+import { useSWRConfig } from "swr";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -19,6 +20,9 @@ export default function Home() {
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
+    const { mutate } = useSWRConfig();
+
+    const { createForm } = useFormData();
 
     useEffect(() => {
         const onClickCloseModal = (e: MouseEvent) => {
@@ -57,12 +61,7 @@ export default function Home() {
         try {
             setIsCreatingForm(true);
 
-            const response = await api.post<ApiResponse<FormType>>(
-                `/forms`,
-                data,
-            );
-
-            const newForm = response.data.data;
+            const newForm = await createForm(data);
 
             router.push(`/Form/${newForm?.id}`);
         } catch (e) {
@@ -76,6 +75,7 @@ export default function Home() {
         try {
             setIsGeneratingForm(true);
 
+            // todo: add generate form to context instead
             const response = await generateFormJson(data.description);
             const generatedFormJson = response.data;
 
@@ -88,8 +88,13 @@ export default function Home() {
 
             const newForm = nestedFormResponse.data;
 
+            await mutate("/forms");
+
             router.push(`/Form/${newForm?.id}`);
         } catch (e) {
+            if (e instanceof AxiosError) {
+                return alert(e.response?.data.message || e.message);
+            }
             alert(e);
         } finally {
             setIsGeneratingForm(false);
@@ -122,12 +127,10 @@ export default function Home() {
                             label="Describe the form you want to generate..."
                             type="textarea"
                             error={generateFormErrors.description?.message}
-                            register={generateFormRegister}
-                            registerName="description"
-                            registerRequired={{
+                            {...generateFormRegister("description", {
                                 required:
                                     "Please provide a description for form.",
-                            }}
+                            })}
                         />
                         <button
                             className="rounded bg-primary-secondary px-5 py-3 disabled:bg-primary-black disabled:text-primary-secondary"
@@ -153,18 +156,15 @@ export default function Home() {
                             label="Form Name"
                             required
                             type="text"
-                            register={createFormRegister}
-                            registerName="name"
-                            registerRequired={{
+                            {...createFormRegister("name", {
                                 required: "Name is required",
-                            }}
+                            })}
                             error={createFormErrors.name?.message}
                         />
                         <Input
                             label="Description"
                             type="text"
-                            register={createFormRegister}
-                            registerName="description"
+                            {...createFormRegister("description")}
                             error={createFormErrors.description?.message}
                         />
                     </fieldset>
