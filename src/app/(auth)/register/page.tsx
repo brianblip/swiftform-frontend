@@ -81,9 +81,7 @@ export default function RegistrationPage() {
                     <Input
                         label="Name"
                         type="text"
-                        register={formRegister}
-                        registerName="name"
-                        registerRequired={{
+                        {...formRegister("name", {
                             required: "Name is required",
                             minLength: {
                                 value: 2,
@@ -93,45 +91,37 @@ export default function RegistrationPage() {
                                 value: 50,
                                 message: "Name should not exceed 50 characters",
                             },
-                        }}
+                        })}
                         error={errors.name?.message}
                     />
                     <Input
                         label="Email"
                         type="email"
-                        register={formRegister}
-                        registerName="email"
-                        registerRequired={{
+                        {...formRegister("email", {
                             required: "Email is required",
                             pattern: {
                                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                                 message: "Invalid email address",
                             },
-                        }}
+                        })}
                         error={errors.email?.message}
                     />
                     <Input
                         label="Password"
                         type="password"
-                        register={formRegister}
-                        registerName="password"
-                        registerRequired={{
+                        {...formRegister("password", {
                             required: "Password is required",
                             minLength: {
                                 value: 8,
                                 message: "Password must be 8 characters",
                             },
-                        }}
+                        })}
                         error={errors.password?.message}
                         isPasswordVisible={isPasswordVisible}
                         setIsPasswordVisible={setIsPasswordVisible}
                     />
                     <Input
-                        label="Re-enter your password"
-                        type="password"
-                        register={formRegister}
-                        registerName="confirmPassword"
-                        registerRequired={{
+                        {...formRegister("confirmPassword", {
                             required: "Please re-enter your password",
                             minLength: {
                                 value: 8,
@@ -139,7 +129,9 @@ export default function RegistrationPage() {
                             },
                             validate: (value: string) =>
                                 value === password || "Passwords do not match",
-                        }}
+                        })}
+                        label="Re-enter your password"
+                        type="password"
                         error={errors.confirmPassword?.message}
                         isPasswordVisible={isReenterPasswordVisible}
                         setIsPasswordVisible={setIsReenterPasswordVisible}

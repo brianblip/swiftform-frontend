@@ -67,30 +67,26 @@ export default function Login() {
                     <Input
                         label="email"
                         type="email"
-                        register={register}
-                        registerName="email"
-                        registerRequired={{
+                        {...register("email", {
                             required: "Email is required",
                             pattern: {
                                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                                 message: "Invalid email address",
                             },
-                        }}
+                        })}
                         error={errors.email?.message}
                     />
 
                     <Input
                         label="password"
                         type="password"
-                        register={register}
-                        registerName="password"
-                        registerRequired={{
+                        {...register("password", {
                             required: "Password is required",
                             minLength: {
                                 value: 8,
                                 message: "Password must be 8 characters",
                             },
-                        }}
+                        })}
                         error={errors.password?.message}
                         isPasswordVisible={isPasswordVisible}
                         setIsPasswordVisible={setIsPasswordVisible}

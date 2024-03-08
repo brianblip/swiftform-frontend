@@ -36,7 +36,7 @@ const useSectionStore = () => {
                     title,
                     form_id: formId,
                 });
-                mutateSections([...(sections || []), data.data], false); // Mutate and revalidate
+                mutateSections([...(sections || []), data.data], false);
                 return data.data;
             } catch (error) {
                 console.error("Error creating section:", error);

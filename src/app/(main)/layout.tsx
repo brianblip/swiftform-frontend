@@ -5,6 +5,7 @@ import "../globals.css";
 import TopBar from "@/components/TopBar";
 import Sidebar from "@/components/SideBar";
 import { AuthProvider, ProtectRoute } from "@/contexts/auth";
+import { FormProvider } from "@/contexts/forms";
 
 const sora = Sora({ subsets: ["latin"] });
 
@@ -25,10 +26,12 @@ export default function RootLayout({
             >
                 <ProtectRoute>
                     <AuthProvider>
-                <TopBar />
-                <Sidebar />
-                {children}
-                </AuthProvider>
+                        <FormProvider>
+                            <TopBar />
+                            <Sidebar />
+                            {children}
+                        </FormProvider>
+                    </AuthProvider>
                 </ProtectRoute>
             </body>
         </html>
