@@ -38,10 +38,6 @@ export default function FormPage({ params }: { params: { formId: number } }) {
         setIsQuestionSectionOpen(false);
     };
 
-    const handleFormSubmission = async (formData: any) => {
-        console.log("Form data submitted:", formData);
-    };
-
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTitle = event.target.value;
         setTitleInput(newTitle);
@@ -55,7 +51,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
         "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
 
     if (!activeForm) {
-        return
+        return null;
     }
 
     return (
@@ -92,7 +88,10 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                         <DynamicForm
                             form={activeForm}
                             user_id={user?.id || 0}
-                            onSubmit={handleFormSubmission}
+                            updateForm={updateForm} // Pass updateForm here
+                            onSubmit={(formData) =>
+                                console.log("Form data submitted:", formData)
+                            }
                         />
                     </SectionProvider>
                 ) : (
