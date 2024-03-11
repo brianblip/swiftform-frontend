@@ -1,9 +1,8 @@
 "use client";
 
-import useAuth from "@/contexts/auth";
+import { mutate } from "swr";
 import { Edit } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
-import { SectionProvider } from "@/contexts/sections";
 import useForm from "@/contexts/forms";
 import ResponseComponent from "@/components/ResponseComponent";
 import DynamicForm from "@/components/FormBuilder/DynamicForm";
@@ -12,7 +11,6 @@ import { useRouter } from "next/navigation";
 
 export default function FormPage({ params }: { params: { formId: number } }) {
     const { formId } = params;
-    const { user } = useAuth();
     const { isLoading, error, getForm, updateForm } = useForm();
     const router = useRouter();
     const activeForm = getForm(Number(formId));
@@ -45,6 +43,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
             const updatedForm = { ...activeForm, name: newTitle };
             updateForm(activeForm.id, updatedForm); // Update the form data
         }
+        mutate("/forms");
     };
 
     const mainClassNames =
@@ -84,16 +83,13 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                 </div>
 
                 {isQuestionSectionOpen ? (
-                    <SectionProvider>
-                        <DynamicForm
-                            form={activeForm}
-                            user_id={user?.id || 0}
-                            updateForm={updateForm} // Pass updateForm here
-                            onSubmit={(formData) =>
-                                console.log("Form data submitted:", formData)
-                            }
-                        />
-                    </SectionProvider>
+                    <DynamicForm
+                        form={activeForm}
+                        updateForm={updateForm}
+                        onSubmit={(formData) =>
+                            console.log("Form data submitted:", formData)
+                        }
+                    />
                 ) : (
                     <ResponseComponent />
                 )}
