@@ -3,36 +3,38 @@
 
 import { mutate } from "swr";
 import { Form, Section } from "@@/types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useSections from "@/contexts/sections";
 import { Button, TextField } from "@mui/material";
+import SectionComponent from "./Section"; // Import the SectionComponent
+import { QuestionProvider } from "@/contexts/questions";
 
 type DynamicFormProps = {
     form: Form;
     user_id: number;
     onSubmit: (formData: any) => void;
+    updateForm: (formId: number, updatedForm: Form) => void;
 };
 
 export default function DynamicForm({
     form,
     user_id,
     onSubmit,
+    updateForm,
 }: DynamicFormProps) {
-    const [formData, setFormData] = useState<any>({});
-    const { createSection, deleteSection } = useSections();
+    const [description, setDescription] = useState<string>(
+        form.description || "",
+    );
+    const { createSection, updateSection, deleteSection } = useSections();
 
-    const handleChange = (fieldId: string, value: string) => {
-        setFormData((prevData: any) => ({
-            ...prevData,
-            [fieldId]: value,
-        }));
-    };
+    useEffect(() => {
+        setDescription(form.description || "");
+    }, [form.description]);
 
     const handleCreateSection = async () => {
         try {
-            const newSection = await createSection("New Section", form.id);
-            console.log("New Section:", newSection);
-            mutateFormsList();
+            await createSection("New Section", form.id);
+            mutate("/forms");
         } catch (error) {
             console.error("Error creating section:", error);
         }
@@ -41,19 +43,17 @@ export default function DynamicForm({
     const handleDeleteSection = async (sectionId: number) => {
         try {
             await deleteSection(sectionId);
-            mutateFormsList();
+            mutate("/forms");
         } catch (error) {
             console.error("Error deleting section:", error);
         }
     };
 
-    const mutateFormsList = () => {
-        mutate("/forms");
-    };
-
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        onSubmit(formData);
+        const updatedForm = { ...form, description };
+        updateForm(form.id, updatedForm);
+        onSubmit(updatedForm);
     };
 
     return (
@@ -67,30 +67,26 @@ export default function DynamicForm({
                     multiline
                     rows={4}
                     variant="outlined"
-                    value={form.description || ""}
-                    onChange={(e) =>
-                        handleChange("description", e.target.value)
-                    }
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            {Array.isArray(form.sections) && form.sections.length > 0 ? (
-                form.sections.map((section: Section) => (
-                    <section key={section.id} className="mb-4">
-                        <h2>{section.title}</h2>
-                        <p>Form ID: {form.id}</p>
-                        <p>Section Form ID: {section.form_id}</p>
-                        <Button
-                            onClick={() => handleDeleteSection(section.id)}
-                            variant="outlined"
-                            color="secondary"
-                        >
-                            Delete Section
-                        </Button>
-                    </section>
-                ))
-            ) : (
-                <p>No sections found.</p>
-            )}
+            <QuestionProvider>
+                {Array.isArray(form.sections) && form.sections.length > 0 ? (
+                    form.sections
+                        .sort((a, b) => a.id - b.id)
+                        .map((section: Section) => (
+                            <SectionComponent
+                                key={section.id}
+                                section={section}
+                                updateSection={updateSection}
+                                handleDeleteSection={handleDeleteSection}
+                            />
+                        ))
+                ) : (
+                    <p>No sections found.</p>
+                )}
+            </QuestionProvider>
             <Button
                 onClick={handleCreateSection}
                 variant="contained"
