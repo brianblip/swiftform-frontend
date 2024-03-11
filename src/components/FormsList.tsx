@@ -1,14 +1,14 @@
+import React from "react";
 import Link from "next/link";
-import useForm from "@/contexts/forms";
-import { useEffect, useState } from "react";
-import ErrorPage from "@/components/ErrorPage";
 import { DeleteForeverOutlined, MoreHoriz } from "@mui/icons-material";
+import useForm from "@/contexts/forms";
+import ErrorPage from "@/components/ErrorPage";
 
-interface FormListID {
+interface FormsListProps {
     formId: number;
 }
 
-export default function FormsList({ formId }: FormListID) {
+export default function FormsList({ formId }: FormsListProps) {
     const { forms, isLoading, error, deleteForm } = useForm();
 
     const handleDelete = async (id: number, title: string) => {
