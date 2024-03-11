@@ -1,7 +1,9 @@
-// SectionComponent.tsx
 import React from "react";
-import { Button, TextField } from "@mui/material";
-import { Question, Section } from "@@/types";
+import { Button, MenuItem, TextField } from "@mui/material";
+import { QuestionType, Section } from "@@/types";
+import useForm from "@/contexts/forms";
+import { mutate } from "swr";
+import QuestionComponent from "@/components/FormBuilder/Question"; // Import the QuestionComponent
 
 type SectionComponentProps = {
     section: Section;
@@ -9,12 +11,51 @@ type SectionComponentProps = {
     handleDeleteSection: (sectionId: number) => void;
 };
 
-const SectionComponent: React.FC<SectionComponentProps> = ({
+export default function SectionComponent({
     section,
     updateSection,
     handleDeleteSection,
-}) => {
-    
+}: SectionComponentProps) {
+    const defaultQuestionType: QuestionType = QuestionType.MULTIPLE_CHOICE;
+    const defaultQuestionPrompt: string = "New Question";
+
+    const { createQuestion, deleteQuestion, updateQuestion } = useForm();
+
+    const createNewQuestion = async () => {
+        const defaultQuestion = {
+            prompt: defaultQuestionPrompt,
+            type: defaultQuestionType,
+        };
+
+        await createQuestion(
+            defaultQuestion.type,
+            defaultQuestion.prompt,
+            section.id,
+            section.questions.length + 1,
+            true,
+        );
+
+        mutate("/forms");
+    };
+
+    const handleDeleteQuestion = async (questionId: number) => {
+        await deleteQuestion(questionId);
+        mutate("/forms");
+    };
+
+    const handleUpdateQuestion = async (
+        questionId: number,
+        type: QuestionType,
+        prompt: string,
+    ) => {
+        await updateQuestion(questionId, type, prompt, section.id, 0);
+        mutate("/forms");
+    };
+
+    const sortedQuestions = [...section.questions].sort(
+        (a, b) => a.order - b.order,
+    );
+
     return (
         <section key={section.id} className="mb-4">
             <TextField
@@ -27,21 +68,24 @@ const SectionComponent: React.FC<SectionComponentProps> = ({
                 defaultValue={section.title}
                 onChange={(e) => updateSection(section.id, e.target.value)}
             />
-            {Array.isArray(section.questions) &&
-            section.questions.length > 0 ? (
-                section.questions
-                    .sort((a, b) => a.id - b.id)
-                    .map((question: Question) => (
-                        <div key={question.id}>
-                            <h1>{question.id}.</h1>
-                            <h1>{question.type}</h1>
-                            <h1>{question.prompt}</h1>
-                        </div>
-                    ))
-            ) : (
-                <p>No Questions found.</p>
-            )}
-
+            {sortedQuestions.map((question) => (
+                <QuestionComponent
+                    key={question.id}
+                    question={question}
+                    handleUpdateQuestion={handleUpdateQuestion}
+                    handleDeleteQuestion={handleDeleteQuestion}
+                />
+            ))}
+            <div className="mt-4">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={createNewQuestion}
+                    className="mt-2"
+                >
+                    Create Question
+                </Button>
+            </div>
             <Button
                 onClick={() => handleDeleteSection(section.id)}
                 variant="outlined"
@@ -51,6 +95,4 @@ const SectionComponent: React.FC<SectionComponentProps> = ({
             </Button>
         </section>
     );
-};
-
-export default SectionComponent;
+}
