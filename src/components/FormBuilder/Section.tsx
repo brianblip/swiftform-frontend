@@ -14,7 +14,6 @@ const SectionComponent: React.FC<SectionComponentProps> = ({
     updateSection,
     handleDeleteSection,
 }) => {
-    
     return (
         <section key={section.id} className="mb-4">
             <TextField
