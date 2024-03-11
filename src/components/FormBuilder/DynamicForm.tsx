@@ -4,28 +4,25 @@
 import { mutate } from "swr";
 import { Form, Section } from "@@/types";
 import React, { useState, useEffect } from "react";
-import useSections from "@/contexts/sections";
 import { Button, TextField } from "@mui/material";
-import SectionComponent from "./Section"; // Import the SectionComponent
-import { QuestionProvider } from "@/contexts/questions";
+import SectionComponent from "./Section";
+import useForm from "@/contexts/forms";
 
 type DynamicFormProps = {
     form: Form;
-    user_id: number;
     onSubmit: (formData: any) => void;
     updateForm: (formId: number, updatedForm: Form) => void;
 };
 
 export default function DynamicForm({
     form,
-    user_id,
     onSubmit,
     updateForm,
 }: DynamicFormProps) {
     const [description, setDescription] = useState<string>(
         form.description || "",
     );
-    const { createSection, updateSection, deleteSection } = useSections();
+    const { createSection, updateSection, deleteSection } = useForm();
 
     useEffect(() => {
         setDescription(form.description || "");
@@ -71,22 +68,21 @@ export default function DynamicForm({
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            <QuestionProvider>
-                {Array.isArray(form.sections) && form.sections.length > 0 ? (
-                    form.sections
-                        .sort((a, b) => a.id - b.id)
-                        .map((section: Section) => (
-                            <SectionComponent
-                                key={section.id}
-                                section={section}
-                                updateSection={updateSection}
-                                handleDeleteSection={handleDeleteSection}
-                            />
-                        ))
-                ) : (
-                    <p>No sections found.</p>
-                )}
-            </QuestionProvider>
+            {Array.isArray(form.sections) && form.sections.length > 0 ? (
+                form.sections
+                    .sort((a, b) => a.id - b.id)
+                    .map((section: Section) => (
+                        <SectionComponent
+                            key={section.id}
+                            section={section}
+                            updateSection={updateSection}
+                            handleDeleteSection={handleDeleteSection}
+                        />
+                    ))
+            ) : (
+                <p>No sections found.</p>
+            )}
+
             <Button
                 onClick={handleCreateSection}
                 variant="contained"
