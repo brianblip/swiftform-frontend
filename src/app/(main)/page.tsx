@@ -177,39 +177,6 @@ export default function Home() {
                     </button>
                 </form>
             </Modal>
-
-            {/* <Modal
-                open={createFormModalOpened}
-                onClose={() => setCreateFormModalOpened(false)}
-            >
-                <form onSubmit={handleCreateForm}>
-                    <Modal.Title>Create Form</Modal.Title>
-                    <Modal.Section>
-                        <Input
-                            label="Form Name"
-                            required
-                            {...createFormRegister("name", {
-                                required: "Name is required",
-                            })}
-                            error={createFormErrors.name?.message}
-                        />
-
-                        <Input
-                            label="Description"
-                            sx={{
-                                mt: 4,
-                            }}
-                            {...createFormRegister("description")}
-                            error={createFormErrors.description?.message}
-                        />
-                    </Modal.Section>
-                    <Modal.Footer>
-                        <Button type="submit" disabled={isCreatingForm}>
-                            Create a Form
-                        </Button>
-                    </Modal.Footer>
-                </form>
-            </Modal> */}
         </main>
     );
 }
