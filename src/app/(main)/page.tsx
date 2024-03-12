@@ -8,7 +8,7 @@ import Modal from "@/components/Modal";
 import Input from "@/components/UIComponents/Input";
 import SuggestionButton from "@/components/SuggestionButton";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { generateFormJson, createNestedForm } from "@/services";
 import { AxiosError } from "axios";
 import useFormData from "@/contexts/forms";
@@ -19,31 +19,9 @@ export default function Home() {
     const router = useRouter();
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
-    const modalRef = useRef<HTMLDivElement>(null);
     const { mutate } = useSWRConfig();
 
     const { createForm } = useFormData();
-
-    useEffect(() => {
-        const onClickCloseModal = (e: MouseEvent) => {
-            if (
-                modalRef.current &&
-                !modalRef.current.contains(e.target as Node)
-            ) {
-                setCreateFormModalOpened(false);
-            }
-        };
-
-        if (createFormModalOpened) {
-            document.addEventListener("click", onClickCloseModal);
-        } else {
-            document.removeEventListener("click", onClickCloseModal);
-        }
-
-        return () => {
-            document.removeEventListener("click", onClickCloseModal);
-        };
-    }, [createFormModalOpened]);
 
     const {
         register: generateFormRegister,
@@ -146,7 +124,6 @@ export default function Home() {
             </div>
             <Modal
                 createFormModalOpened={createFormModalOpened}
-                modalRef={modalRef}
                 setCreateFormModalOpened={setCreateFormModalOpened}
             >
                 <form className="grid gap-4" onSubmit={handleCreateForm}>
@@ -177,39 +154,6 @@ export default function Home() {
                     </button>
                 </form>
             </Modal>
-
-            {/* <Modal
-                open={createFormModalOpened}
-                onClose={() => setCreateFormModalOpened(false)}
-            >
-                <form onSubmit={handleCreateForm}>
-                    <Modal.Title>Create Form</Modal.Title>
-                    <Modal.Section>
-                        <Input
-                            label="Form Name"
-                            required
-                            {...createFormRegister("name", {
-                                required: "Name is required",
-                            })}
-                            error={createFormErrors.name?.message}
-                        />
-
-                        <Input
-                            label="Description"
-                            sx={{
-                                mt: 4,
-                            }}
-                            {...createFormRegister("description")}
-                            error={createFormErrors.description?.message}
-                        />
-                    </Modal.Section>
-                    <Modal.Footer>
-                        <Button type="submit" disabled={isCreatingForm}>
-                            Create a Form
-                        </Button>
-                    </Modal.Footer>
-                </form>
-            </Modal> */}
         </main>
     );
 }
