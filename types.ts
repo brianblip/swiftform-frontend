@@ -27,13 +27,13 @@ export interface Section {
 }
 
 export enum QuestionType {
-    TEXTFIELD = "textfield",
-    TEXTAREA = "textarea",
-    MULTIPLE_CHOICE = "multiple_choice",
-    CHECKBOX = "checkbox",
-    DROPDOWN = "dropdown",
-    ATTACHMENT = "attachment",
-    DATE = "date",
+    TEXTFIELD = "TEXTFIELD",
+    TEXTAREA = "TEXTAREA",
+    MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
+    CHECKBOX = "CHECKBOX",
+    DROPDOWN = "DROPDOWN",
+    ATTACHMENT = "ATTACHMENT",
+    DATE = "DATE",
 }
 
 export interface Question {

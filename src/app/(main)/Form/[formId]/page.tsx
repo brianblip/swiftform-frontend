@@ -1,9 +1,8 @@
 "use client";
 
-import useAuth from "@/contexts/auth";
+import { mutate } from "swr";
 import { Edit } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
-import { SectionProvider } from "@/contexts/sections";
 import useForm from "@/contexts/forms";
 import ResponseComponent from "@/components/ResponseComponent";
 import DynamicForm from "@/components/FormBuilder/DynamicForm";
@@ -12,7 +11,6 @@ import { useRouter } from "next/navigation";
 
 export default function FormPage({ params }: { params: { formId: number } }) {
     const { formId } = params;
-    const { user } = useAuth();
     const { isLoading, error, getForm, updateForm } = useForm();
     const router = useRouter();
     const activeForm = getForm(Number(formId));
@@ -38,10 +36,6 @@ export default function FormPage({ params }: { params: { formId: number } }) {
         setIsQuestionSectionOpen(false);
     };
 
-    const handleFormSubmission = async (formData: any) => {
-        console.log("Form data submitted:", formData);
-    };
-
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTitle = event.target.value;
         setTitleInput(newTitle);
@@ -49,13 +43,14 @@ export default function FormPage({ params }: { params: { formId: number } }) {
             const updatedForm = { ...activeForm, name: newTitle };
             updateForm(activeForm.id, updatedForm); // Update the form data
         }
+        mutate("/forms");
     };
 
     const mainClassNames =
         "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
 
     if (!activeForm) {
-        return
+        return null;
     }
 
     return (
@@ -88,13 +83,13 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                 </div>
 
                 {isQuestionSectionOpen ? (
-                    <SectionProvider>
-                        <DynamicForm
-                            form={activeForm}
-                            user_id={user?.id || 0}
-                            onSubmit={handleFormSubmission}
-                        />
-                    </SectionProvider>
+                    <DynamicForm
+                        form={activeForm}
+                        updateForm={updateForm}
+                        onSubmit={(formData) =>
+                            console.log("Form data submitted:", formData)
+                        }
+                    />
                 ) : (
                     <ResponseComponent />
                 )}
