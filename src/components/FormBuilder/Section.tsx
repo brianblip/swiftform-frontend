@@ -16,7 +16,7 @@ export default function SectionComponent({
     updateSection,
     handleDeleteSection,
 }: SectionComponentProps) {
-    const defaultQuestionType: QuestionType = QuestionType.MULTIPLE_CHOICE;
+    const defaultQuestionType: QuestionType = "multiple_choice";
     const defaultQuestionPrompt: string = "New Question";
 
     const { createQuestion, deleteQuestion, updateQuestion } = useForm();
