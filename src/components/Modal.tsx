@@ -15,12 +15,19 @@ export default function Modal({
     modalRef,
     setCreateFormModalOpened,
 }: ModalProps) {
+    const ref = useRef<HTMLDivElement>(null);
+    useClickAway(ref, (e: MouseEvent) => {
+        if (ref.current && !ref.current.contains(e.target as Node)) {
+            setCreateFormModalOpened(false);
+        }
+    });
+
     return (
         <section
             className={`fixed left-0 top-0 z-50 h-dvh w-dvw place-items-center bg-primary-black/50 ${createFormModalOpened ? "grid" : "hidden"}`}
         >
             <div
-                ref={modalRef}
+                ref={ref}
                 className="relative w-10/12 rounded bg-primary-secondary p-4 sm:w-[500px]"
             >
                 <button
@@ -29,7 +36,7 @@ export default function Modal({
                 >
                     <CloseIcon />
                 </button>
-            {children}
+                {children}
             </div>
         </section>
     );
