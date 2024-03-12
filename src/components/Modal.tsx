@@ -5,14 +5,12 @@ import { useClickAway } from "react-use";
 interface ModalProps {
     children: ReactNode;
     createFormModalOpened: boolean;
-    modalRef: any;
     setCreateFormModalOpened: any;
 }
 
 export default function Modal({
     children,
     createFormModalOpened,
-    modalRef,
     setCreateFormModalOpened,
 }: ModalProps) {
     const ref = useRef<HTMLDivElement>(null);
