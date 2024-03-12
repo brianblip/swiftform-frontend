@@ -80,14 +80,6 @@ export interface Response {
     user_id: number;
 }
 
-// todo: these are not properties from the backend, remove this
-export interface FormChoice {
-    id: number;
-    label: string;
-    value: string;
-    question_id: number;
-}
-
 export type ApiResponse<T = undefined> = {
     data?: T;
     message?: string;
@@ -111,3 +103,5 @@ export type FormsResponse = {
 export interface FormParam {
     id: number;
 }
+
+export type FormChoice = Choice;
