@@ -43,16 +43,28 @@ export default function QuestionComponent({
         updatedChoice: string,
     ) => {
         await updateChoice(choiceId, updatedChoice);
-
     };
 
     const handleDeleteChoice = async (choiceId: number) => {
         await deleteChoice(choiceId);
-        mutate("/forms")
+        mutate("/forms");
     };
 
+    const questionTypes: QuestionType[] = [
+        "textfield",
+        "textarea",
+        "multiple_choice",
+        "checkbox",
+        "dropdown",
+        "attachment",
+        "date",
+    ];
+
     return (
-        <div key={question.id} className="flex flex-col items-start border border-white">
+        <div
+            key={question.id}
+            className="flex flex-col items-start border border-white"
+        >
             <div className="mb-4 mr-4">
                 <h1>Question ID: {question.id}</h1>
                 <h1>Question Order: {question.order}</h1>
@@ -84,18 +96,16 @@ export default function QuestionComponent({
                     variant="filled"
                     className="mt-2"
                 >
-                    {Object.values(QuestionType).map((type) => (
-                        <MenuItem key={type} value={type}>
-                            {type}
+                    {questionTypes.map((questionType) => (
+                        <MenuItem key={questionType} value={questionType}>
+                            {questionType}
                         </MenuItem>
                     ))}
                 </TextField>
             </div>
-            {[
-                QuestionType.MULTIPLE_CHOICE,
-                QuestionType.CHECKBOX,
-                QuestionType.DROPDOWN,
-            ].includes(question.type) && (
+            {["multiple_choice", "checkbox", "dropdown"].includes(
+                question.type,
+            ) && (
                 <div className="flex flex-col items-start">
                     <h2>Choices:</h2>
                     {sortedChoices.map((choice) => (
