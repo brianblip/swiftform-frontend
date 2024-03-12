@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, MenuItem, TextField } from "@mui/material";
-import { Question, QuestionType } from "@@/types";
+import { QuestionType, Choice, Question } from "@@/types";
+import useForm from "@/contexts/forms";
+import ChoiceComponent from "./Choice";
+import { mutate } from "swr";
 
 type QuestionComponentProps = {
     question: Question;
@@ -17,9 +20,40 @@ export default function QuestionComponent({
     handleUpdateQuestion,
     handleDeleteQuestion,
 }: QuestionComponentProps) {
+    const { createChoice, updateChoice, deleteChoice } = useForm();
+    const [newChoiceText, setNewChoiceText] = useState("");
+
+    const handleCreateChoice = async () => {
+        if (newChoiceText.trim()) {
+            const newChoice = await createChoice(
+                newChoiceText,
+                question.id,
+                question.choices.length + 1,
+            );
+            setNewChoiceText("");
+        }
+    };
+
+    const sortedChoices = [...question.choices].sort(
+        (a, b) => a.order - b.order,
+    );
+
+    const handleUpdateChoice = async (
+        choiceId: number,
+        updatedChoice: string,
+    ) => {
+        await updateChoice(choiceId, updatedChoice);
+
+    };
+
+    const handleDeleteChoice = async (choiceId: number) => {
+        await deleteChoice(choiceId);
+        mutate("/forms")
+    };
+
     return (
-        <div key={question.id} className="flex items-center">
-            <div className="mr-4">
+        <div key={question.id} className="flex flex-col items-start border border-white">
+            <div className="mb-4 mr-4">
                 <h1>Question ID: {question.id}</h1>
                 <h1>Question Order: {question.order}</h1>
                 <TextField
@@ -57,10 +91,44 @@ export default function QuestionComponent({
                     ))}
                 </TextField>
             </div>
+            {[
+                QuestionType.MULTIPLE_CHOICE,
+                QuestionType.CHECKBOX,
+                QuestionType.DROPDOWN,
+            ].includes(question.type) && (
+                <div className="flex flex-col items-start">
+                    <h2>Choices:</h2>
+                    {sortedChoices.map((choice) => (
+                        <ChoiceComponent
+                            key={choice.id}
+                            choice={choice}
+                            handleUpdateChoice={handleUpdateChoice}
+                            handleDeleteChoice={handleDeleteChoice}
+                        />
+                    ))}
+                    <div className="mt-2 flex items-center">
+                        <TextField
+                            label="New Choice"
+                            variant="filled"
+                            value={newChoiceText}
+                            onChange={(e) => setNewChoiceText(e.target.value)}
+                        />
+                        <Button
+                            onClick={handleCreateChoice}
+                            variant="contained"
+                            color="primary"
+                            className="ml-2"
+                        >
+                            Add Choice
+                        </Button>
+                    </div>
+                </div>
+            )}
             <Button
                 onClick={() => handleDeleteQuestion(question.id)}
                 variant="outlined"
                 color="secondary"
+                className="mt-4"
             >
                 Delete Question
             </Button>
