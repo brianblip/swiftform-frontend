@@ -110,13 +110,13 @@ export default function QuestionComponent({
                         )
                     }
                 >
-                    {Object.values(QuestionType).map((type) => (
+                    {questionTypes.map((questionType) => (
                         <option
                             className={`w-full font-sans`}
-                            key={type}
-                            value={type}
+                            key={questionType}
+                            value={questionType}
                         >
-                            {type}
+                            {questionType}
                         </option>
                     ))}
                 </Input>
@@ -141,11 +141,9 @@ export default function QuestionComponent({
                             </MenuItem>
                         ))}
                     </TextField> */}
-                {[
-                    QuestionType.MULTIPLE_CHOICE,
-                    QuestionType.CHECKBOX,
-                    QuestionType.DROPDOWN,
-                ].includes(question.type) && (
+                {["multiple_choice", "checkbox", "dropdown"].includes(
+                    question.type,
+                ) && (
                     <div className="grid gap-4 rounded bg-primary-secondary p-4 shadow-2xl">
                         {/* <h2>Choices:</h2> */}
                         {sortedChoices.map((choice) => (
@@ -161,9 +159,9 @@ export default function QuestionComponent({
                                 label="New Choice:"
                                 type="text"
                                 value={newChoiceText}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                    setNewChoiceText(e.target.value)
-                                }
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>,
+                                ) => setNewChoiceText(e.target.value)}
                             />
                             {/* <TextField
                                 label="New Choice"
