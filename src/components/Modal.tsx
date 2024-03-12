@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useClickAway } from "react-use";
 
 interface ModalProps {
     children: ReactNode;
