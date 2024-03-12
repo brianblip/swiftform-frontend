@@ -26,15 +26,14 @@ export interface Section {
     updated_at: string;
 }
 
-export enum QuestionType {
-    TEXTFIELD = "TEXTFIELD",
-    TEXTAREA = "TEXTAREA",
-    MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
-    CHECKBOX = "CHECKBOX",
-    DROPDOWN = "DROPDOWN",
-    ATTACHMENT = "ATTACHMENT",
-    DATE = "DATE",
-}
+export type QuestionType =
+    | "textfield"
+    | "textarea"
+    | "multiple_choice"
+    | "checkbox"
+    | "dropdown"
+    | "attachment"
+    | "date";
 
 export interface Question {
     id: number;
