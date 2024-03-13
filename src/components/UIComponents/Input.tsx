@@ -36,7 +36,7 @@ const Input = React.forwardRef<
     ) => {
         // ref parameter added here
         return (
-            <div className="grid gap-1">
+            <div className="grid w-full gap-1">
                 <label
                     htmlFor={id ? id : label}
                     className={`text-sm font-medium ${error ? "text-error" : ""}`}
