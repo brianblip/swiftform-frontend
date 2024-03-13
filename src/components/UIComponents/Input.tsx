@@ -7,9 +7,6 @@ interface InputProps {
     className?: any;
     id?: string;
     required?: boolean;
-    value?: string;
-    defaultValue?: string;
-    onChange?: any;
     type: "text" | "email" | "password" | "textarea" | "select";
     error?: string;
     isPasswordVisible?: boolean;
