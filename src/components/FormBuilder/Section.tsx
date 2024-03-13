@@ -63,7 +63,7 @@ export default function SectionComponent({
             key={section.id}
             className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
         >
-            <TextField
+            {/* <TextField
                 fullWidth
                 color="info"
                 id={`section-title-${section.id}`}
@@ -79,7 +79,7 @@ export default function SectionComponent({
                 className="w-full rounded bg-primary-secondary px-3 py-2 text-white focus:bg-primary-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 id={`section-title-${section.id}`}
                 defaultValue={section.title}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSection(section.id, e.target.value)}
+                onChange={(e) => updateSection(section.id, e.target.value)}
             />
             {sortedQuestions.map((question) => (
                 <QuestionComponent
