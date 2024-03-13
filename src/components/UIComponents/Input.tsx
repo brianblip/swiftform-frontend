@@ -4,11 +4,14 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 interface InputProps {
     label: string;
+    className?: any;
+    id?: string;
     required?: boolean;
-    type: "text" | "email" | "password" | "textarea";
+    type: "text" | "email" | "password" | "textarea" | "select";
     error?: string;
     isPasswordVisible?: boolean;
     setIsPasswordVisible?: any;
+    children?: any;
 }
 
 // Wrap the component function with React.forwardRef
@@ -19,11 +22,14 @@ const Input = React.forwardRef<
     (
         {
             label,
+            className,
+            id,
             required,
             type,
             error,
             isPasswordVisible,
             setIsPasswordVisible,
+            children,
             ...props
         },
         ref,
