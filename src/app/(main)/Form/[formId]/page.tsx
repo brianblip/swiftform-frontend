@@ -47,16 +47,19 @@ export default function FormPage({ params }: { params: { formId: number } }) {
             <main
                 className={`flex min-h-[calc(100vh-57.0667px)] w-dvw flex-col items-center gap-8 px-4 py-10 pb-20 sm:px-8 md:min-h-dvh md:py-16 md:pb-28 lg:px-20`}
             >
-                <div className="flex w-full flex-col items-center gap-y-4">
-                    <div className="flex w-full items-center justify-center">
+                <div className="grid w-full place-items-center gap-y-6">
+                    <div className="relative flex w-3/4 items-center lg:w-[468px]">
                         <input
                             id="formTitle"
                             autoFocus
                             value={titleInput}
                             onChange={handleTitleChange}
-                            className="w-1/4 border-none bg-transparent p-2 text-center text-3xl"
+                            className="w-full rounded bg-primary-secondary px-3 py-2 pr-8 text-2xl text-primary-white focus:bg-primary-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        <label htmlFor="formTitle">
+                        <label
+                            htmlFor="formTitle"
+                            className="absolute right-0 cursor-pointer pr-1"
+                        >
                             <Edit />
                         </label>
                     </div>
