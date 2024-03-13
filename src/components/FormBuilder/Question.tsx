@@ -181,7 +181,7 @@ export default function QuestionComponent({
                     </div>
                 )}
             </div>
-            <Button
+            <button
                 onClick={() => handleDeleteQuestion(question.id)}
                 className="absolute right-0 top-0 rounded bg-error hover:bg-error/75"
             >
