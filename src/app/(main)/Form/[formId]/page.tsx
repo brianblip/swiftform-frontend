@@ -28,14 +28,6 @@ export default function FormPage({ params }: { params: { formId: number } }) {
         }
     }, [activeForm, isLoading, router]);
 
-    const onClickOpenQuestionSection = () => {
-        setIsQuestionSectionOpen(true);
-    };
-
-    const onClickOpenResponseSection = () => {
-        setIsQuestionSectionOpen(false);
-    };
-
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTitle = event.target.value;
         setTitleInput(newTitle);
@@ -68,13 +60,13 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                     </div>
                     <div className="flex w-full gap-x-4 border-b border-b-primary-white">
                         <button
-                            onClick={onClickOpenQuestionSection}
+                            onClick={() => setIsQuestionSectionOpen(true)}
                             className={`border-b-2 ${isQuestionSectionOpen ? "border-b-primary-white font-bold" : "border-b-transparent"}`}
                         >
                             Question
                         </button>
                         <button
-                            onClick={onClickOpenResponseSection}
+                            onClick={() => setIsQuestionSectionOpen(false)}
                             className={`border-b-2 ${!isQuestionSectionOpen ? "border-b-primary-white font-bold" : "border-b-transparent"}`}
                         >
                             Response
