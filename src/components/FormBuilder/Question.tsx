@@ -4,6 +4,9 @@ import { QuestionType, Choice, Question } from "@@/types";
 import useForm from "@/contexts/forms";
 import ChoiceComponent from "./Choice";
 import { mutate } from "swr";
+import Input from "../UIComponents/Input";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
 
 type QuestionComponentProps = {
     question: Question;
