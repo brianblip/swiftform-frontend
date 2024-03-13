@@ -59,10 +59,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                             onChange={handleTitleChange}
                             className="w-full rounded bg-primary-secondary px-3 py-2 pr-8 text-2xl text-primary-white focus:bg-primary-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        <label
-                            htmlFor="formTitle"
-                            className="absolute right-0 cursor-pointer pr-1"
-                        >
+                        <label htmlFor="formTitle">
                             <Edit />
                         </label>
                     </div>
