@@ -16,7 +16,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({ isChecked, handleToggle }) 
                     checked={isChecked}
                     onChange={handleToggle}
                 />
-                <div className={`block h-6 w-10 rounded-full ${isChecked ? 'bg-red-500' : 'bg-gray-600'}`}></div>
+                <div className={`block h-6 w-10 rounded-full ${isChecked ? 'bg-gray-600': 'bg-red-500'}`}></div>
                 <div className={`dot absolute top-1 size-4 rounded-full bg-white transition`} style={{ left: isChecked ? 'calc(100% - 1.5rem)' : '0.25rem' }}></div>
             </div>
         </label>
