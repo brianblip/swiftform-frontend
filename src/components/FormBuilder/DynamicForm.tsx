@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import { Button, TextField } from "@mui/material";
 import SectionComponent from "./Section";
 import useForm from "@/contexts/forms";
+import Input from "../UIComponents/Input";
 
 type DynamicFormProps = {
     form: Form;
