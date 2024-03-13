@@ -4,6 +4,8 @@ import { QuestionType, Section } from "@@/types";
 import useForm from "@/contexts/forms";
 import { mutate } from "swr";
 import QuestionComponent from "@/components/FormBuilder/Question"; // Import the QuestionComponent
+import Input from "../UIComponents/Input";
+import CloseIcon from "@mui/icons-material/Close";
 
 type SectionComponentProps = {
     section: Section;
