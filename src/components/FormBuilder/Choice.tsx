@@ -29,14 +29,20 @@ export default function ChoiceComponent({
 
     return (
         <div className="flex items-center gap-3">
-            <TextField
+            <Input
+                label="Choice Text:"
+                type="text"
+                defaultValue={editedText}
+                onchange={handleChange}
+            />
+            {/* <TextField
                 label="Choice Text"
                 variant="filled"
                 value={editedText}
                 onChange={handleChange}
                 fullWidth
                 className="mb-2"
-            />
+            /> */}
             <div className="mt-2">
                 <Button
                     onClick={handleDelete}
