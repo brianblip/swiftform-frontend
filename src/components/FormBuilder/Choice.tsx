@@ -43,15 +43,13 @@ export default function ChoiceComponent({
                 fullWidth
                 className="mb-2"
             /> */}
-            <div className="mt-2">
-                <Button
-                    onClick={handleDelete}
-                    variant="outlined"
-                    color="secondary"
-                >
-                    Delete
-                </Button>
-            </div>
+
+            <button
+                onClick={handleDelete}
+                className="rounded bg-error p-1 hover:bg-error/50"
+            >
+                <DeleteIcon />
+            </button>
         </div>
     );
 }
