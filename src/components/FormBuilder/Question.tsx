@@ -69,7 +69,7 @@ export default function QuestionComponent({
             className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
         >
             <div className="mb-4 mr-4">
-                <h1>Question ID: {question.id}</h1>
+            {/* <h1>Question ID: {question.id}</h1> */}
                 <h1>Question Order: {question.order}</h1>
                 <TextField
                     fullWidth
