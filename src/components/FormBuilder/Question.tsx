@@ -54,7 +54,10 @@ export default function QuestionComponent({
     };
 
     return (
-        <div key={question.id} className="flex flex-col items-start border border-white">
+        <div
+            key={question.id}
+            className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
+        >
             <div className="mb-4 mr-4">
                 <h1>Question ID: {question.id}</h1>
                 <h1>Question Order: {question.order}</h1>
