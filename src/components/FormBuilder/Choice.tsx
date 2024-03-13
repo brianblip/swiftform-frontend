@@ -29,13 +29,7 @@ export default function ChoiceComponent({
 
     return (
         <div className="flex items-center gap-3">
-            <Input
-                label="Choice Text:"
-                type="text"
-                defaultValue={editedText}
-                onChange={handleChange}
-            />
-            {/* <TextField
+            <TextField
                 label="Choice Text"
                 variant="filled"
                 value={editedText}
