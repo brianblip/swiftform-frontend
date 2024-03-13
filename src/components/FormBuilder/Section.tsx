@@ -63,7 +63,7 @@ export default function SectionComponent({
             key={section.id}
             className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
         >
-            {/* <TextField
+            <TextField
                 fullWidth
                 color="info"
                 id={`section-title-${section.id}`}
