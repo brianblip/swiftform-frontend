@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import { Choice } from "@@/types";
+import Input from "../UIComponents/Input";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type ChoiceComponentProps = {
     choice: Choice;
