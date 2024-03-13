@@ -55,7 +55,10 @@ export default function DynamicForm({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="w-full max-w-lg">
+        <form
+            onSubmit={handleSubmit}
+            className="grid w-full gap-4 sm:w-11/12 lg:w-9/12 xl:w-[660px]"
+        >
             <Input
                 label="Description:"
                 type="textarea"
