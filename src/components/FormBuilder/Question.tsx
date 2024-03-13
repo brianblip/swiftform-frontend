@@ -46,12 +46,11 @@ export default function QuestionComponent({
         updatedChoice: string,
     ) => {
         await updateChoice(choiceId, updatedChoice);
-
     };
 
     const handleDeleteChoice = async (choiceId: number) => {
         await deleteChoice(choiceId);
-        mutate("/forms")
+        mutate("/forms");
     };
 
     return (
