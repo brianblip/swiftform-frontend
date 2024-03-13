@@ -96,10 +96,11 @@ export default function QuestionComponent({
                         )
                     }
                 /> */}
-                <TextField
-                    fullWidth
-                    select
-                    label="Question Type"
+            <div className="grid gap-2">
+                <Input
+                    label="Question Type:"
+                    type="select"
+                    className="bg-primary-secondary p-2 text-white"
                     value={question.type}
                     onChange={(e) =>
                         handleUpdateQuestion(
@@ -108,47 +109,76 @@ export default function QuestionComponent({
                             question.prompt,
                         )
                     }
-                    variant="filled"
-                    className="mt-2"
                 >
                     {questionTypes.map((questionType) => (
-                        <MenuItem key={questionType} value={questionType}>
+                        <option
+                            className={`w-full font-sans`}
+                            key={questionType}
+                            value={questionType}
+                        >
                             {questionType}
-                        </MenuItem>
+                        </option>
                     ))}
-                </TextField>
-            </div>
-            {["multiple_choice", "checkbox", "dropdown"].includes(
+                </Input>
+                {/* <TextField
+                        fullWidth
+                        select
+                        label="Question Type"
+                        value={question.type}
+                        onChange={(e) =>
+                            handleUpdateQuestion(
+                                question.id,
+                                e.target.value as QuestionType,
+                                question.prompt,
+                            )
+                        }
+                        variant="filled"
+                        className="mt-2"
+                    >
+                        {Object.values(QuestionType).map((type) => (
+                            <MenuItem key={type} value={type}>
+                                {type}
+                            </MenuItem>
+                        ))}
+                    </TextField> */}
+                {["multiple_choice", "checkbox", "dropdown"].includes(
                 question.type,
             ) && (
-                <div className="flex flex-col items-start">
-                    <h2>Choices:</h2>
-                    {sortedChoices.map((choice) => (
-                        <ChoiceComponent
-                            key={choice.id}
-                            choice={choice}
-                            handleUpdateChoice={handleUpdateChoice}
-                            handleDeleteChoice={handleDeleteChoice}
-                        />
-                    ))}
-                    <div className="mt-2 flex items-center">
-                        <TextField
-                            label="New Choice"
-                            variant="filled"
-                            value={newChoiceText}
-                            onChange={(e) => setNewChoiceText(e.target.value)}
-                        />
-                        <Button
-                            onClick={handleCreateChoice}
-                            variant="contained"
-                            color="primary"
-                            className="ml-2"
-                        >
-                            Add Choice
-                        </Button>
+                    <div className="grid gap-4 rounded bg-primary-secondary p-4 shadow-2xl">
+                        {/* <h2>Choices:</h2> */}
+                        {sortedChoices.map((choice) => (
+                            <ChoiceComponent
+                                key={choice.id}
+                                choice={choice}
+                                handleUpdateChoice={handleUpdateChoice}
+                                handleDeleteChoice={handleDeleteChoice}
+                            />
+                        ))}
+                        <div className="flex items-center gap-3">
+                            <Input
+                                label="New Choice:"
+                                type="text"
+                                value={newChoiceText}
+                                onChange={(e) =>
+                                    setNewChoiceText(e.target.value)
+                                }
+                            />
+                            {/* <TextField
+                                label="New Choice"
+                                variant="filled"
+                                value={newChoiceText}
+                                onChange={(e) => setNewChoiceText(e.target.value)}
+                            /> */}
+                            <button
+                                onClick={handleCreateChoice}
+                                className="rounded bg-lime-700 p-1 hover:bg-lime-700/75"
+                            >
+                                <AddIcon />
+                            </button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
             <Button
                 onClick={() => handleDeleteQuestion(question.id)}
                 variant="outlined"
