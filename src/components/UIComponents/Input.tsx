@@ -38,7 +38,7 @@ const Input = React.forwardRef<
         return (
             <div className="grid gap-1">
                 <label
-                    htmlFor={label}
+                    htmlFor={id ? id : label}
                     className={`text-sm font-medium ${error ? "text-error" : ""}`}
                 >
                     {label}
@@ -47,7 +47,7 @@ const Input = React.forwardRef<
                 {type === "textarea" ? (
                     <textarea
                         ref={ref as React.Ref<HTMLTextAreaElement>} // Use ref here for textarea
-                        id={label}
+                        id={id ? id : label}
                         className={`max-h-40 min-h-20 w-full rounded border-2 px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : "border-transparent"}`}
                         {...props}
                     />
@@ -68,8 +68,12 @@ const Input = React.forwardRef<
                                         ? "text"
                                         : "password"
                             }
-                            id={label}
-                            className={`w-full rounded border border-primary-black px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : ""}`}
+                            id={id ? id : label}
+                            className={
+                                className
+                                    ? className
+                                    : `w-full rounded border border-primary-black px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : ""}`
+                            }
                             aria-invalid={error ? "true" : "false"}
                             {...props}
                         />
@@ -90,6 +94,18 @@ const Input = React.forwardRef<
                             </button>
                         )}
                     </div>
+                ) : type === "select" ? (
+                    <select
+                        id={id ? id : label}
+                        {...props}
+                        className={
+                            className
+                                ? className
+                                : `bg-primary-secondary p-2 text-black`
+                        }
+                    >
+                        {children}
+                    </select>
                 ) : (
                     <p className="w-full">
                         Sorry, you didn&rsquo;t specify the type of the input
