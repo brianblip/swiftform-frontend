@@ -50,12 +50,15 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                 <div className="flex w-full flex-col items-center gap-y-4">
                     <div className="flex w-full items-center justify-center">
                         <input
+                            id="formTitle"
                             autoFocus
                             value={titleInput}
                             onChange={handleTitleChange}
                             className="w-1/4 border-none bg-transparent p-2 text-center text-3xl"
                         />
-                        <Edit className="text-3xl" />
+                        <label htmlFor="formTitle">
+                            <Edit />
+                        </label>
                     </div>
                     <div className="flex w-full gap-x-4 border-b border-b-primary-white">
                         <button
