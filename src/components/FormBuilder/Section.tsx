@@ -89,23 +89,18 @@ export default function SectionComponent({
                     handleDeleteQuestion={handleDeleteQuestion}
                 />
             ))}
-            <div className="mt-4">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={createNewQuestion}
-                    className="mt-2"
-                >
-                    Create Question
-                </Button>
-            </div>
-            <Button
-                onClick={() => handleDeleteSection(section.id)}
-                variant="outlined"
-                color="secondary"
+            <button
+                onClick={createNewQuestion}
+                className="rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/75"
             >
-                Delete Section
-            </Button>
+                Create Question
+            </button>
+            <button
+                onClick={() => handleDeleteSection(section.id)}
+                className="absolute right-0 top-0 rounded bg-error hover:bg-error/75"
+            >
+                <CloseIcon />
+            </button>
         </section>
     );
 }
