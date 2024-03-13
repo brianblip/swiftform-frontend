@@ -47,7 +47,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     };
 
     const mainClassNames =
-        "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-scroll flex flex-col items-center gap-10";
+        "h-[calc(100vh-57.0667px)] w-screen p-4 pt-16 sm:p-8 sm:pt-16 md:h-screen overflow-y-auto scrollbar-hidden flex flex-col items-center gap-10"
 
     if (!activeForm) {
         return null;
