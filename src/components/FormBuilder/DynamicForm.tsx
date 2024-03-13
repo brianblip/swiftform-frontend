@@ -55,15 +55,12 @@ export default function DynamicForm({
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="grid w-full gap-4 sm:w-11/12 lg:w-9/12 xl:w-[660px]"
-        >
+        <form onSubmit={handleSubmit} className="w-full max-w-lg">
             <Input
                 label="Description:"
                 type="textarea"
                 defaultValue={description}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
             />
             {/* <TextField
                     fullWidth
