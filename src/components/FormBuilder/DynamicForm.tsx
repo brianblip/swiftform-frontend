@@ -83,18 +83,19 @@ export default function DynamicForm({
                 <p>No sections found.</p>
             )}
 
-            <Button
+            <button
                 onClick={handleCreateSection}
-                variant="contained"
-                color="primary"
-                className="mb-4"
+                className="mb-4 rounded bg-primary-secondary px-4 py-2 hover:bg-primary-white/25 disabled:bg-primary-black disabled:text-primary-neutral"
             >
                 Add New Section
-            </Button>
+            </button>
 
-            <Button type="submit" variant="contained" color="primary">
+            <button
+                type="submit"
+                className="rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/70 disabled:bg-primary-black disabled:text-primary-neutral"
+            >
                 Submit
-            </Button>
+            </button>
         </form>
     );
 }
