@@ -56,8 +56,13 @@ export default function DynamicForm({
 
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-lg">
-            <div className="mb-4">
-                <TextField
+            <Input
+                label="Description:"
+                type="textarea"
+                defaultValue={description}
+                onChange={(e) => setDescription(e.target.value)}
+            />
+            {/* <TextField
                     fullWidth
                     id="description"
                     name="description"
@@ -67,8 +72,7 @@ export default function DynamicForm({
                     variant="outlined"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                />
-            </div>
+                /> */}
             {Array.isArray(form.sections) && form.sections.length > 0 ? (
                 form.sections
                     .sort((a, b) => a.id - b.id)
