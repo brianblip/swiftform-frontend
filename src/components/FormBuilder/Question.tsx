@@ -171,14 +171,12 @@ export default function QuestionComponent({
                     </div>
                 )}
             </div>
-            <Button
+            <button
                 onClick={() => handleDeleteQuestion(question.id)}
-                variant="outlined"
-                color="secondary"
-                className="mt-4"
+                className="absolute right-0 top-0 rounded bg-error hover:bg-error/75"
             >
-                Delete Question
-            </Button>
+                <CloseIcon />
+            </button>
         </div>
     );
 }
