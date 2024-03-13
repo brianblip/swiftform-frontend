@@ -58,10 +58,22 @@ export default function QuestionComponent({
             key={question.id}
             className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
         >
-            <div className="mb-4 mr-4">
             {/* <h1>Question ID: {question.id}</h1> */}
-                <h1>Question Order: {question.order}</h1>
-                <TextField
+            <h1>Question Order: {question.order}</h1>
+            <Input
+                label="Question Prompt:"
+                type="text"
+                className="w-full rounded bg-primary-secondary px-3 py-2 text-white focus:bg-primary-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                defaultValue={question.prompt}
+                onChange={(e) =>
+                    handleUpdateQuestion(
+                        question.id,
+                        question.type,
+                        e.target.value,
+                    )
+                }
+            />
+            {/* <TextField
                     fullWidth
                     label="Question Prompt"
                     variant="filled"
@@ -73,7 +85,7 @@ export default function QuestionComponent({
                             e.target.value,
                         )
                     }
-                />
+                /> */}
                 <TextField
                     fullWidth
                     select
