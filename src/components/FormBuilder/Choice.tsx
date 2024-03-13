@@ -28,7 +28,7 @@ export default function ChoiceComponent({
     };
 
     return (
-        <div className="w-full flex flex-col items-start border border-white">
+        <div className="flex items-center gap-3">
             <TextField
                 label="Choice Text"
                 variant="filled"
