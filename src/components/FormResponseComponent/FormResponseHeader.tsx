@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import ToggleButton from '../UIComponents/ToggleButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Select from '../UIComponents/Select';
 export default function FormResponseHeader() {
   const [activeButton, setActiveButton] = useState('Summary');
   const [isChecked, setIsChecked] = useState(false);
+  const options = ['neo@gmail.com', 'lorem@gmail.com', 'sample@email.com'];
 
   const buttons = [
     { label: 'Summary', key: 'Summary' },
@@ -15,7 +17,7 @@ export default function FormResponseHeader() {
   };
   return (
     <>
-      <div className="my-8 grid min-h-48 w-full grid-cols-1 gap-4 rounded-md bg-[#444654] p-4 shadow-md">
+      <div className="grid min-h-48 w-full grid-cols-1 rounded-md bg-[#444654] p-4 shadow-md">
         <div className="flex justify-between">
           <p className='text-lg font-bold'>999 Reponse</p>
           <div className='cursor-pointer'>
@@ -40,6 +42,16 @@ export default function FormResponseHeader() {
           ))}
         </div>
       </div>
+      {activeButton === "Question" &&
+        <div className="grid min-h-28 w-full grid-cols-1 rounded-md bg-[#444654] p-4 shadow-md">
+          <Select options={options}/>
+        </div>
+      }
+      {activeButton === "Individual" &&
+        <div className="grid min-h-28 w-full grid-cols-1 rounded-md bg-[#444654] p-4 shadow-md">
+          hi
+        </div>
+      }
     </>
   )
 }
