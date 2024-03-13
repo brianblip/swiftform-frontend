@@ -59,7 +59,10 @@ export default function SectionComponent({
     );
 
     return (
-        <section key={section.id} className="mb-4">
+        <section
+            key={section.id}
+            className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
+        >
             <TextField
                 fullWidth
                 color="info"
