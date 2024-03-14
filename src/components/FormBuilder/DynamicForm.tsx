@@ -63,7 +63,7 @@ export default function DynamicForm({
                 label="Description:"
                 type="textarea"
                 defaultValue={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
             />
             {/* <TextField
                     fullWidth
