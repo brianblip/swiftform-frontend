@@ -75,7 +75,7 @@ export default function QuestionComponent({
                 type="text"
                 className="w-full rounded bg-primary-secondary px-3 py-2 text-white focus:bg-primary-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 defaultValue={question.prompt}
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     handleUpdateQuestion(
                         question.id,
                         question.type,
@@ -102,7 +102,7 @@ export default function QuestionComponent({
                     type="select"
                     className="bg-primary-secondary p-2 text-white"
                     defaultValue={question.type}
-                    onChange={(e) =>
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                         handleUpdateQuestion(
                             question.id,
                             e.target.value as QuestionType,
@@ -159,7 +159,7 @@ export default function QuestionComponent({
                                 label="New Choice:"
                                 type="text"
                                 value={newChoiceText}
-                                onChange={(e) =>
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                     setNewChoiceText(e.target.value)
                                 }
                             />
