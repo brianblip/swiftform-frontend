@@ -43,8 +43,8 @@ export default function FormResponseHeader() {
         </div>
       </div>
       {activeButton === "Question" &&
-        <div className="grid min-h-28 w-full grid-cols-1 rounded-md bg-[#444654] p-4 shadow-md">
-          <Select options={options}/>
+        <div className="grid min-h-28 w-full grid-cols-1 items-center rounded-md bg-[#444654] p-4 shadow-md">
+          <Select options={options} size="sm" />
         </div>
       }
       {activeButton === "Individual" &&
