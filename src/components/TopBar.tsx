@@ -7,17 +7,19 @@ import Birdie from "@/assets/Birdie.png";
 
 export default function TopBar() {
     return (
-        <nav className="sticky top-0 z-50 flex items-center justify-between bg-primary-black md:hidden">
-            <NotificationButton />
-            <Link className="" href="/">
+        <section className="sticky top-0 z-50 md:hidden">
+            <nav className="flex items-center justify-between bg-primary-black">
+                <NotificationButton />
+                <Link className="flex items-center" href="/">
                     <Image
                         className="size-14"
                         src={Birdie}
                         alt="SwiftForm logo"
                     />
                     <p>SwiftForm</p>
-            </Link>
-            <MobileMenu />
-        </nav>
+                </Link>
+                <MobileMenu />
+            </nav>
+        </section>
     );
 }
