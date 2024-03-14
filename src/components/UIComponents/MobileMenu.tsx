@@ -43,31 +43,29 @@ const MobileMenu = () => {
     }, [isMenuOpen]);
 
     return (
-        <div ref={parentRef}>
+        <section ref={parentRef}>
             <button
                 onClick={onToggleOpenMenu}
-                className={`p-4 hover:bg-primary-secondary ${isMenuOpen ? "bg-primary-secondary" : ""}`}
+                className={`p-4 transition hover:bg-primary-secondary ${isMenuOpen ? "bg-primary-secondary" : ""}`}
             >
                 <MenuIcon />
             </button>
-            <div
-                className={`absolute top-0 flex h-screen w-3/4 flex-col justify-end bg-primary-black p-2 ${isMenuOpen ? "right-0" : "right-full"}`}
+            <aside
+                className={`absolute right-0 top-0 flex h-screen w-[240px] flex-col justify-between bg-primary-black p-2 transition ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
             >
                 <button
                     onClick={onClickCloseMenu}
-                    className="absolute right-full top-0 m-2 p-2 hover:bg-primary-secondary"
+                    className="self-end rounded p-2 transition hover:bg-primary-secondary"
                 >
                     <CloseIcon />
                 </button>
-                <div className="flex size-full flex-col justify-between gap-2">
-                    <FormsList formId={currentFormId} />
-                    <div className="flex flex-col gap-2">
-                        <ProfileButton />
-                        <LogoutButton />
-                    </div>
+                <FormsList formId={currentFormId} />
+                <div className="grid gap-2">
+                    <ProfileButton />
+                    <LogoutButton />
                 </div>
-            </div>
-        </div>
+            </aside>
+        </section>
     );
 };
 
