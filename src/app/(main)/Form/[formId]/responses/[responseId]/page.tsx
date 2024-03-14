@@ -1,7 +1,7 @@
 "use client";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
-import { Response, Form, Question } from "@@/types";
+import { Response, Form, Question, Answer } from "@@/types";
 export default function ResponsePage({
     params,
 }: {
@@ -16,23 +16,30 @@ export default function ResponsePage({
     if (!responseData || !formData) {
         return <div>Loading...</div>;
     }
-    const getNumResponses = (question: Question) => {
-        const answersForQuestion = responseData.answers.filter(
-            (answer) => answer.question_id === question.id,
+    const getAnswersForQuestion = (questionId: number): Answer[] => {
+        return responseData.answers.filter(
+            (answer) => answer.question_id === questionId,
         );
-        return answersForQuestion.length;
     };
+
     return (
         <div className="container mx-auto mt-24">
             <div className="border border-black p-4">
-                <h2>{formData.name}</h2>
                 {formData.sections.map((section) => (
                     <div key={section.id} className="mt-4">
-                        <h3>{section.title}</h3>
                         {section.questions.map((question) => (
                             <div key={question.id} className="mt-8">
                                 <p>{question.prompt}</p>
-                                <p>{getNumResponses(question)} responses</p>
+                                {getAnswersForQuestion(question.id).map(
+                                    (answer) => (
+                                        <div
+                                            key={answer.id}
+                                            className="ml-4 mt-2"
+                                        >
+                                            {answer.text}
+                                        </div>
+                                    ),
+                                )}
                             </div>
                         ))}
                     </div>
