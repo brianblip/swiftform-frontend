@@ -10,7 +10,12 @@ export default function TopBar() {
         <nav className="sticky top-0 z-50 flex items-center justify-between bg-primary-black md:hidden">
             <NotificationButton />
             <Link className="" href="/">
-                <p>LOGO</p>
+                    <Image
+                        className="size-14"
+                        src={Birdie}
+                        alt="SwiftForm logo"
+                    />
+                    <p>SwiftForm</p>
             </Link>
             <MobileMenu />
         </nav>
