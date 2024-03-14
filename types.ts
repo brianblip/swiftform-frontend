@@ -78,6 +78,7 @@ export interface Response {
     form_id: number;
     created_at: string;
     user_id: number;
+    answers: Answer[];
 }
 
 export type ApiResponse<T = undefined> = {
