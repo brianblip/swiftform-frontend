@@ -20,7 +20,7 @@ const LogoutButton = () => {
     return (
         <button
             onClick={handleLogout}
-            className={`flex w-full gap-2 p-2 hover:bg-primary-secondary`}
+            className={`flex w-full gap-2 rounded p-2 transition hover:bg-primary-secondary`}
         >
             <LogoutOutlinedIcon />
             <p>Log out</p>
