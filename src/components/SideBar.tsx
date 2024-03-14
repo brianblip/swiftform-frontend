@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import NotificationButton from "./UIComponents/NotificationButton";
 import ProfileButton from "./UIComponents/ProfileButton";
 import LogoutButton from "./UIComponents/LogoutButton";
+import Image from "next/image";
+import Birdie from "@/assets/Birdie.png";
 
 export default function SideBar() {
     const pathname = usePathname();
