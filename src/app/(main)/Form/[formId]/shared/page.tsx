@@ -2,21 +2,36 @@
 
 import useSWR from "swr";
 import { fetcher } from "@/utils";
-import { Form } from "@@/types";
+import { Form, Response, Answer, ApiResponse } from "@@/types";
 import TextInput from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { useForm } from "react-hook-form";
-import { register } from "module";
+import api from "@/services/api";
+import { useState } from "react";
 
 export default function Shared({ params }: { params: { formId: string } }) {
     const { formId } = params;
-
     const { data } = useSWR<Form>(`/forms/${formId}`, fetcher);
+    const [isCreatingRespose, setIsCreatingResponse] = useState(false);
 
     const { register, handleSubmit } = useForm({});
 
-    const handleSubmitResponse = handleSubmit((data) => {
-        console.log(data);
+    const handleSubmitResponse = handleSubmit(async (data) => {
+        try {
+            setIsCreatingResponse(true);
+            const response = await api.post<ApiResponse<Response>>(
+                `/responses`,
+                {
+                    form_id: formId,
+                },
+            );
+
+            console.log(response.data.data);
+        } catch (e) {
+            alert("An error occurred");
+        } finally {
+            setIsCreatingResponse(false);
+        }
     });
 
     return (
@@ -67,8 +82,8 @@ export default function Shared({ params }: { params: { formId: string } }) {
                 ))}
             </div>
 
-            <Button type="submit" className="mt-8">
-                Submit
+            <Button type="submit" className="mt-8" disabled={isCreatingRespose}>
+                {isCreatingRespose ? "Submitting..." : "Submit"}
             </Button>
         </form>
     );
