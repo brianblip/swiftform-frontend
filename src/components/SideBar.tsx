@@ -16,7 +16,12 @@ export default function SideBar() {
     return (
         <nav className="sticky left-0 top-0 hidden h-dvh min-w-60 max-w-60 flex-col items-center justify-between bg-primary-black px-2 py-4 md:flex">
             <Link className="" href="/">
-                <p>LOGO</p>
+                    <Image
+                        className="size-12"
+                        src={Birdie}
+                        alt="SwiftForm logo"
+                    />
+                    <p>SwiftForm</p>
             </Link>
             <FormsList formId={currentFormId} />
             <div className="flex w-full flex-col gap-2">
