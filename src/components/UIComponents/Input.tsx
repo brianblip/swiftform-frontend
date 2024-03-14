@@ -7,6 +7,9 @@ interface InputProps {
     className?: any;
     id?: string;
     required?: boolean;
+    value?: string;
+    defaultValue?: string;
+    onChange?: any;
     type: "text" | "email" | "password" | "textarea" | "select";
     error?: string;
     isPasswordVisible?: boolean;
@@ -25,6 +28,9 @@ const Input = React.forwardRef<
             className,
             id,
             required,
+            value,
+            defaultValue,
+            onChange,
             type,
             error,
             isPasswordVisible,
@@ -49,6 +55,9 @@ const Input = React.forwardRef<
                         ref={ref as React.Ref<HTMLTextAreaElement>} // Use ref here for textarea
                         id={id ? id : label}
                         className={`max-h-40 min-h-20 w-full rounded border-2 px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : "border-transparent"}`}
+                        defaultValue={defaultValue}
+                        value={value}
+                        onChange={onChange}
                         {...props}
                     />
                 ) : type === "text" ||
@@ -75,6 +84,9 @@ const Input = React.forwardRef<
                                     : `w-full rounded border border-primary-black px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : ""}`
                             }
                             aria-invalid={error ? "true" : "false"}
+                            defaultValue={defaultValue}
+                            value={value}
+                            onChange={onChange}
                             {...props}
                         />
                         {type === "password" && (
