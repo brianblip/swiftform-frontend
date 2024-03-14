@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
 interface SelectProps {
-  options: string[]
+  options: string[],
+  size: String
 }
-
-const Select: React.FC<SelectProps> = ({ options }) => {
+/*
+* size default is sm
+*/
+const Select: React.FC<SelectProps> = ({ options, size = "sm" }) => {
+  // TODO: move functions and states to the parent component
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -17,10 +21,22 @@ const Select: React.FC<SelectProps> = ({ options }) => {
     setIsOpen(false);
   };
 
+  /*
+  * custom sizes
+  */
+  let widthClass = "w-full";
+  if (size === "sm") {
+    widthClass = "w-1/3";
+  } else if (size === "md") {
+    widthClass = "w-1/2";
+  } else if (size === "lg") {
+    widthClass = "w-full";
+  }
+  
   return (
-    <div className="relative">
+    <div className={`relative ${widthClass}`}>
       <div
-        className="flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 px-4 py-2"
+        className="flex cursor-pointer items-center justify-between rounded-md border border-gray-300 px-4 py-2"
         onClick={handleToggle}
       >
         <span>{selectedOption || 'Select an option'}</span>
