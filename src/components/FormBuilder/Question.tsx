@@ -51,6 +51,7 @@ export default function QuestionComponent({
     const handleDeleteChoice = async (choiceId: number) => {
         await deleteChoice(choiceId);
         mutate("/forms");
+        mutate("/forms");
     };
 
     const questionTypes: QuestionType[] = [
