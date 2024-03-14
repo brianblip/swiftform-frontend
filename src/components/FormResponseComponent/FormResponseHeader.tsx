@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import ToggleButton from '../UIComponents/ToggleButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Select from '../UIComponents/Select';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 export default function FormResponseHeader() {
   const [activeButton, setActiveButton] = useState('Summary');
   const [isChecked, setIsChecked] = useState(false);
-  const options = ['neo@gmail.com', 'lorem@gmail.com', 'sample@email.com'];
+  const options = ['question 1', 'question 2', 'question 3']; //dummy data
+  const dummyEmail = ['lorem@gmail.com', 'neo@gmail.com', 'zxcv@gmail.com']; //dummy data
 
   const buttons = [
     { label: 'Summary', key: 'Summary' },
@@ -48,8 +50,11 @@ export default function FormResponseHeader() {
         </div>
       }
       {activeButton === "Individual" &&
-        <div className="grid min-h-28 w-full grid-cols-1 rounded-md bg-[#444654] p-4 shadow-md">
-          hi
+        <div className="grid min-h-28 w-full grid-cols-2 items-center rounded-md bg-[#444654] p-4 shadow-md">
+          <Select options={dummyEmail} size="md" />
+          <div className="flex justify-end">
+            <DeleteForeverIcon fontSize='large' className="cursor-pointer"/>
+          </div>
         </div>
       }
     </>
