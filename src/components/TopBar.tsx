@@ -2,6 +2,8 @@
 import Link from "next/link";
 import NotificationButton from "./UIComponents/NotificationButton";
 import MobileMenu from "./UIComponents/MobileMenu";
+import Image from "next/image";
+import Birdie from "@/assets/Birdie.png";
 
 export default function TopBar() {
     return (
