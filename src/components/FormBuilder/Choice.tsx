@@ -33,7 +33,7 @@ export default function ChoiceComponent({
                 label="Choice Text:"
                 type="text"
                 defaultValue={editedText}
-                onchange={handleChange}
+                onChange={handleChange}
             />
             {/* <TextField
                 label="Choice Text"

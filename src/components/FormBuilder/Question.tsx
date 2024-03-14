@@ -91,7 +91,7 @@ export default function QuestionComponent({
                     label="Question Type:"
                     type="select"
                     className="bg-primary-secondary p-2 text-white"
-                    value={question.type}
+                    defaultValue={question.type}
                     onChange={(e) =>
                         handleUpdateQuestion(
                             question.id,
