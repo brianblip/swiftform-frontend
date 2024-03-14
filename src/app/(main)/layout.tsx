@@ -22,7 +22,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${sora.className} relative bg-primary-neutral text-primary-white md:flex`}
+                className={`${sora.className} relative overflow-hidden bg-primary-neutral text-primary-white md:flex`}
             >
                 <ProtectRoute>
                     <AuthProvider>
