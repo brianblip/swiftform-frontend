@@ -21,6 +21,7 @@ export default function ChartedResponse() {
     return (
         <div className="my-8 grid min-h-48 w-full grid-cols-1 gap-4 bg-[#444654] p-4 shadow-md">
             <div>questio Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo distinctio repellat quas accusantium numquam magnam illum provident fuga necessitatibus aliquam sunt ipsam placeat officia dolor veritatis, maiores dicta aspernatur quasi!</div>
+            <p className='font-extralight'>999 response</p>
             <div className='flex items-center justify-around'>
                 <PieChart data={data} />
                 {/* TODO: LOOP ANSWERS */}
