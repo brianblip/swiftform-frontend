@@ -8,11 +8,13 @@ import Button from "@/components/ui/Button";
 import { useForm } from "react-hook-form";
 import api from "@/services/api";
 import { useState } from "react";
+import SuccessComponent from "@/components/UIComponents/Success";
 
 export default function Shared({ params }: { params: { formId: string } }) {
     const { formId } = params;
     const { data: form } = useSWR<Form>(`/forms/${formId}`, fetcher);
     const [isCreatingRespose, setIsCreatingResponse] = useState(false);
+    const [showSuccessComponent, setShowSuccessComponent] = useState(false);
 
     const { register, handleSubmit, reset } = useForm<{
         sections: {
@@ -21,6 +23,10 @@ export default function Shared({ params }: { params: { formId: string } }) {
             }[];
         }[];
     }>({});
+
+    const handleCloseSuccessComponent = () => {
+        setShowSuccessComponent(false);
+    };
 
     const handleSubmitResponse = handleSubmit(async (data) => {
         try {
@@ -59,7 +65,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
             );
 
             reset();
-            alert("Response submitted successfully");
+            setShowSuccessComponent(true);
         } catch (e) {
             alert("An error occurred");
         } finally {
@@ -68,14 +74,17 @@ export default function Shared({ params }: { params: { formId: string } }) {
     });
 
     return (
-        <form
-            className="flex h-[calc(100vh-57.0667px)] flex-col gap-8 overflow-scroll px-4 py-8"
-            onSubmit={handleSubmitResponse}
-        >
-            <section className="grid gap-2">
-                <h1 className="text-center text-2xl font-bold">{form?.name}</h1>
-                <p className="break-all">{form?.description}</p>
-                {/* <TextInput defaultValue={form?.name} disabled label="" />
+        <>
+            <form
+                className="flex h-[calc(100vh-57.0667px)] flex-col gap-8 overflow-scroll px-4 py-8"
+                onSubmit={handleSubmitResponse}
+            >
+                <section className="grid gap-2">
+                    <h1 className="text-center text-2xl font-bold">
+                        {form?.name}
+                    </h1>
+                    <p className="break-all">{form?.description}</p>
+                    {/* <TextInput defaultValue={form?.name} disabled label="" />
 
                 <TextInput
                     defaultValue={form?.description}
@@ -83,51 +92,57 @@ export default function Shared({ params }: { params: { formId: string } }) {
                     label=""
                     className="mt-4"
                 /> */}
-            </section>
+                </section>
 
-            {/* sections */}
-            <div className="grid gap-2">
-                {form?.sections.map((section, sectionIndex) => (
-                    <div
-                        key={section.id}
-                        className="flex flex-col gap-4 rounded bg-primary-secondary p-4"
-                    >
-                        <h1 className="text-lg font-medium">{section.title}</h1>
-                        {/* <TextInput
+                {/* sections */}
+                <div className="grid gap-2">
+                    {form?.sections.map((section, sectionIndex) => (
+                        <div
+                            key={section.id}
+                            className="flex flex-col gap-4 rounded bg-primary-secondary p-4"
+                        >
+                            <h1 className="text-lg font-medium">
+                                {section.title}
+                            </h1>
+                            {/* <TextInput
                             disabled
                             defaultValue={section.title}
                             label=""
                         /> */}
 
-                        {/* questions */}
-                        <div className="flex flex-col gap-4">
-                            {section.questions.map(
-                                (question, questionIndex) => {
-                                    if (question.type === "textfield") {
-                                        return (
-                                            <TextInput
-                                                label={question.prompt}
-                                                key={question.id}
-                                                {...register(
-                                                    `sections.${sectionIndex}.questions.${questionIndex}.text`,
-                                                )}
-                                            />
-                                        );
-                                    }
-                                },
-                            )}
+                            {/* questions */}
+                            <div className="flex flex-col gap-4">
+                                {section.questions.map(
+                                    (question, questionIndex) => {
+                                        if (question.type === "textfield") {
+                                            return (
+                                                <TextInput
+                                                    label={question.prompt}
+                                                    key={question.id}
+                                                    {...register(
+                                                        `sections.${sectionIndex}.questions.${questionIndex}.text`,
+                                                    )}
+                                                />
+                                            );
+                                        }
+                                    },
+                                )}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
 
-            <button
-                type="submit"
-                className="mb-8 rounded bg-white px-2 py-3 text-black hover:bg-white/75"
-                disabled={isCreatingRespose}
-            >
-                {isCreatingRespose ? "Submitting..." : "Submit"}
-            </button>
-        </form>
+                <button
+                    type="submit"
+                    className="mb-8 rounded bg-white px-2 py-3 text-black hover:bg-white/75"
+                    disabled={isCreatingRespose}
+                >
+                    {isCreatingRespose ? "Submitting..." : "Submit"}
+                </button>
+            </form>
+            {showSuccessComponent && (
+                <SuccessComponent onClose={handleCloseSuccessComponent} />
+            )}
+        </>
     );
 }
