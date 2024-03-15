@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Button, MenuItem, TextField } from "@mui/material";
 import { QuestionType, Choice, Question } from "@@/types";
 import useForm from "@/contexts/forms";
 import ChoiceComponent from "./Choice";
@@ -51,7 +50,6 @@ export default function QuestionComponent({
     const handleDeleteChoice = async (choiceId: number) => {
         await deleteChoice(choiceId);
         mutate("/forms");
-        mutate("/forms");
     };
 
     const questionTypes: QuestionType[] = [
@@ -69,7 +67,6 @@ export default function QuestionComponent({
             key={question.id}
             className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
         >
-            {/* <h1>Question ID: {question.id}</h1> */}
             <h1>Question Order: {question.order}</h1>
             <Input
                 label="Question Prompt:"
@@ -84,102 +81,61 @@ export default function QuestionComponent({
                     )
                 }
             />
-            {/* <TextField
-                    fullWidth
-                    label="Question Prompt"
-                    variant="filled"
-                    defaultValue={question.prompt}
-                    onChange={(e) =>
-                        handleUpdateQuestion(
-                            question.id,
-                            question.type,
-                            e.target.value,
-                        )
-                    }
-                /> */}
-            <div className="grid gap-2">
-                <Input
-                    label="Question Type:"
-                    type="select"
-                    className="bg-primary-secondary p-2 text-white"
-                    defaultValue={question.type}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                        handleUpdateQuestion(
-                            question.id,
-                            e.target.value as QuestionType,
-                            question.prompt,
-                        )
-                    }
-                >
-                    {questionTypes.map((questionType) => (
-                        <option
-                            className={`w-full font-sans`}
-                            key={questionType}
-                            value={questionType}
-                        >
-                            {questionType}
-                        </option>
-                    ))}
-                </Input>
-                {/* <TextField
-                        fullWidth
-                        select
-                        label="Question Type"
-                        value={question.type}
-                        onChange={(e) =>
-                            handleUpdateQuestion(
-                                question.id,
-                                e.target.value as QuestionType,
-                                question.prompt,
-                            )
-                        }
-                        variant="filled"
-                        className="mt-2"
+
+            <Input
+                label="Question Type:"
+                type="select"
+                className="bg-primary-secondary p-2 text-white"
+                value={question.type}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                    handleUpdateQuestion(
+                        question.id,
+                        e.target.value as QuestionType,
+                        question.prompt,
+                    )
+                }
+            >
+                {questionTypes.map((questionType) => (
+                    <option
+                        className={`w-full font-sans`}
+                        key={questionType}
+                        value={questionType}
                     >
-                        {Object.values(QuestionType).map((type) => (
-                            <MenuItem key={type} value={type}>
-                                {type}
-                            </MenuItem>
-                        ))}
-                    </TextField> */}
-                {["multiple_choice", "checkbox", "dropdown"].includes(
-                    question.type,
-                ) && (
-                    <div className="grid gap-4 rounded bg-primary-secondary p-4 shadow-2xl">
-                        {/* <h2>Choices:</h2> */}
-                        {sortedChoices.map((choice) => (
-                            <ChoiceComponent
-                                key={choice.id}
-                                choice={choice}
-                                handleUpdateChoice={handleUpdateChoice}
-                                handleDeleteChoice={handleDeleteChoice}
-                            />
-                        ))}
-                        <div className="flex items-center gap-3">
-                            <Input
-                                label="New Choice:"
-                                type="text"
-                                value={newChoiceText}
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>,
-                                ) => setNewChoiceText(e.target.value)}
-                            />
-                            {/* <TextField
-                                label="New Choice"
-                                variant="filled"
-                                value={newChoiceText}
-                                onChange={(e) => setNewChoiceText(e.target.value)}
-                            /> */}
-                            <button
-                                onClick={handleCreateChoice}
-                                className="rounded bg-lime-700 p-1 hover:bg-lime-700/75"
-                            >
-                                <AddIcon />
-                            </button>
-                        </div>
+                        {questionType}
+                    </option>
+                ))}
+            </Input>
+            {["multiple_choice", "checkbox", "dropdown"].includes(
+                question.type,
+            ) && (
+                <div className="grid gap-4 rounded bg-primary-secondary p-4 shadow-2xl">
+                    {sortedChoices.map((choice) => (
+                        <ChoiceComponent
+                            key={choice.id}
+                            choice={choice}
+                            handleUpdateChoice={handleUpdateChoice}
+                            handleDeleteChoice={handleDeleteChoice}
+                        />
+                    ))}
+                    <div className="flex items-center gap-3">
+                        <Input
+                            label="New Choice:"
+                            type="text"
+                            value={newChoiceText}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>,
+                            ) => setNewChoiceText(e.target.value)}
+                        />
+                        <button
+                            onClick={handleCreateChoice}
+                            className="rounded bg-lime-700 p-1 hover:bg-lime-700/75"
+                        >
+                            <AddIcon />
+                        </button>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
+
             <button
                 onClick={() => handleDeleteQuestion(question.id)}
                 className="absolute right-0 top-0 rounded bg-error hover:bg-error/75"
