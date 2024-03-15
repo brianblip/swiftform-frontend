@@ -4,11 +4,17 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 interface InputProps {
     label: string;
+    className?: any;
+    id?: string;
     required?: boolean;
-    type: "text" | "email" | "password" | "textarea";
+    value?: string;
+    defaultValue?: string;
+    onChange?: any;
+    type: "text" | "email" | "password" | "textarea" | "select";
     error?: string;
     isPasswordVisible?: boolean;
     setIsPasswordVisible?: any;
+    children?: any;
 }
 
 // Wrap the component function with React.forwardRef
@@ -19,20 +25,26 @@ const Input = React.forwardRef<
     (
         {
             label,
+            className,
+            id,
             required,
+            value,
+            defaultValue,
+            onChange,
             type,
             error,
             isPasswordVisible,
             setIsPasswordVisible,
+            children,
             ...props
         },
         ref,
     ) => {
         // ref parameter added here
         return (
-            <div className="grid gap-1">
+            <div className="grid w-full gap-1">
                 <label
-                    htmlFor={label}
+                    htmlFor={id ? id : label}
                     className={`text-sm font-medium ${error ? "text-error" : ""}`}
                 >
                     {label}
@@ -41,8 +53,11 @@ const Input = React.forwardRef<
                 {type === "textarea" ? (
                     <textarea
                         ref={ref as React.Ref<HTMLTextAreaElement>} // Use ref here for textarea
-                        id={label}
+                        id={id ? id : label}
                         className={`max-h-40 min-h-20 w-full rounded border-2 px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : "border-transparent"}`}
+                        defaultValue={defaultValue}
+                        value={value}
+                        onChange={onChange}
                         {...props}
                     />
                 ) : type === "text" ||
@@ -62,9 +77,16 @@ const Input = React.forwardRef<
                                         ? "text"
                                         : "password"
                             }
-                            id={label}
-                            className={`w-full rounded border border-primary-black px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : ""}`}
+                            id={id ? id : label}
+                            className={
+                                className
+                                    ? className
+                                    : `w-full rounded border border-primary-black px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : ""}`
+                            }
                             aria-invalid={error ? "true" : "false"}
+                            defaultValue={defaultValue}
+                            value={value}
+                            onChange={onChange}
                             {...props}
                         />
                         {type === "password" && (
@@ -84,6 +106,18 @@ const Input = React.forwardRef<
                             </button>
                         )}
                     </div>
+                ) : type === "select" ? (
+                    <select
+                        id={id ? id : label}
+                        {...props}
+                        className={
+                            className
+                                ? className
+                                : `bg-primary-secondary p-2 text-black`
+                        }
+                    >
+                        {children}
+                    </select>
                 ) : (
                     <p className="w-full">
                         Sorry, you didn&rsquo;t specify the type of the input

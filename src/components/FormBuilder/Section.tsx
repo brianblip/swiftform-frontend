@@ -4,6 +4,8 @@ import { QuestionType, Section } from "@@/types";
 import useForm from "@/contexts/forms";
 import { mutate } from "swr";
 import QuestionComponent from "@/components/FormBuilder/Question"; // Import the QuestionComponent
+import Input from "../UIComponents/Input";
+import CloseIcon from "@mui/icons-material/Close";
 
 type SectionComponentProps = {
     section: Section;
@@ -57,8 +59,11 @@ export default function SectionComponent({
     );
 
     return (
-        <section key={section.id} className="mb-4">
-            <TextField
+        <section
+            key={section.id}
+            className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
+        >
+            {/* <TextField
                 fullWidth
                 color="info"
                 id={`section-title-${section.id}`}
@@ -67,6 +72,14 @@ export default function SectionComponent({
                 variant="filled"
                 defaultValue={section.title}
                 onChange={(e) => updateSection(section.id, e.target.value)}
+            /> */}
+            <Input
+                label="Section Title:"
+                type="text"
+                className="w-full rounded bg-primary-secondary px-3 py-2 text-white focus:bg-primary-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                id={`section-title-${section.id}`}
+                defaultValue={section.title}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSection(section.id, e.target.value)}
             />
             {sortedQuestions.map((question) => (
                 <QuestionComponent
@@ -76,23 +89,18 @@ export default function SectionComponent({
                     handleDeleteQuestion={handleDeleteQuestion}
                 />
             ))}
-            <div className="mt-4">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={createNewQuestion}
-                    className="mt-2"
-                >
-                    Create Question
-                </Button>
-            </div>
-            <Button
-                onClick={() => handleDeleteSection(section.id)}
-                variant="outlined"
-                color="secondary"
+            <button
+                onClick={createNewQuestion}
+                className="rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/75"
             >
-                Delete Section
-            </Button>
+                Create Question
+            </button>
+            <button
+                onClick={() => handleDeleteSection(section.id)}
+                className="absolute right-0 top-0 rounded bg-error hover:bg-error/75"
+            >
+                <CloseIcon />
+            </button>
         </section>
     );
 }
