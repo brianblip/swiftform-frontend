@@ -80,25 +80,27 @@ export default function Home() {
     });
 
     return (
-        <main className="grid h-[calc(100dvh-57.0667px)] w-dvw place-items-center p-4 sm:p-8 md:h-dvh">
-            <div className="flex w-full flex-col items-center gap-y-4 md:gap-y-6">
+        <main className="flex h-[calc(100dvh-57.0667px)] w-full items-center p-4 sm:p-8 md:h-dvh xl:px-16">
+            <div className="flex w-full flex-col items-center gap-y-4">
                 <h1 className="text-3xl font-bold md:text-4xl">Forms</h1>
-                <div className="flex w-full flex-col items-center gap-y-6 md:gap-y-9 lg:w-[720px] xl:w-[820px]">
-                    <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
-                        <SuggestionButton />
-                        <SuggestionButton />
-                        <SuggestionButton />
-                        <SuggestionButton />
-                    </div>
-                    <button
-                        onClick={() => setCreateFormModalOpened(true)}
-                        className="w-full bg-primary-white px-2 py-3 text-primary-black"
-                    >
-                        Create new form
-                    </button>
+                <div className="flex w-full flex-col gap-y-8 lg:w-[720px] xl:w-[820px]">
+                    <section className="flex w-full flex-col items-center gap-4">
+                        <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
+                            <SuggestionButton />
+                            <SuggestionButton />
+                            <SuggestionButton />
+                            <SuggestionButton />
+                        </div>
+                        <button
+                            onClick={() => setCreateFormModalOpened(true)}
+                            className="w-full rounded bg-white px-2 py-3 text-primary-black"
+                        >
+                            Create new form
+                        </button>
+                    </section>
 
                     <form
-                        className="grid w-full gap-6"
+                        className="grid w-full gap-4"
                         onSubmit={handleGenerateForm}
                     >
                         <Input
@@ -111,7 +113,7 @@ export default function Home() {
                             })}
                         />
                         <button
-                            className="rounded bg-primary-secondary px-5 py-3 disabled:bg-primary-black disabled:text-primary-secondary"
+                            className="rounded bg-primary-secondary px-2 py-3 disabled:bg-primary-black disabled:text-primary-secondary"
                             type="submit"
                             disabled={isGeneratingForm}
                         >
@@ -126,7 +128,7 @@ export default function Home() {
                 createFormModalOpened={createFormModalOpened}
                 setCreateFormModalOpened={setCreateFormModalOpened}
             >
-                <form className="grid gap-4" onSubmit={handleCreateForm}>
+                <form className="grid w-full gap-4" onSubmit={handleCreateForm}>
                     <h1 className="text-xl font-bold">Create Form</h1>
                     <fieldset className="grid gap-2">
                         <Input

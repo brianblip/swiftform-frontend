@@ -68,33 +68,39 @@ export default function Shared({ params }: { params: { formId: string } }) {
     });
 
     return (
-        <form className="container mx-auto" onSubmit={handleSubmitResponse}>
-            <div className="mt-24 border border-black p-4">
-                <TextInput defaultValue={form?.name} disabled label="" />
+        <form
+            className="flex h-[calc(100vh-57.0667px)] flex-col gap-8 overflow-scroll px-4 py-8"
+            onSubmit={handleSubmitResponse}
+        >
+            <section className="grid gap-2">
+                <h1 className="text-center text-2xl font-bold">{form?.name}</h1>
+                <p className="break-all">{form?.description}</p>
+                {/* <TextInput defaultValue={form?.name} disabled label="" />
 
                 <TextInput
                     defaultValue={form?.description}
                     disabled
                     label=""
                     className="mt-4"
-                />
-            </div>
+                /> */}
+            </section>
 
             {/* sections */}
-            <div className="mt-16 flex flex-col gap-4">
+            <div className="grid gap-2">
                 {form?.sections.map((section, sectionIndex) => (
                     <div
                         key={section.id}
-                        className="flex flex-col gap-4 border border-black p-4"
+                        className="flex flex-col gap-4 rounded bg-primary-secondary p-4"
                     >
-                        <TextInput
+                        <h1 className="text-lg font-medium">{section.title}</h1>
+                        {/* <TextInput
                             disabled
                             defaultValue={section.title}
                             label=""
-                        />
+                        /> */}
 
                         {/* questions */}
-                        <div className="mt-8 flex flex-col gap-4">
+                        <div className="flex flex-col gap-4">
                             {section.questions.map(
                                 (question, questionIndex) => {
                                     if (question.type === "textfield") {
@@ -115,9 +121,13 @@ export default function Shared({ params }: { params: { formId: string } }) {
                 ))}
             </div>
 
-            <Button type="submit" className="mt-8" disabled={isCreatingRespose}>
+            <button
+                type="submit"
+                className="mb-8 rounded bg-white px-2 py-3 text-black hover:bg-white/75"
+                disabled={isCreatingRespose}
+            >
                 {isCreatingRespose ? "Submitting..." : "Submit"}
-            </Button>
+            </button>
         </form>
     );
 }
