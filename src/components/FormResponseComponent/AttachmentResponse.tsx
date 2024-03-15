@@ -10,7 +10,7 @@ export default function AttachmentResponse() {
     return (
         <div className="my-8 grid min-h-48 w-full grid-cols-1 gap-4 bg-[#444654] p-4 shadow-md">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quasi doloremque ipsa dicta delectus quaerat praesentium possimus, obcaecati accusamus similique velit maxime ea saepe debitis architecto minus labore soluta voluptate?</p>
-            <p>total response 111</p>
+            <p className='font-extralight'>999 response</p>
             <ul className="my-4 space-y-2 py-2">
                 {files.map((file, index) => (
                     <li key={index} className="flex items-center">
