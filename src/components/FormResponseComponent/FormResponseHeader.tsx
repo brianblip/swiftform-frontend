@@ -53,9 +53,24 @@ export default function FormResponseHeader() {
         <div className="grid min-h-28 w-full grid-cols-2 items-center rounded-md bg-[#444654] p-4 shadow-md">
           <Select options={dummyEmail} size="md" />
           <div className="flex justify-end">
-            <DeleteForeverIcon fontSize='large' className="cursor-pointer"/>
+            <DeleteForeverIcon fontSize='large' className="cursor-pointer" />
           </div>
         </div>
+      }
+      {activeButton === "Summary" &&
+        <div className="grid min-h-28 w-full grid-cols-1 items-center rounded-md bg-[#444654] p-4 shadow-md">
+          <p className="text-2xl font-bold">Who has responded?</p>
+          {/* TODO: Loop all the email and 
+          when clicked it will navigate to induvidual response */}
+          <ul className="my-4 space-y-2 py-2">
+            <li className='cursor-pointer text-lg'>loren@gmail.com</li>
+            <li className='cursor-pointer text-lg'>loren@gmail.com</li>
+            <li className='cursor-pointer text-lg'>loren@gmail.com</li>
+            <li className='cursor-pointer text-lg'>loren@gmail.com</li>
+            <li className='cursor-pointer text-lg'>loren@gmail.com</li>
+          </ul>
+        </div>
+
       }
     </>
   )
