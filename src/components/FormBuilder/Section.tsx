@@ -61,7 +61,7 @@ export default function SectionComponent({
     return (
         <section
             key={section.id}
-            className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
+            className="relative grid gap-4 rounded border border-white/50 p-4 shadow-md"
         >
             {/* <TextField
                 fullWidth
