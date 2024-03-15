@@ -22,6 +22,16 @@ export default function ResponsePage({
         );
     };
 
+    const separateCheckboxValues = (text: string): string[] => {
+        // Assuming the checkbox values are separated by commas within curly braces
+        const regex = /{([^}]*)}/;
+        const match = text.match(regex);
+        if (match && match[1]) {
+            return match[1].split(",").map((value) => value.trim());
+        }
+        return [];
+    };
+
     return (
         <div className="container mx-auto mt-24">
             <div className="border border-black p-4">
@@ -36,7 +46,17 @@ export default function ResponsePage({
                                             key={answer.id}
                                             className="ml-4 mt-2"
                                         >
-                                            {answer.text}
+                                            <h1>User: {responseData.user_id}</h1>
+                                            {/* Check if the question type is checkbox */}
+                                            {question.type === "checkbox" ? (
+                                                // If it's a checkbox, separate the values
+                                                separateCheckboxValues(answer.text).map((value, index) => (
+                                                    <div key={index}>{value}</div>
+                                                ))
+                                            ) : (
+                                                // Otherwise, display the answer text
+                                                answer.text
+                                            )}
                                         </div>
                                     ),
                                 )}
