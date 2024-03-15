@@ -63,7 +63,9 @@ export default function DynamicForm({
                 label="Description:"
                 type="textarea"
                 defaultValue={description}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                    setDescription(e.target.value)
+                }
             />
             {/* <TextField
                     fullWidth
@@ -100,7 +102,7 @@ export default function DynamicForm({
 
             <button
                 type="submit"
-                className="rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/70 disabled:bg-primary-black disabled:text-primary-neutral"
+                className="mb-10 rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/70 disabled:bg-primary-black disabled:text-primary-neutral"
             >
                 Submit
             </button>
