@@ -109,12 +109,14 @@ const Input = React.forwardRef<
                 ) : type === "select" ? (
                     <select
                         id={id ? id : label}
-                        {...props}
                         className={
                             className
                                 ? className
-                                : `bg-primary-secondary p-2 text-black`
+                                : `bg-primary-secondary p-2 text-white`
                         }
+                        value={value}
+                        onChange={onChange}
+                        {...props}
                     >
                         {children}
                     </select>
