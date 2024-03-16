@@ -21,4 +21,7 @@ const buttonVariants = cva("w-full rounded px-5 py-3 transition", {
             navbar: "flex gap-2 rounded p-2 hover:bg-primary-secondary",
         },
     },
+    defaultVariants: {
+        variant: "primary",
+    },
 });
