@@ -11,15 +11,10 @@ import Input from "../UIComponents/Input";
 
 type DynamicFormProps = {
     form: Form;
-    onSubmit: (formData: any) => void;
     updateForm: (formId: number, updatedForm: Form) => void;
 };
 
-export default function DynamicForm({
-    form,
-    onSubmit,
-    updateForm,
-}: DynamicFormProps) {
+export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
     const [description, setDescription] = useState<string>(
         form.description || "",
     );
@@ -51,7 +46,6 @@ export default function DynamicForm({
         event.preventDefault();
         const updatedForm = { ...form, description };
         updateForm(form.id, updatedForm);
-        onSubmit(updatedForm);
     };
 
     return (
