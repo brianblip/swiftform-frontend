@@ -4,26 +4,24 @@
 import { mutate } from "swr";
 import { Form, Section } from "@@/types";
 import React, { useState, useEffect } from "react";
-import { Button, TextField } from "@mui/material";
 import SectionComponent from "./Section";
-import useForm from "@/contexts/forms";
+import useForm, { FormState } from "@/contexts/forms";
 import Input from "../UIComponents/Input";
+import { toast } from "react-toastify";
+import { Axios, AxiosError } from "axios";
+import { handleApiError } from "@/utils";
 
 type DynamicFormProps = {
     form: Form;
-    onSubmit: (formData: any) => void;
-    updateForm: (formId: number, updatedForm: Form) => void;
+    updateForm: FormState["updateForm"];
 };
 
-export default function DynamicForm({
-    form,
-    onSubmit,
-    updateForm,
-}: DynamicFormProps) {
+export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
     const [description, setDescription] = useState<string>(
         form.description || "",
     );
     const { createSection, updateSection, deleteSection } = useForm();
+    const [isUpdatingForm, setIsUpdatingForm] = useState(false);
 
     useEffect(() => {
         setDescription(form.description || "");
@@ -47,11 +45,18 @@ export default function DynamicForm({
         }
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        const updatedForm = { ...form, description };
-        updateForm(form.id, updatedForm);
-        onSubmit(updatedForm);
+        try {
+            setIsUpdatingForm(true);
+            const updatedForm = { ...form, description };
+            await updateForm(form.id, updatedForm);
+            toast.success("Saved changes.");
+        } catch (e) {
+            handleApiError(e);
+        } finally {
+            setIsUpdatingForm(false);
+        }
     };
 
     return (
@@ -104,7 +109,7 @@ export default function DynamicForm({
                 type="submit"
                 className="mb-10 rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/70 disabled:bg-primary-black disabled:text-primary-neutral"
             >
-                Submit
+                {isUpdatingForm ? "Saving..." : "Save Changes"}
             </button>
         </form>
     );

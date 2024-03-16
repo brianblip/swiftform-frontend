@@ -14,7 +14,7 @@ export type FormState = {
     error: Error | null;
     getForm: (formId: number) => Form | null;
     createForm: (formData: CreateFormData) => Promise<Form>;
-    updateForm: (formId: number, formData: Form) => Promise<Form>;
+    updateForm: (formId: number, formData: Form) => Promise<ApiResponse<Form>>;
     deleteForm: (formId: number) => Promise<void>;
     createSection: (title: string, formId: number) => Promise<Section>;
     updateSection: (sectionId: number, title: string) => Promise<Section>;
@@ -76,17 +76,15 @@ const useFormStore = (): FormState => {
     };
 
     const updateForm = async (formId: number, formData: Form) => {
-        try {
-            const { data } = await api.put(`/forms/${formId}`, formData);
-            const updatedForms = (forms || []).map((form) =>
-                form.id === formId ? data.data : form,
-            );
-            mutate("/forms", updatedForms, false);
-            return data.data;
-        } catch (error) {
-            console.error("Error updating form:", error);
-            throw error;
-        }
+        const response = await api.put<ApiResponse<Form>>(
+            `/forms/${formId}`,
+            formData,
+        );
+        const updatedForms = (forms || []).map((form) =>
+            form.id === formId ? response.data.data : form,
+        );
+        mutate("/forms", updatedForms, false);
+        return response.data;
     };
 
     const deleteForm = async (formId: number) => {
@@ -229,9 +227,9 @@ const useFormStore = (): FormState => {
                 question_id: questionId,
                 order,
             });
-    
+
             const newChoice = data.data as Choice;
-    
+
             // Update the local state with the new choice
             const updatedForms = (forms || []).map((form) => {
                 form.sections = form.sections.map((section) => {
@@ -245,7 +243,7 @@ const useFormStore = (): FormState => {
                 });
                 return form;
             });
-    
+
             mutate("/forms", updatedForms, false);
             return newChoice;
         } catch (error) {

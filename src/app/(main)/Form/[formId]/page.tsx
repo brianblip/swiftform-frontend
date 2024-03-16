@@ -80,13 +80,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                 </section>
 
                 {isQuestionSectionOpen ? (
-                    <DynamicForm
-                        form={activeForm}
-                        updateForm={updateForm}
-                        onSubmit={(formData) =>
-                            console.log("Form data submitted:", formData)
-                        }
-                    />
+                    <DynamicForm form={activeForm} updateForm={updateForm} />
                 ) : (
                     <ResponseComponent />
                 )}
