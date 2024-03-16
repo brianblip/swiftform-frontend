@@ -63,16 +63,6 @@ export default function SectionComponent({
             key={section.id}
             className="relative grid gap-4 rounded border border-white/50 p-4 shadow-md"
         >
-            {/* <TextField
-                fullWidth
-                color="info"
-                id={`section-title-${section.id}`}
-                name={`section-title-${section.id}`}
-                label="Section title"
-                variant="filled"
-                defaultValue={section.title}
-                onChange={(e) => updateSection(section.id, e.target.value)}
-            /> */}
             <Input
                 label="Section Title:"
                 type="text"
