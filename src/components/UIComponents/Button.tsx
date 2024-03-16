@@ -1,3 +1,4 @@
+import { cva } from "cva";
 import React from "react";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
