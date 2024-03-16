@@ -1,3 +1,4 @@
+// same with textarea
 import React from 'react'
 export default function TexFieldResponse() {
     return (
