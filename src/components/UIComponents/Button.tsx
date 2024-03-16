@@ -5,8 +5,13 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: "primary" | "secondary" | "modal" | "exit" | "navbar";
 };
 
-export default function Button(props: ButtonProps) {
-    return <button {...props} />;
+export default function Button({ variant, ...props }: ButtonProps) {
+    return (
+        <button
+            {...props}
+            className={buttonVariants({ variant })}
+        />
+    );
 }
 
 const buttonVariants = cva("w-full rounded px-5 py-3 transition", {
