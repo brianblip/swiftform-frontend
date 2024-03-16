@@ -9,4 +9,4 @@ export default function Button(props: ButtonProps) {
     return <button {...props} />;
 }
 
-const buttonVariants = cva();
+const buttonVariants = cva("w-full rounded px-5 py-3 transition");
