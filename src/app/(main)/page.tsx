@@ -13,6 +13,7 @@ import { generateFormJson, createNestedForm } from "@/services";
 import { AxiosError } from "axios";
 import useFormData from "@/contexts/forms";
 import { useSWRConfig } from "swr";
+import Button from "@/components/UIComponents/Button";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -91,12 +92,12 @@ export default function Home() {
                             <SuggestionButton />
                             <SuggestionButton />
                         </div>
-                        <button
+                        <Button
+                            variant="secondary"
                             onClick={() => setCreateFormModalOpened(true)}
-                            className="w-full rounded bg-white px-2 py-3 text-primary-black"
                         >
                             Create new form
-                        </button>
+                        </Button>
                     </section>
 
                     <form
@@ -112,15 +113,11 @@ export default function Home() {
                                     "Please provide a description for form.",
                             })}
                         />
-                        <button
-                            className="rounded bg-primary-secondary px-2 py-3 disabled:bg-primary-black disabled:text-primary-secondary"
-                            type="submit"
-                            disabled={isGeneratingForm}
-                        >
+                        <Button type="submit" disabled={isGeneratingForm}>
                             {isGeneratingForm
                                 ? "Generating..."
                                 : "Generate Form"}
-                        </button>
+                        </Button>
                     </form>
                 </div>
             </div>
@@ -147,13 +144,13 @@ export default function Home() {
                             error={createFormErrors.description?.message}
                         />
                     </fieldset>
-                    <button
-                        className="rounded bg-primary-neutral px-5 py-3 disabled:bg-primary-black disabled:text-primary-neutral"
+                    <Button
+                        variant="modal"
                         type="submit"
                         disabled={isCreatingForm}
                     >
                         {isCreatingForm ? "Creating..." : "Create a Form"}
-                    </button>
+                    </Button>
                 </form>
             </Modal>
         </main>
