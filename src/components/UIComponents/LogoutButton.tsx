@@ -2,6 +2,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import useAuth from "@/contexts/auth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Button from "./Button";
 
 const LogoutButton = () => {
     const { logout } = useAuth();
@@ -18,13 +19,10 @@ const LogoutButton = () => {
         return null; // Return null while reloading to avoid rendering the component
     }
     return (
-        <button
-            onClick={handleLogout}
-            className={`flex w-full gap-2 rounded p-2 transition hover:bg-primary-secondary`}
-        >
+        <Button onClick={handleLogout} variant="navbar">
             <LogoutOutlinedIcon />
             <p>Log out</p>
-        </button>
+        </Button>
     );
 };
 
