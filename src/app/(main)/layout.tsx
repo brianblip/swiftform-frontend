@@ -7,6 +7,9 @@ import Sidebar from "@/components/SideBar";
 import { AuthProvider, ProtectRoute } from "@/contexts/auth";
 import { FormProvider } from "@/contexts/forms";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const sora = Sora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -33,6 +36,18 @@ export default function RootLayout({
                         </FormProvider>
                     </AuthProvider>
                 </ProtectRoute>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={1000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
             </body>
         </html>
     );

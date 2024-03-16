@@ -4,25 +4,24 @@
 import { mutate } from "swr";
 import { Form, Section } from "@@/types";
 import React, { useState, useEffect } from "react";
-import { Button, TextField } from "@mui/material";
 import SectionComponent from "./Section";
-import useForm from "@/contexts/forms";
+import useForm, { FormState } from "@/contexts/forms";
+import Input from "../UIComponents/Input";
+import { toast } from "react-toastify";
+import { Axios, AxiosError } from "axios";
+import { handleApiError } from "@/utils";
 
 type DynamicFormProps = {
     form: Form;
-    onSubmit: (formData: any) => void;
-    updateForm: (formId: number, updatedForm: Form) => void;
+    updateForm: FormState["updateForm"];
 };
 
-export default function DynamicForm({
-    form,
-    onSubmit,
-    updateForm,
-}: DynamicFormProps) {
+export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
     const [description, setDescription] = useState<string>(
         form.description || "",
     );
     const { createSection, updateSection, deleteSection } = useForm();
+    const [isUpdatingForm, setIsUpdatingForm] = useState(false);
 
     useEffect(() => {
         setDescription(form.description || "");
@@ -46,17 +45,34 @@ export default function DynamicForm({
         }
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        const updatedForm = { ...form, description };
-        updateForm(form.id, updatedForm);
-        onSubmit(updatedForm);
+        try {
+            setIsUpdatingForm(true);
+            const updatedForm = { ...form, description };
+            await updateForm(form.id, updatedForm);
+            toast.success("Saved changes.");
+        } catch (e) {
+            handleApiError(e);
+        } finally {
+            setIsUpdatingForm(false);
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="w-full max-w-lg">
-            <div className="mb-4">
-                <TextField
+        <form
+            onSubmit={handleSubmit}
+            className="grid w-full gap-4 sm:w-11/12 lg:w-9/12 xl:w-[660px]"
+        >
+            <Input
+                label="Description:"
+                type="textarea"
+                defaultValue={description}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                    setDescription(e.target.value)
+                }
+            />
+            {/* <TextField
                     fullWidth
                     id="description"
                     name="description"
@@ -66,8 +82,7 @@ export default function DynamicForm({
                     variant="outlined"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                />
-            </div>
+                /> */}
             {Array.isArray(form.sections) && form.sections.length > 0 ? (
                 form.sections
                     .sort((a, b) => a.id - b.id)
@@ -83,18 +98,19 @@ export default function DynamicForm({
                 <p>No sections found.</p>
             )}
 
-            <Button
+            <button
                 onClick={handleCreateSection}
-                variant="contained"
-                color="primary"
-                className="mb-4"
+                className="mb-4 rounded bg-primary-secondary px-4 py-2 hover:bg-primary-white/25 disabled:bg-primary-black disabled:text-primary-neutral"
             >
                 Add New Section
-            </Button>
+            </button>
 
-            <Button type="submit" variant="contained" color="primary">
-                Submit
-            </Button>
+            <button
+                type="submit"
+                className="mb-10 rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/70 disabled:bg-primary-black disabled:text-primary-neutral"
+            >
+                {isUpdatingForm ? "Saving..." : "Save Changes"}
+            </button>
         </form>
     );
 }
