@@ -9,17 +9,20 @@ import AddIcon from "@mui/icons-material/Add";
 
 type QuestionComponentProps = {
     question: Question;
-    handleUpdateQuestion: (
+    sectionId: number
+    updateQuestion: (
         questionId: number,
         type: QuestionType,
         prompt: string,
+        sectionId: number
     ) => void;
     handleDeleteQuestion: (questionId: number) => void;
 };
 
 export default function QuestionComponent({
     question,
-    handleUpdateQuestion,
+    sectionId,
+    updateQuestion,
     handleDeleteQuestion,
 }: QuestionComponentProps) {
     const { createChoice, updateChoice, deleteChoice } = useForm();
@@ -74,24 +77,25 @@ export default function QuestionComponent({
                 className="w-full rounded bg-primary-secondary px-3 py-2 text-white focus:bg-primary-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 defaultValue={question.prompt}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    handleUpdateQuestion(
+                    updateQuestion(
                         question.id,
                         question.type,
                         e.target.value,
+                        sectionId
                     )
                 }
             />
-
             <Input
                 label="Question Type:"
                 type="select"
                 className="bg-primary-secondary p-2 text-white"
                 value={question.type}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                    handleUpdateQuestion(
+                    updateQuestion(
                         question.id,
                         e.target.value as QuestionType,
                         question.prompt,
+                        sectionId
                     )
                 }
             >
