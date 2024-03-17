@@ -106,7 +106,13 @@ const useFormStore = (): FormState => {
                 title,
                 form_id: formId,
             });
-            mutate("/forms", [...(forms || []), data.data], false);
+            const updatedForms = (forms || []).map((form) => {
+                if (form.id === formId) {
+                    form.sections.push(data.data);
+                }
+                return form;
+            });
+            mutate("/forms", updatedForms, false);
             return data.data;
         } catch (error) {
             console.error("Error creating section:", error);
@@ -119,16 +125,16 @@ const useFormStore = (): FormState => {
             const { data } = await api.put(`/sections/${sectionId}`, {
                 title,
             });
-            const updatedSections = (forms || []).map((form) => {
-                const updatedSection = form.sections.find(
-                    (section) => section.id === sectionId,
-                );
-                if (updatedSection) {
-                    updatedSection.title = title;
-                }
+            const updatedForms = (forms || []).map((form) => {
+                form.sections = form.sections.map((section) => {
+                    if (section.id === sectionId) {
+                        section.title = title;
+                    }
+                    return section;
+                });
                 return form;
             });
-            mutate("/forms", updatedSections, false);
+            mutate("/forms", updatedForms, false);
             return data.data;
         } catch (error) {
             console.error("Error updating section:", error);
@@ -168,8 +174,20 @@ const useFormStore = (): FormState => {
                 is_required: isRequired,
             });
 
-            mutate("/forms", [...(forms || []), data.data], false);
-            return data.data;
+            const newQuestion = data.data as Question;
+
+            const updatedForms = (forms || []).map((form) => {
+                form.sections = form.sections.map((section) => {
+                    if (section.id === sectionId) {
+                        section.questions.push(newQuestion);
+                    }
+                    return section;
+                });
+                return form;
+            });
+
+            mutate("/forms", updatedForms, false);
+            return newQuestion;
         } catch (error) {
             console.error("Error creating question:", error);
             throw error;
@@ -192,24 +210,40 @@ const useFormStore = (): FormState => {
                 order,
                 is_required: isRequired,
             });
-            const updatedQuestions = (forms || []).map((question) =>
-                question.id === questionId ? data.data : question,
-            );
-            mutate("/forms", updatedQuestions, false); // Mutate and revalidate
+            const updatedForms = (forms || []).map((form) => {
+                form.sections = form.sections.map((section) => {
+                    section.questions = section.questions.map((question) => {
+                        if (question.id === questionId) {
+                            return data.data;
+                        }
+                        return question;
+                    });
+                    return section;
+                });
+                return form;
+            });
+            mutate("/forms", updatedForms, false);
             return data.data;
         } catch (error) {
             console.error("Error updating question:", error);
+            // Throw the error to handle it in the component
             throw error;
         }
     };
-
+    
     const deleteQuestion = async (questionId: number) => {
         try {
             await api.delete(`/questions/${questionId}`);
-            const updatedQuestions = (forms || []).filter(
-                (question) => question.id !== questionId,
-            );
-            mutate("/forms", updatedQuestions, false); // Mutate and revalidate
+            const updatedForms = (forms || []).map((form) => {
+                form.sections = form.sections.map((section) => {
+                    section.questions = section.questions.filter(
+                        (question) => question.id !== questionId,
+                    );
+                    return section;
+                });
+                return form;
+            });
+            mutate("/forms", updatedForms, false);
         } catch (error) {
             console.error("Error deleting question:", error);
             throw error;
@@ -230,15 +264,14 @@ const useFormStore = (): FormState => {
 
             const newChoice = data.data as Choice;
 
-            // Update the local state with the new choice
             const updatedForms = (forms || []).map((form) => {
                 form.sections = form.sections.map((section) => {
-                    const updatedQuestion = section.questions.find(
-                        (q) => q.id === questionId,
-                    );
-                    if (updatedQuestion) {
-                        updatedQuestion.choices.push(newChoice);
-                    }
+                    section.questions = section.questions.map((question) => {
+                        if (question.id === questionId) {
+                            question.choices.push(newChoice);
+                        }
+                        return question;
+                    });
                     return section;
                 });
                 return form;
@@ -251,25 +284,21 @@ const useFormStore = (): FormState => {
             throw error;
         }
     };
+
     const updateChoice = async (choiceId: number, text: string) => {
         try {
             const { data } = await api.put(`/choices/${choiceId}`, { text });
-            // Update local state with updated choice
             const updatedForms = (forms || []).map((form) => {
                 form.sections = form.sections.map((section) => {
-                    const updatedQuestion = section.questions.find((question) =>
-                        question.choices.some(
-                            (choice) => choice.id === choiceId,
-                        ),
-                    );
-                    if (updatedQuestion) {
-                        updatedQuestion.choices = updatedQuestion.choices.map(
-                            (choice) =>
-                                choice.id === choiceId
-                                    ? { ...choice, text: data.data.text }
-                                    : choice,
-                        );
-                    }
+                    section.questions = section.questions.map((question) => {
+                        question.choices = question.choices.map((choice) => {
+                            if (choice.id === choiceId) {
+                                return { ...choice, text: data.data.text };
+                            }
+                            return choice;
+                        });
+                        return question;
+                    });
                     return section;
                 });
                 return form;
