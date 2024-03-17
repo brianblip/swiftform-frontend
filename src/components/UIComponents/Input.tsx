@@ -1,38 +1,51 @@
 import React from "react"; // Ensure React is imported for using React.forwardRef
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import cn from "@/utils/cn";
+import { cva } from "cva";
 
-interface InputProps {
-    label: string;
-    className?: any;
-    id?: string;
-    required?: boolean;
-    value?: string;
-    defaultValue?: string;
-    onChange?: any;
-    type: "text" | "email" | "password" | "textarea" | "select";
-    error?: string;
-    isPasswordVisible?: boolean;
-    setIsPasswordVisible?: any;
-    children?: any;
-}
+type InputProps = React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+> &
+    React.DetailedHTMLProps<
+        React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+        HTMLTextAreaElement
+    > &
+    React.DetailedHTMLProps<
+        React.SelectHTMLAttributes<HTMLSelectElement>,
+        HTMLSelectElement
+    > & {
+        label?: string;
+        type: "text" | "email" | "password" | "textarea" | "select" | "date";
+        onChange?: any;
+        error?: string;
+        isPasswordVisible?: boolean;
+        setIsPasswordVisible?: any;
+        variant?:
+            | "primary"
+            | "auth"
+            | "authpassword"
+            | "textarea"
+            | "form"
+            | "formSelect";
+    };
 
 // Wrap the component function with React.forwardRef
 const Input = React.forwardRef<
-    HTMLTextAreaElement | HTMLInputElement,
+    HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement,
     InputProps
 >(
     (
         {
             label,
-            className,
             id,
+            className,
             required,
-            value,
-            defaultValue,
             onChange,
             type,
             error,
+            variant,
             isPasswordVisible,
             setIsPasswordVisible,
             children,
@@ -42,27 +55,28 @@ const Input = React.forwardRef<
     ) => {
         // ref parameter added here
         return (
-            <div className="grid w-full gap-1">
-                <label
-                    htmlFor={id ? id : label}
-                    className={`text-sm font-medium ${error ? "text-error" : ""}`}
-                >
-                    {label}
-                    {required ? "*" : ""}
-                </label>
+            <div className="grid w-full">
+                {label && (
+                    <label
+                        htmlFor={id ? id : label}
+                        className={`pb-1 text-sm font-medium ${error ? "text-error" : ""}`}
+                    >
+                        {label}
+                        {required ? "*" : ""}
+                    </label>
+                )}
                 {type === "textarea" ? (
                     <textarea
                         ref={ref as React.Ref<HTMLTextAreaElement>} // Use ref here for textarea
                         id={id ? id : label}
-                        className={`max-h-40 min-h-20 w-full rounded border-2 px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : "border-transparent"}`}
-                        defaultValue={defaultValue}
-                        value={value}
+                        className={`${cn(error ? "border-error focus:ring-error" : " focus:ring-blue-500", inputVariants({ variant }), className)}`}
                         onChange={onChange}
                         {...props}
                     />
                 ) : type === "text" ||
                   type === "email" ||
-                  type === "password" ? (
+                  type === "password" ||
+                  type === "date" ? (
                     <div
                         className={`${type === "password" ? "relative flex items-center" : ""}`}
                     >
@@ -73,19 +87,21 @@ const Input = React.forwardRef<
                                     ? "text"
                                     : type === "email"
                                       ? "email"
-                                      : isPasswordVisible
-                                        ? "text"
-                                        : "password"
+                                      : type === "date"
+                                        ? "date"
+                                        : isPasswordVisible
+                                          ? "text"
+                                          : "password"
                             }
                             id={id ? id : label}
-                            className={
-                                className
-                                    ? className
-                                    : `w-full rounded border border-primary-black px-3 py-2 text-primary-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "border-error focus:ring-error" : ""}`
-                            }
+                            className={`${cn(
+                                error
+                                    ? "border-error focus:ring-error"
+                                    : "focus:ring-blue-500",
+                                inputVariants({ variant }),
+                                className,
+                            )}`}
                             aria-invalid={error ? "true" : "false"}
-                            defaultValue={defaultValue}
-                            value={value}
                             onChange={onChange}
                             {...props}
                         />
@@ -109,12 +125,13 @@ const Input = React.forwardRef<
                 ) : type === "select" ? (
                     <select
                         id={id ? id : label}
-                        className={
-                            className
-                                ? className
-                                : `bg-primary-secondary p-2 text-white`
-                        }
-                        value={value}
+                        className={`${cn(
+                            error
+                                ? "border-error focus:ring-error"
+                                : "focus:ring-blue-500",
+                            inputVariants({ variant }),
+                            className,
+                        )}`}
                         onChange={onChange}
                         {...props}
                     >
@@ -134,3 +151,23 @@ const Input = React.forwardRef<
 Input.displayName = "Input";
 
 export default Input;
+
+const inputVariants = cva(
+    "w-full rounded border px-3 py-2 focus:outline-none focus:ring-2",
+    {
+        variants: {
+            variant: {
+                primary: "text-primary-black",
+                auth: "border-primary-black text-primary-black",
+                authpassword: "border-primary-black pr-9 text-primary-black",
+                textarea: "max-h-40 min-h-20 text-primary-black",
+                form: "border-transparent bg-primary-secondary hover:bg-primary-white/15 focus:bg-primary-white/25",
+                formSelect:
+                    "cursor-pointer border-transparent bg-primary-secondary",
+            },
+        },
+        defaultVariants: {
+            variant: "primary",
+        },
+    },
+);
