@@ -26,37 +26,28 @@ export default function Shared({ params }: { params: { formId: string } }) {
     const handleSubmitResponse = handleSubmit(async (data) => {
         try {
             setIsCreatingResponse(true);
-
-            // create a response to the form first
             const response = await api.post<ApiResponse<Response>>(
                 `/responses`,
-                {
-                    form_id: formId,
-                },
+                { form_id: formId },
             );
-
             const newResponse = response.data.data;
 
             const questions = form?.sections.flatMap((section) =>
                 section.questions.map((question) => question),
             );
 
-            // get the answers to the questions
-            const answers = data.sections.flatMap((section) => {
-                return section.questions.map((question, questionIndex) => {
-                    return {
-                        question_id: questions?.[questionIndex].id,
-                        response_id: newResponse?.id,
-                        text: question.text,
-                    };
-                });
-            });
+            const answers = data.sections.flatMap((section) =>
+                section.questions.map((question, questionIndex) => ({
+                    question_id: questions?.[questionIndex].id,
+                    response_id: newResponse?.id,
+                    text: question.text,
+                })),
+            );
 
-            // add the answers to the response
             await Promise.all(
-                answers.map((answer) => {
-                    return api.post<ApiResponse<Answer>>(`/answers`, answer);
-                }),
+                answers.map((answer) =>
+                    api.post<ApiResponse<Answer>>(`/answers`, answer),
+                ),
             );
 
             reset();
@@ -89,7 +80,6 @@ export default function Shared({ params }: { params: { formId: string } }) {
                             {section.title}
                         </h1>
 
-                        {/* questions */}
                         <div className="flex flex-col gap-4">
                             {section.questions.map(
                                 (question, questionIndex) => {
