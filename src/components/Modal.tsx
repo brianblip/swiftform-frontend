@@ -1,6 +1,7 @@
 import { ReactNode, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useClickAway } from "react-use";
+import Button from "./UIComponents/Button";
 
 interface ModalProps {
     children: ReactNode;
@@ -28,12 +29,12 @@ export default function Modal({
                 ref={ref}
                 className="relative w-10/12 rounded bg-primary-secondary p-4 sm:w-[500px]"
             >
-                <button
-                    className="absolute right-0 top-0 rounded hover:bg-error"
+                <Button
+                    variant="exit"
                     onClick={() => setCreateFormModalOpened(false)}
                 >
                     <CloseIcon />
-                </button>
+                </Button>
                 {children}
             </div>
         </section>

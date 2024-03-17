@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import Link from "next/link";
+import Button from "./Button";
 
 const ProfileButton = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -33,13 +34,14 @@ const ProfileButton = () => {
 
     return (
         <div ref={profileRef} className="relative md:flex md:items-center">
-            <button
+            <Button
+                variant="navbar"
                 onClick={onClickToggleProfile}
-                className={`flex w-full gap-2 rounded p-2 transition hover:bg-primary-secondary ${isProfileOpen ? "bg-primary-secondary" : ""}`}
+                className={`${isProfileOpen ? "bg-primary-secondary" : ""}`}
             >
                 <PermIdentityOutlinedIcon />
                 <p>My Account</p>
-            </button>
+            </Button>
             <div
                 className={`absolute bottom-full -z-10 mb-2 flex w-full origin-bottom flex-col items-start rounded bg-primary-secondary p-2 shadow-2xl transition md:bottom-auto md:left-[calc(100%+theme(spacing.4))] md:-z-50 md:mb-0 md:flex md:max-h-40 md:overflow-y-auto ${isProfileOpen ? "md:translate-x-0" : "scale-0 md:translate-x-[-105%] md:scale-100"}`}
             >
