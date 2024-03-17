@@ -37,6 +37,9 @@ export default function FormPage({ params }: { params: { formId: number } }) {
         }
         mutate("/forms");
     };
+    const handleRedirectToShared = () => {
+        router.push(`/Form/${formId}/shared`);
+    };
 
     if (!activeForm) {
         return null;
@@ -45,7 +48,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     return (
         <ErrorBoundary isLoading={isLoading || !activeForm} error={error}>
             <main
-                className={`flex h-[calc(100vh-57.0667px)] w-dvw flex-col items-center gap-8 overflow-scroll px-4 py-10 sm:px-8 md:h-dvh md:py-16 xl:p-16`}
+                className={`flex h-[calc(100vh-57.0667px)] w-dvw flex-col items-center gap-8  overflow-scroll px-4 py-10 pb-20 sm:px-8 md:min-h-dvh md:py-16 md:pb-28 lg:px-20 `}
             >
                 <section className="flex w-full flex-col items-center gap-6">
                     <div className="relative flex w-3/4 items-center lg:w-[468px]">
@@ -84,6 +87,13 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                 ) : (
                     <ResponseComponent />
                 )}
+
+                <button
+                    onClick={handleRedirectToShared}
+                    className="rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/70 "
+                >
+                    Share
+                </button>
             </main>
         </ErrorBoundary>
     );
