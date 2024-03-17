@@ -10,6 +10,7 @@ import Input from "../UIComponents/Input";
 import { toast } from "react-toastify";
 import { Axios, AxiosError } from "axios";
 import { handleApiError } from "@/utils";
+import Button from "../UIComponents/Button";
 
 type DynamicFormProps = {
     form: Form;
@@ -65,6 +66,7 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
             className="grid w-full gap-4 sm:w-11/12 lg:w-9/12 xl:w-[660px]"
         >
             <Input
+                variant="textarea"
                 label="Description:"
                 type="textarea"
                 defaultValue={description}
@@ -98,19 +100,17 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
                 <p>No sections found.</p>
             )}
 
-            <button
+            <Button
+                type="button"
+                className="mb-4"
                 onClick={handleCreateSection}
-                className="mb-4 rounded bg-primary-secondary px-4 py-2 hover:bg-primary-white/25 disabled:bg-primary-black disabled:text-primary-neutral"
             >
                 Add New Section
-            </button>
+            </Button>
 
-            <button
-                type="submit"
-                className="mb-10 rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/70 disabled:bg-primary-black disabled:text-primary-neutral"
-            >
+            <Button type="submit" variant="secondary" className="mb-10">
                 {isUpdatingForm ? "Saving..." : "Save Changes"}
-            </button>
+            </Button>
         </form>
     );
 }
