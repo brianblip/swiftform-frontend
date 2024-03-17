@@ -14,6 +14,7 @@ import { AxiosError } from "axios";
 import useFormData from "@/contexts/forms";
 import { useSWRConfig } from "swr";
 import Button from "@/components/UIComponents/Button";
+import Main from "@/components/UIComponents/Main";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -81,7 +82,7 @@ export default function Home() {
     });
 
     return (
-        <main className="flex h-[calc(100dvh-57.0667px)] w-full items-center p-4 sm:p-8 md:h-dvh xl:px-16">
+        <Main>
             <div className="flex w-full flex-col items-center gap-y-4">
                 <h1 className="text-3xl font-bold md:text-4xl">Forms</h1>
                 <div className="flex w-full flex-col gap-y-8 lg:w-[720px] xl:w-[820px]">
@@ -106,6 +107,7 @@ export default function Home() {
                     >
                         <Input
                             label="Describe the form you want to generate..."
+                            variant="textarea"
                             type="textarea"
                             error={generateFormErrors.description?.message}
                             {...generateFormRegister("description", {
@@ -153,7 +155,7 @@ export default function Home() {
                     </Button>
                 </form>
             </Modal>
-        </main>
+        </Main>
     );
 }
 

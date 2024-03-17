@@ -6,6 +6,7 @@ import { mutate } from "swr";
 import Input from "../UIComponents/Input";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import Button from "../UIComponents/Button";
 
 type QuestionComponentProps = {
     question: Question;
@@ -69,9 +70,10 @@ export default function QuestionComponent({
         >
             <h1>Question Order: {question.order}</h1>
             <Input
+                variant="form"
                 label="Question Prompt:"
+                id={`Question_Prompt_${question.id}`}
                 type="text"
-                className="w-full rounded bg-primary-secondary px-3 py-2 text-white focus:bg-primary-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 defaultValue={question.prompt}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     handleUpdateQuestion(
@@ -84,8 +86,9 @@ export default function QuestionComponent({
 
             <Input
                 label="Question Type:"
+                id={`Question_Type_${question.id}`}
                 type="select"
-                className="bg-primary-secondary p-2 text-white"
+                variant="formSelect"
                 value={question.type}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                     handleUpdateQuestion(
@@ -117,7 +120,7 @@ export default function QuestionComponent({
                             handleDeleteChoice={handleDeleteChoice}
                         />
                     ))}
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3">   
                         <Input
                             label="New Choice:"
                             type="text"
@@ -126,22 +129,25 @@ export default function QuestionComponent({
                                 e: React.ChangeEvent<HTMLInputElement>,
                             ) => setNewChoiceText(e.target.value)}
                         />
-                        <button
+                        <Button
+                            type="button"
+                            variant="add"
+                            size="xs"
                             onClick={handleCreateChoice}
-                            className="rounded bg-lime-700 p-1 hover:bg-lime-700/75"
                         >
                             <AddIcon />
-                        </button>
+                        </Button>
                     </div>
                 </div>
             )}
 
-            <button
+            <Button
+                variant="exit"
+                size="xs"
                 onClick={() => handleDeleteQuestion(question.id)}
-                className="absolute right-0 top-0 rounded bg-error hover:bg-error/75"
             >
                 <CloseIcon />
-            </button>
+            </Button>
         </div>
     );
 }

@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/UIComponents/Input";
 import Alert from "@/components/Alert";
+import Button from "@/components/UIComponents/Button";
+import Main from "@/components/UIComponents/Main";
 interface RegisterForm {
     name: string;
     email: string;
@@ -64,7 +66,7 @@ export default function RegistrationPage() {
     };
 
     return (
-        <div className="flex min-h-dvh w-dvw items-center justify-center bg-white text-primary-black">
+        <Main variant="auth">
             <div className="flex flex-col items-center gap-8">
                 <div className="size-28 overflow-hidden rounded-full">
                     <Image src={Birdie} alt="SwiftForm logo" />
@@ -79,6 +81,7 @@ export default function RegistrationPage() {
                     className="grid gap-4"
                 >
                     <Input
+                        variant="auth"
                         label="Name"
                         type="text"
                         {...formRegister("name", {
@@ -95,6 +98,7 @@ export default function RegistrationPage() {
                         error={errors.name?.message}
                     />
                     <Input
+                        variant="auth"
                         label="Email"
                         type="email"
                         {...formRegister("email", {
@@ -107,6 +111,7 @@ export default function RegistrationPage() {
                         error={errors.email?.message}
                     />
                     <Input
+                        variant="authpassword"
                         label="Password"
                         type="password"
                         {...formRegister("password", {
@@ -121,6 +126,7 @@ export default function RegistrationPage() {
                         setIsPasswordVisible={setIsPasswordVisible}
                     />
                     <Input
+                        variant="authpassword"
                         {...formRegister("confirmPassword", {
                             required: "Please re-enter your password",
                             minLength: {
@@ -137,19 +143,16 @@ export default function RegistrationPage() {
                         setIsPasswordVisible={setIsReenterPasswordVisible}
                     />
 
-                    <button
-                        type="submit"
-                        className="mt-4 w-full rounded bg-primary-black p-3 text-white"
-                    >
+                    <Button type="submit" variant="auth">
                         Continue
-                    </button>
+                    </Button>
                 </form>
                 <Link href="/login" className="w-fit text-sm">
                     Already have an account?
-                    <span className="font-medium"> Log in</span>
+                    <span className="font-bold"> Log in</span>
                 </Link>
             </div>
             <Alert message={errorMessage} status="Error" />
-        </div>
+        </Main>
     );
 }

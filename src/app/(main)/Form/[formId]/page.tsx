@@ -8,6 +8,8 @@ import ResponseComponent from "@/components/ResponseComponent";
 import DynamicForm from "@/components/FormBuilder/DynamicForm";
 import { ErrorBoundary } from "@/components";
 import { useRouter } from "next/navigation";
+import Main from "@/components/UIComponents/Main";
+import Input from "@/components/UIComponents/Input";
 
 export default function FormPage({ params }: { params: { formId: number } }) {
     const { formId } = params;
@@ -47,17 +49,24 @@ export default function FormPage({ params }: { params: { formId: number } }) {
 
     return (
         <ErrorBoundary isLoading={isLoading || !activeForm} error={error}>
-            <main
-                className={`flex h-[calc(100vh-57.0667px)] w-dvw flex-col items-center gap-8  overflow-scroll px-4 py-10 pb-20 sm:px-8 md:min-h-dvh md:py-16 md:pb-28 lg:px-20 `}
-            >
+            <Main variant="form">
                 <section className="flex w-full flex-col items-center gap-6">
                     <div className="relative flex w-3/4 items-center lg:w-[468px]">
-                        <input
+                        {/* <input
                             id="formTitle"
                             autoFocus
                             value={titleInput}
                             onChange={handleTitleChange}
                             className="w-full rounded bg-primary-secondary px-3 py-2 pr-8 text-2xl text-primary-white hover:bg-primary-white/15 focus:bg-primary-white/25 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        /> */}
+                        <Input
+                            variant="form"
+                            id="formTitle"
+                            autoFocus
+                            value={titleInput}
+                            onChange={handleTitleChange}
+                            type="text"
+                            className="pr-8 text-2xl "
                         />
                         <label
                             htmlFor="formTitle"
@@ -87,14 +96,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                 ) : (
                     <ResponseComponent />
                 )}
-
-                <button
-                    onClick={handleRedirectToShared}
-                    className="rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/70 "
-                >
-                    Share
-                </button>
-            </main>
+            </Main>
         </ErrorBoundary>
     );
 }

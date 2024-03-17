@@ -31,6 +31,7 @@ export default function Modal({
             >
                 <Button
                     variant="exit"
+                    size="xs"
                     onClick={() => setCreateFormModalOpened(false)}
                 >
                     <CloseIcon />

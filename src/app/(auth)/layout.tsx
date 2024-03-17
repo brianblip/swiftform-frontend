@@ -18,9 +18,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body
-                className={`${sora.className} bg-primary-neutral text-primary-white md:flex`}
-            >
+            <body className={`${sora.className} bg-white text-primary-black`}>
                 <AuthProvider>{children}</AuthProvider>
             </body>
         </html>

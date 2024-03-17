@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import Button from "./Button";
 
 const NotificationButton = () => {
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -33,13 +34,15 @@ const NotificationButton = () => {
 
     return (
         <section className="md:relative" ref={parentRef}>
-            <button
+            <Button
+                size="navbar"
+                variant="navbar"
+                className={`${isNotificationOpen ? "bg-primary-secondary" : ""} block rounded-none md:flex md:rounded`}
                 onClick={onClickToggleNotification}
-                className={`p-4 transition hover:bg-primary-secondary md:flex md:w-full md:gap-2 md:p-2 ${isNotificationOpen ? "bg-primary-secondary" : ""}`}
             >
                 <NotificationsOutlinedIcon />
                 <p className="hidden md:block">Notification</p>
-            </button>
+            </Button>
             <div
                 className={`absolute -z-10 flex max-h-40 w-full flex-col overflow-scroll bg-primary-secondary p-2 shadow-2xl transition md:bottom-0 md:left-[calc(100%+theme(spacing.4))] md:rounded ${isNotificationOpen ? "translate-y-0" : "-translate-y-full md:translate-x-[-105%] md:translate-y-0"}`}
             >
