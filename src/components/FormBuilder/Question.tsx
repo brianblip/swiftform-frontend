@@ -10,17 +10,20 @@ import Button from "../UIComponents/Button";
 
 type QuestionComponentProps = {
     question: Question;
-    handleUpdateQuestion: (
+    sectionId: number
+    updateQuestion: (
         questionId: number,
         type: QuestionType,
         prompt: string,
+        sectionId: number
     ) => void;
     handleDeleteQuestion: (questionId: number) => void;
 };
 
 export default function QuestionComponent({
     question,
-    handleUpdateQuestion,
+    sectionId,
+    updateQuestion,
     handleDeleteQuestion,
 }: QuestionComponentProps) {
     const { createChoice, updateChoice, deleteChoice } = useForm();
@@ -76,14 +79,14 @@ export default function QuestionComponent({
                 type="text"
                 defaultValue={question.prompt}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    handleUpdateQuestion(
+                    updateQuestion(
                         question.id,
                         question.type,
                         e.target.value,
+                        sectionId
                     )
                 }
             />
-
             <Input
                 label="Question Type:"
                 id={`Question_Type_${question.id}`}
@@ -91,10 +94,11 @@ export default function QuestionComponent({
                 variant="formSelect"
                 value={question.type}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                    handleUpdateQuestion(
+                    updateQuestion(
                         question.id,
                         e.target.value as QuestionType,
                         question.prompt,
+                        sectionId
                     )
                 }
             >
