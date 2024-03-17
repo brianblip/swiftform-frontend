@@ -5,6 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import FormsList from "../FormsList";
 import ProfileButton from "./ProfileButton";
 import LogoutButton from "./LogoutButton";
+import Button from "./Button";
 
 const MobileMenu = () => {
     const pathname = usePathname();
@@ -44,21 +45,24 @@ const MobileMenu = () => {
 
     return (
         <section ref={parentRef}>
-            <button
+            <Button
+                size="navbar"
+                variant="navbar"
+                className={`${isMenuOpen ? "bg-primary-secondary" : ""} block rounded-none`}
                 onClick={onToggleOpenMenu}
-                className={`p-4 transition hover:bg-primary-secondary ${isMenuOpen ? "bg-primary-secondary" : ""}`}
             >
                 <MenuIcon />
-            </button>
+            </Button>
             <aside
                 className={`absolute right-0 top-0 flex h-screen w-[240px] flex-col justify-between bg-primary-black p-2 transition ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
             >
-                <button
+                <Button
+                    variant="navbar"
                     onClick={onClickCloseMenu}
-                    className="self-end rounded p-2 transition hover:bg-primary-secondary"
+                    className="w-fit self-end p-2"
                 >
                     <CloseIcon />
-                </button>
+                </Button>
                 <FormsList formId={currentFormId} />
                 <div className="grid gap-2">
                     <ProfileButton />
