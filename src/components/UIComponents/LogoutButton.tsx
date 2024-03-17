@@ -19,7 +19,12 @@ const LogoutButton = () => {
         return null; // Return null while reloading to avoid rendering the component
     }
     return (
-        <Button onClick={handleLogout} variant="navbar">
+        <Button
+            onClick={handleLogout}
+            variant="navbar"
+            size="sm"
+            className="p-2"
+        >
             <LogoutOutlinedIcon />
             <p>Log out</p>
         </Button>
