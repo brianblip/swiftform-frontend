@@ -22,12 +22,13 @@ export default function FormPage({ params }: { params: { formId: number } }) {
         if (isLoading) return;
 
         if (!activeForm) {
-            router.push("/404");
+            router.push("/");
         } else {
-            setTitleInput(activeForm.name);
+            setTitleInput(activeForm.name || ""); // Initialize with activeForm.name or ""
         }
     }, [activeForm, isLoading, router]);
 
+    // Change handleTitleChange function to update the state
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTitle = event.target.value;
         setTitleInput(newTitle);
