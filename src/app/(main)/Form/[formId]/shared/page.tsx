@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import api from "@/services/api";
 import Button from "@/components/UIComponents/Button";
 import Input from "@/components/UIComponents/Input";
+import { handleApiError } from "@/utils";
+import { toast } from "react-toastify";
 
 export default function Shared({ params }: { params: { formId: string } }) {
     const { formId } = params;
@@ -55,9 +57,9 @@ export default function Shared({ params }: { params: { formId: string } }) {
             );
 
             reset();
-            router.push(`/Form/${formId}/shared/success`);
-        } catch (e) {
-            alert("An error occurred");
+            toast.success("Response submitted successfully");
+        } catch (error) {
+            handleApiError(error);
         } finally {
             setIsCreatingResponse(false);
         }
