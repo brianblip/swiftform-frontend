@@ -66,7 +66,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                             value={titleInput}
                             onChange={handleTitleChange}
                             type="text"
-                            className="pr-8 text-2xl "
+                            className="pr-8 text-2xl"
                         />
                         <label
                             htmlFor="formTitle"
