@@ -1,7 +1,7 @@
 "use client";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
-import { Response, Form, Question, Answer } from "@@/types";
+import { Response, Form, Answer } from "@@/types";
 export default function ResponsePage({
     params,
 }: {
@@ -37,10 +37,16 @@ export default function ResponsePage({
             <div className="border border-black p-4">
                 {formData.sections.map((section) => (
                     // section
-                    <section key={section.id} className="mt-4 border border-white">
+                    <section
+                        key={section.id}
+                        className="mt-4 border border-white"
+                    >
                         <h1>{section.title}</h1>
                         {section.questions.map((question) => (
-                            <article key={question.id} className="mt-8 border border-white">
+                            <article
+                                key={question.id}
+                                className="mt-8 border border-white"
+                            >
                                 <h1>{question.prompt}</h1>
                                 {getAnswersForQuestion(question.id).map(
                                     (answer) => (

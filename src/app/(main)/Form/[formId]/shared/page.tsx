@@ -38,14 +38,18 @@ export default function Shared({ params }: { params: { formId: string } }) {
 
             const answers = data.sections.flatMap((section) =>
                 section.questions.map((question, questionIndex) => ({
-                    question_id: questions?.[questionIndex].id,
-                    response_id: newResponse?.id,
                     text: question.text,
                 })),
             );
 
+            const answersWithQuestionId = answers.map((answer, index) => ({
+                ...answer,
+                question_id: questions?.[index].id,
+                response_id: newResponse?.id,
+            }));
+
             await Promise.all(
-                answers.map((answer) =>
+                answersWithQuestionId.map((answer) =>
                     api.post<ApiResponse<Answer>>(`/answers`, answer),
                 ),
             );
