@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Choice } from "@@/types";
 import Input from "../UIComponents/Input";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Button from "../UIComponents/Button";
 
 type ChoiceComponentProps = {
     choice: Choice;
@@ -31,6 +32,7 @@ export default function ChoiceComponent({
         <div className="flex items-center gap-3">
             <Input
                 label="Choice Text:"
+                id={`${choice.id}`}
                 type="text"
                 defaultValue={editedText}
                 onChange={handleChange}
@@ -44,12 +46,9 @@ export default function ChoiceComponent({
                 className="mb-2"
             /> */}
 
-            <button
-                onClick={handleDelete}
-                className="rounded bg-error p-1 hover:bg-error/50"
-            >
+            <Button onClick={handleDelete} variant="trash" size="xs">
                 <DeleteIcon />
-            </button>
+            </Button>
         </div>
     );
 }
