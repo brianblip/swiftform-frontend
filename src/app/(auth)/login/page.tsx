@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/components/UIComponents/Input";
 import Alert from "@/components/Alert";
+import Button from "@/components/UIComponents/Button";
+import Main from "@/components/UIComponents/Main";
 
 interface LoginForm {
     email: string;
@@ -52,19 +54,20 @@ export default function Login() {
     };
 
     return (
-        <main className="flex min-h-dvh w-dvw items-center justify-center bg-white text-primary-black">
+        <Main variant="auth">
             <div className="flex flex-col items-center gap-8">
                 <div className="size-28 overflow-hidden rounded-full">
                     <Image src={Birdie} alt="SwiftForm logo" />
                 </div>
 
-                <h1 className="text-xl font-bold md:text-2xl">Welcome back</h1>
+                <h1 className="text-xl font-bold md:text-3xl">Welcome back</h1>
 
                 <form
                     onSubmit={handleSubmit(handleLogin)}
                     className="grid gap-4"
                 >
                     <Input
+                        variant="auth"
                         label="email"
                         type="email"
                         {...register("email", {
@@ -78,6 +81,7 @@ export default function Login() {
                     />
 
                     <Input
+                        variant="authpassword"
                         label="password"
                         type="password"
                         {...register("password", {
@@ -96,19 +100,16 @@ export default function Login() {
                         Forgot password?
                     </a>
 
-                    <button
-                        type="submit"
-                        className="w-full rounded bg-primary-black p-3 text-white"
-                    >
+                    <Button type="submit" variant="auth">
                         Continue
-                    </button>
+                    </Button>
                 </form>
                 <Link href="/register" className="w-fit text-sm">
                     Don&rsquo;t have an account?
-                    <span className="font-medium"> Sign up</span>
+                    <span className="font-bold"> Sign up</span>
                 </Link>
             </div>
             <Alert message={loginError} status="Error" />
-        </main>
+        </Main>
     );
 }
