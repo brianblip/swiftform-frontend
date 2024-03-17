@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import useSWR from "swr";
@@ -37,14 +37,18 @@ export default function Shared({ params }: { params: { formId: string } }) {
 
             const answers = data.sections.flatMap((section) =>
                 section.questions.map((question, questionIndex) => ({
-                    question_id: questions?.[questionIndex].id,
-                    response_id: newResponse?.id,
                     text: question.text,
                 })),
             );
 
+            const answersWithQuestionId = answers.map((answer, index) => ({
+                ...answer,
+                question_id: questions?.[index].id,
+                response_id: newResponse?.id,
+            }));
+
             await Promise.all(
-                answers.map((answer) =>
+                answersWithQuestionId.map((answer) =>
                     api.post<ApiResponse<Answer>>(`/answers`, answer),
                 ),
             );
@@ -60,7 +64,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
 
     return (
         <form
-            className="flex w-full h-[calc(100vh-57.0667px)] flex-col gap-8 overflow-scroll px-4 py-8"
+            className="flex h-[calc(100vh-57.0667px)] w-full flex-col gap-8 overflow-scroll px-4 py-8"
             onSubmit={handleSubmitResponse}
         >
             <section className="grid gap-2">
@@ -79,7 +83,8 @@ export default function Shared({ params }: { params: { formId: string } }) {
                         <div className="flex flex-col gap-4">
                             {section.questions.map(
                                 (question, questionIndex) => {
-                                    const key = `sections.${sectionIndex}.questions.${questionIndex}.text` as any;
+                                    const key =
+                                        `sections.${sectionIndex}.questions.${questionIndex}.text` as any;
                                     const registerProps = {
                                         key,
                                         ...register(key),
