@@ -131,6 +131,7 @@ export default function QuestionComponent({
                             ) => setNewChoiceText(e.target.value)}
                         />
                         <button
+                            type="button"
                             onClick={handleCreateChoice}
                             className="rounded bg-lime-700 p-1 hover:bg-lime-700/75"
                         >
@@ -141,6 +142,7 @@ export default function QuestionComponent({
             )}
 
             <button
+                type="button"
                 onClick={() => handleDeleteQuestion(question.id)}
                 className="absolute right-0 top-0 rounded bg-error hover:bg-error/75"
             >

@@ -83,12 +83,14 @@ export default function SectionComponent({
                 />
             ))}
             <button
+                type="button"
                 onClick={createNewQuestion}
                 className="rounded bg-primary-white px-4 py-2 text-black hover:bg-primary-white/75"
             >
                 Create Question
             </button>
             <button
+                type="button"
                 onClick={() => handleDeleteSection(section.id)}
                 className="absolute right-0 top-0 rounded bg-error hover:bg-error/75"
             >

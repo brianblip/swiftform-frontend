@@ -88,6 +88,7 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
             )}
 
             <button
+                type="button"
                 onClick={handleCreateSection}
                 className="mb-4 rounded bg-primary-secondary px-4 py-2 hover:bg-primary-white/25 disabled:bg-primary-black disabled:text-primary-neutral"
             >
