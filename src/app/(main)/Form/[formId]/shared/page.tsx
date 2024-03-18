@@ -16,7 +16,12 @@ export default function Shared({ params }: { params: { formId: string } }) {
     const { data: form } = useSWR<Form>(`/forms/${formId}`, fetcher);
     const [isCreatingResponse, setIsCreatingResponse] = useState(false);
 
-    const { register, handleSubmit, reset } = useForm<{
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<{
         sections: {
             questions: {
                 text: string;
@@ -106,15 +111,47 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                                 label={
                                                                     question.prompt
                                                                 }
-                                                                {...registerProps}
+                                                                {...register(
+                                                                    `sections.${sectionIndex}.questions.${questionIndex}.text`,
+                                                                    {
+                                                                        required:
+                                                                            "This field is required",
+                                                                    },
+                                                                )}
+                                                                error={
+                                                                    errors
+                                                                        ?.sections?.[
+                                                                        sectionIndex
+                                                                    ]
+                                                                        ?.questions?.[
+                                                                        questionIndex
+                                                                    ]?.text
+                                                                        ?.message
+                                                                }
                                                             />
                                                         );
                                                     case "textarea":
                                                         return (
-                                                            <textarea
+                                                            <TextInput
                                                                 placeholder="Enter Answer"
                                                                 className="rounded-md border px-3 py-2 text-black"
-                                                                {...registerProps}
+                                                                {...register(
+                                                                    `sections.${sectionIndex}.questions.${questionIndex}.text`,
+                                                                    {
+                                                                        required:
+                                                                            "This field is required",
+                                                                    },
+                                                                )}
+                                                                error={
+                                                                    errors
+                                                                        ?.sections?.[
+                                                                        sectionIndex
+                                                                    ]
+                                                                        ?.questions?.[
+                                                                        questionIndex
+                                                                    ]?.text
+                                                                        ?.message
+                                                                }
                                                             />
                                                         );
                                                     case "multiple_choice":
@@ -130,12 +167,29 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                                             }
                                                                             className="flex items-center gap-2"
                                                                         >
-                                                                            <input
+                                                                            <TextInput
                                                                                 type="radio"
                                                                                 value={
                                                                                     choice.text
                                                                                 }
-                                                                                {...registerProps}
+                                                                                {...register(
+                                                                                    `sections.${sectionIndex}.questions.${questionIndex}.text`,
+                                                                                    {
+                                                                                        required:
+                                                                                            "This field is required",
+                                                                                    },
+                                                                                )}
+                                                                                error={
+                                                                                    errors
+                                                                                        ?.sections?.[
+                                                                                        sectionIndex
+                                                                                    ]
+                                                                                        ?.questions?.[
+                                                                                        questionIndex
+                                                                                    ]
+                                                                                        ?.text
+                                                                                        ?.message
+                                                                                }
                                                                             />
                                                                             <span>
                                                                                 {
@@ -160,14 +214,31 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                                             }
                                                                             className="flex items-center gap-2"
                                                                         >
-                                                                            <input
+                                                                            <TextInput
                                                                                 type={
                                                                                     question.type
                                                                                 }
                                                                                 value={
                                                                                     choice.text
                                                                                 }
-                                                                                {...registerProps}
+                                                                                {...register(
+                                                                                    `sections.${sectionIndex}.questions.${questionIndex}.text`,
+                                                                                    {
+                                                                                        required:
+                                                                                            "This field is required",
+                                                                                    },
+                                                                                )}
+                                                                                error={
+                                                                                    errors
+                                                                                        ?.sections?.[
+                                                                                        sectionIndex
+                                                                                    ]
+                                                                                        ?.questions?.[
+                                                                                        questionIndex
+                                                                                    ]
+                                                                                        ?.text
+                                                                                        ?.message
+                                                                                }
                                                                             />
                                                                             <span>
                                                                                 {
@@ -183,7 +254,13 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                         return (
                                                             <select
                                                                 className="rounded-md border px-3 py-2 text-black"
-                                                                {...registerProps}
+                                                                {...register(
+                                                                    `sections.${sectionIndex}.questions.${questionIndex}.text`,
+                                                                    {
+                                                                        required:
+                                                                            "This field is required",
+                                                                    },
+                                                                )}
                                                             >
                                                                 {question.choices.map(
                                                                     (
@@ -210,7 +287,13 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                             <input
                                                                 type="date"
                                                                 className="rounded-md border px-3 py-2"
-                                                                {...registerProps}
+                                                                {...register(
+                                                                    `sections.${sectionIndex}.questions.${questionIndex}.text`,
+                                                                    {
+                                                                        required:
+                                                                            "This field is required",
+                                                                    },
+                                                                )}
                                                             />
                                                         );
                                                     default:
