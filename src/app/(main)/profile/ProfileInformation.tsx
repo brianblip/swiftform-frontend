@@ -57,6 +57,7 @@ export default function ProfileInformation() {
                 const { name, email, avatar_url } = response.data.data;
                 setFullName(name);
                 setEmail(email);
+                console.log(avatar_url)
                 if (avatar_url) {
                     setImageSrc(`${backendURL}${avatar_url}`);
                 } else {
@@ -119,7 +120,7 @@ export default function ProfileInformation() {
                      value={email}
                 />
             </div>
-            <button className="rounded bg-primary-secondary px-8 py-2">
+            <button type="submit" className="rounded bg-primary-secondary px-8 py-2">
                 Save Changes
             </button>
         </form>
