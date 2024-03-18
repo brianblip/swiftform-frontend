@@ -140,6 +140,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                     key={question.id}
                                                     className="grid gap-1"
                                                 >
+                                                    <h1>{question.prompt}</h1>
                                                     {question.choices.map(
                                                         (choice) => (
                                                             <label
@@ -171,6 +172,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                     key={question.id}
                                                     className="grid gap-1"
                                                 >
+                                                    <h1>{question.prompt}</h1>
                                                     {question.choices.map(
                                                         (choice) => (
                                                             <label
@@ -224,6 +226,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                         )}
                                                     </select> */}
                                                     <Input
+                                                        label={question.prompt}
                                                         type="select"
                                                         variant="formSelect"
                                                         className="bg-primary-neutral"

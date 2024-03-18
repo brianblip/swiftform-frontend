@@ -53,6 +53,26 @@ const Input = React.forwardRef<
         },
         ref,
     ) => {
+        const inputVariants = cva(
+            `w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${error ? "mb-1 border-error focus:ring-error" : ""}`,
+            {
+                variants: {
+                    variant: {
+                        primary: "text-primary-black",
+                        auth: `${error ? "border-error" : "border-primary-black"} text-primary-black`,
+                        authpassword: `${error ? "border-error" : "border-primary-black"} pr-9 text-primary-black`,
+                        textarea: "max-h-40 min-h-20 text-primary-black",
+                        form: "border-transparent bg-primary-secondary hover:bg-primary-white/15 focus:bg-primary-white/25",
+                        formSelect:
+                            "cursor-pointer border-transparent bg-primary-secondary",
+                    },
+                },
+                defaultVariants: {
+                    variant: "primary",
+                },
+            },
+        );
+
         // ref parameter added here
         return (
             <div className="grid w-full">
@@ -69,7 +89,7 @@ const Input = React.forwardRef<
                     <textarea
                         ref={ref as React.Ref<HTMLTextAreaElement>} // Use ref here for textarea
                         id={id ? id : label}
-                        className={`${cn(error ? "border-error focus:ring-error" : " focus:ring-blue-500", inputVariants({ variant }), className)}`}
+                        className={`${cn(inputVariants({ variant }), className)}`}
                         onChange={onChange}
                         {...props}
                     />
@@ -95,9 +115,6 @@ const Input = React.forwardRef<
                             }
                             id={id ? id : label}
                             className={`${cn(
-                                error
-                                    ? "border-error focus:ring-error"
-                                    : "focus:ring-blue-500",
                                 inputVariants({ variant }),
                                 className,
                             )}`}
@@ -151,23 +168,3 @@ const Input = React.forwardRef<
 Input.displayName = "Input";
 
 export default Input;
-
-const inputVariants = cva(
-    "w-full rounded border px-3 py-2 focus:outline-none focus:ring-2",
-    {
-        variants: {
-            variant: {
-                primary: "text-primary-black",
-                auth: "border-primary-black text-primary-black",
-                authpassword: "border-primary-black pr-9 text-primary-black",
-                textarea: "max-h-40 min-h-20 text-primary-black",
-                form: "border-transparent bg-primary-secondary hover:bg-primary-white/15 focus:bg-primary-white/25",
-                formSelect:
-                    "cursor-pointer border-transparent bg-primary-secondary",
-            },
-        },
-        defaultVariants: {
-            variant: "primary",
-        },
-    },
-);
