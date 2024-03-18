@@ -1,13 +1,14 @@
 import Input from "../../../components/Input";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
 import api from "@/services/api";
 
 export default function ProfileInformation() {
     const formRef = useRef<HTMLFormElement | null>(null);
     const fileRef = useRef<HTMLInputElement | null>(null);
     const [imageSrc, setImageSrc] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
 
     console.log("Initial imageSrc:", imageSrc);
 
@@ -53,7 +54,9 @@ export default function ProfileInformation() {
                 const response = await api.get("/users/me", {
                     withCredentials: true,
                 });
-                const avatar_url = response.data.data.avatar_url;
+                const { name, email, avatar_url } = response.data.data;
+                setFullName(name);
+                setEmail(email);
                 if (avatar_url) {
                     setImageSrc(`${backendURL}${avatar_url}`);
                 } else {
@@ -98,29 +101,22 @@ export default function ProfileInformation() {
                     Change picture
                 </button>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1">
                 <Input
-                    type="name"
-                    placeholder="First name"
-                    label="First name"
-                    size="md"
-                    id="firstName"
+                     type="Fullname"
+                     placeholder="Fullname"
+                     label="Fullname"
+                     size="md"
+                     id="fullname"
+                     value={fullName}
                 />
                 <Input
-                    type="name"
-                    placeholder="Last name"
-                    label="Last name"
-                    size="md"
-                    id="lastName"
-                />
-            </div>
-            <div className="mb-4">
-                <Input
-                    type="email"
-                    placeholder="Email"
-                    label="Email"
-                    size="full"
-                    id="email"
+                     type="email"
+                     placeholder="Email"
+                     label="Email"
+                     size="md"
+                     id="email"
+                     value={email}
                 />
             </div>
             <button className="rounded bg-primary-secondary px-8 py-2">
