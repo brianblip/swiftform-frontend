@@ -4,6 +4,7 @@ interface InputProps {
     type: string;
     size: string;
     id: string;
+    value?: string;
     required?: boolean;
 }
 const Input = ({
