@@ -14,6 +14,7 @@ const Input = ({
     size,
     id,
     required,
+    value = ""
 }: InputProps) => {
     const getSize = () => {
         switch (size) {
@@ -40,6 +41,7 @@ const Input = ({
                 placeholder={placeholder}
                 type={type}
                 required={required}
+                defaultValue={value}
             />
         </div>
     );
