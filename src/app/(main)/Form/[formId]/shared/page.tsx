@@ -17,7 +17,12 @@ export default function Shared({ params }: { params: { formId: string } }) {
     const [isCreatingResponse, setIsCreatingResponse] = useState(false);
     const router = useRouter();
 
-    const { register, handleSubmit, reset } = useForm<{
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<{
         sections: {
             questions: {
                 text: string;
