@@ -4,6 +4,7 @@ interface InputProps {
     type: string;
     size: string;
     id: string;
+    value?: string;
     required?: boolean;
 }
 const Input = ({
@@ -13,6 +14,7 @@ const Input = ({
     size,
     id,
     required,
+    value = ""
 }: InputProps) => {
     const getSize = () => {
         switch (size) {
@@ -39,6 +41,7 @@ const Input = ({
                 placeholder={placeholder}
                 type={type}
                 required={required}
+                defaultValue={value}
             />
         </div>
     );
