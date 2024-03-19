@@ -16,7 +16,12 @@ const LogoutButton = () => {
 
     if (isLoggedOut) {
         router.push("/login"); // This will reload the current route
-        return null; // Return null while reloading to avoid rendering the component
+        return (
+            <Button disabled variant="navbar" size="sm">
+                <LogoutOutlinedIcon />
+                <p>Logging out...</p>
+            </Button>
+        );
     }
     return (
         <Button
