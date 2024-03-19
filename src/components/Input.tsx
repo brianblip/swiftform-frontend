@@ -1,3 +1,5 @@
+import React from "react";
+
 interface InputProps {
     label: string;
     placeholder: string;
@@ -6,6 +8,7 @@ interface InputProps {
     id: string;
     value?: string;
     required?: boolean;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const Input = ({
     label,
@@ -14,7 +17,8 @@ const Input = ({
     size,
     id,
     required,
-    value = ""
+    onChange,
+    value = "",
 }: InputProps) => {
     const getSize = () => {
         switch (size) {
@@ -42,6 +46,7 @@ const Input = ({
                 type={type}
                 required={required}
                 defaultValue={value}
+                onChange={onChange}
             />
         </div>
     );

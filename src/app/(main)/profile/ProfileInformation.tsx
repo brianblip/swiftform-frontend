@@ -1,5 +1,5 @@
 import Input from "../../../components/Input";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import api from "@/services/api";
 
@@ -10,39 +10,65 @@ export default function ProfileInformation() {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
 
-    console.log("Initial imageSrc:", imageSrc);
+    const handleFullNameChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setFullName(e.target.value);
+        },
+        [],
+    );
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
+    const handleFileChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            const file = event.target.files?.[0];
 
-        if (file) {
-            setImageSrc(URL.createObjectURL(file));
-        } else {
-            setImageSrc("");
-        }
-    };
+            if (file) {
+                setImageSrc(URL.createObjectURL(file));
+            } else {
+                setImageSrc("");
+            }
+        },
+        [], // No dependencies for now
+    );
 
     const backendURL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!formRef.current) return; // Check if formRef is null
-        const formData = new FormData(formRef.current);
-        const file = fileRef.current?.files?.[0]; // Get the selected file
-        if (file) formData.append("file", file);
 
         try {
-            const response = await api.patch("/upload", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
+            const response = await api.get("/users/me", {
                 withCredentials: true,
             });
-            const avatar_url = response.data.avatar_url;
-            if (avatar_url) {
-                setImageSrc(`${backendURL}${response.data.avatar_url}`);
+            const { name } = response.data.data;
+
+            // Check if the name has changed before updating
+            if (name !== fullName) {
+                // Update name if it has changed
+                const updateResponse = await api.patch(
+                    "/users/me",
+                    { name: fullName },
+                    { withCredentials: true },
+                );
+                console.log("Name updated successfully");
             }
-            console.log("Success:");
+
+            const file = fileRef.current?.files?.[0]; // Get the selected file
+            if (file) {
+                const formData = new FormData(formRef.current);
+                formData.append("file", file);
+                const response = await api.patch("/upload", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                    withCredentials: true,
+                });
+                const avatar_url = response.data.avatar_url;
+                if (avatar_url) {
+                    setImageSrc(`${backendURL}${response.data.avatar_url}`);
+                }
+                console.log("Picture uploaded successfully");
+            }
         } catch (error) {
             console.error("Error:", error);
         }
@@ -57,7 +83,6 @@ export default function ProfileInformation() {
                 const { name, email, avatar_url } = response.data.data;
                 setFullName(name);
                 setEmail(email);
-                console.log(avatar_url)
                 if (avatar_url) {
                     setImageSrc(`${backendURL}${avatar_url}`);
                 } else {
@@ -92,7 +117,7 @@ export default function ProfileInformation() {
                     type="file"
                     ref={fileRef}
                     onChange={handleFileChange}
-                    style={{ display: "none" }} // Hide the file input
+                    style={{ display: "none" }}
                 />
                 <button
                     type="button"
@@ -104,23 +129,27 @@ export default function ProfileInformation() {
             </div>
             <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1">
                 <Input
-                     type="Fullname"
-                     placeholder="Fullname"
-                     label="Fullname"
-                     size="md"
-                     id="fullname"
-                     value={fullName}
+                    type="Fullname"
+                    placeholder="Fullname"
+                    label="Fullname"
+                    size="md"
+                    id="fullname"
+                    value={fullName}
+                    onChange={handleFullNameChange}
                 />
                 <Input
-                     type="email"
-                     placeholder="Email"
-                     label="Email"
-                     size="md"
-                     id="email"
-                     value={email}
+                    type="email"
+                    placeholder="Email"
+                    label="Email"
+                    size="md"
+                    id="email"
+                    value={email}
                 />
             </div>
-            <button type="submit" className="rounded bg-primary-secondary px-8 py-2">
+            <button
+                type="submit"
+                className="rounded bg-primary-secondary px-8 py-2"
+            >
                 Save Changes
             </button>
         </form>
