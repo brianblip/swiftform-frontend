@@ -20,7 +20,6 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     const activeForm = getForm(Number(formId));
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
-    const pathname = usePathname()
     
     // Set default titleInput value when activeForm changes
     useEffect(() => {
@@ -86,12 +85,12 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                         >
                             Question
                         </button>
-                        <Link
-                            href={`${pathname}/responses`}
-                            className={`border-b-2 hover:text-white/75 ${!isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent"}`}
+                        <button
+                            onClick={() => setIsQuestionSectionOpen(false)}
+                            className={`border-b-2 hover:text-white/75 ${isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent"}`}
                         >
                             Response
-                        </Link>
+                        </button>
                     </div>
                 </section>
                 {isQuestionSectionOpen 
