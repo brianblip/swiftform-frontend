@@ -107,6 +107,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                     /> */}
                                                     <Input
                                                         type="text"
+                                                        labelVariant="form"
                                                         label={question.prompt}
                                                         key={question.id}
                                                         {...register(
@@ -127,6 +128,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                     /> */}
                                                     <Input
                                                         variant="textarea"
+                                                        labelVariant="form"
                                                         type="textarea"
                                                         key={question.id}
                                                         {...register(
@@ -230,6 +232,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                         label={question.prompt}
                                                         type="select"
                                                         variant="formSelect"
+                                                        labelVariant="form"
                                                         className="bg-primary-neutral"
                                                         key={question.id}
                                                         {...register(
@@ -269,6 +272,8 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                     /> */}
                                                     <Input
                                                         type="date"
+                                                        labelVariant="form"
+                                                        label={question.prompt}
                                                         variant="formSelect"
                                                         className="bg-primary-neutral"
                                                         key={question.id}
