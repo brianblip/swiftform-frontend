@@ -66,7 +66,7 @@ const Input = React.forwardRef<
                         textarea: "max-h-40 min-h-20 text-primary-black",
                         form: "border-transparent bg-primary-secondary hover:bg-primary-white/15 focus:bg-primary-white/25",
                         formSelect:
-                            "cursor-pointer border-transparent bg-primary-secondary",
+                            "cursor-pointer border-transparent bg-primary-neutral",
                     },
                 },
                 defaultVariants: {
@@ -75,20 +75,17 @@ const Input = React.forwardRef<
             },
         );
 
-        const labelVariants = cva(
-            `pb-1 ${error ? "text-error" : ""}`,
-            {
-                variants: {
-                    labelVariant: {
-                        primary: `text-sm font-medium`,
-                        form: `text-base font-normal`,
-                    },
-                },
-                defaultVariants: {
-                    labelVariant: "primary",
+        const labelVariants = cva(`pb-1 ${error ? "text-error" : ""}`, {
+            variants: {
+                labelVariant: {
+                    primary: `text-sm font-medium`,
+                    form: `text-base font-normal`,
                 },
             },
-        );
+            defaultVariants: {
+                labelVariant: "primary",
+            },
+        });
 
         // ref parameter added here
         return (
