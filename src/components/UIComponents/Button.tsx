@@ -11,7 +11,8 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
         | "exit"
         | "trash"
         | "navbar"
-        | "auth";
+        | "auth"
+        | "copy";
     size?: "sm" | "base" | "xs" | "navbar";
 };
 
@@ -34,6 +35,7 @@ export default function Button({
                 trash: "w-fit bg-error hover:bg-error/50",
                 navbar: "flex gap-2 p-2 hover:bg-primary-secondary",
                 auth: "bg-primary-black text-white hover:bg-primary-black/75",
+                copy: "absolute right-20 top-0 w-fit hover:bg-error"
             },
             size: {
                 xs: "p-1",
