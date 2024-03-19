@@ -1,7 +1,7 @@
 "use client";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
-import { Response, Form, Question, Answer } from "@@/types";
+import { Response, Form, Answer } from "@@/types";
 export default function ResponsePage({
     params,
 }: {
@@ -36,33 +36,31 @@ export default function ResponsePage({
         <div className="container mx-auto mt-24">
             <div className="border border-black p-4">
                 {formData.sections.map((section) => (
-                    <div key={section.id} className="mt-4">
+                    // section
+                    <section
+                        key={section.id}
+                        className="mt-4 border border-white"
+                    >
+                        <h1>{section.title}</h1>
                         {section.questions.map((question) => (
-                            <div key={question.id} className="mt-8">
-                                <p>{question.prompt}</p>
+                            <article
+                                key={question.id}
+                                className="mt-8 border border-white"
+                            >
+                                <h1>{question.prompt}</h1>
                                 {getAnswersForQuestion(question.id).map(
                                     (answer) => (
                                         <div
-                                            key={answer.id}
+                                            key={question.id}
                                             className="ml-4 mt-2"
                                         >
-                                            <h1>User: {responseData.user_id}</h1>
-                                            {/* Check if the question type is checkbox */}
-                                            {question.type === "checkbox" ? (
-                                                // If it's a checkbox, separate the values
-                                                separateCheckboxValues(answer.text).map((value, index) => (
-                                                    <div key={index}>{value}</div>
-                                                ))
-                                            ) : (
-                                                // Otherwise, display the answer text
-                                                answer.text
-                                            )}
+                                            {answer.text}
                                         </div>
                                     ),
                                 )}
-                            </div>
+                            </article>
                         ))}
-                    </div>
+                    </section>
                 ))}
             </div>
         </div>

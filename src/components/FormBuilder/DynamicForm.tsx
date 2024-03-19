@@ -74,17 +74,6 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
                     setDescription(e.target.value)
                 }
             />
-            {/* <TextField
-                    fullWidth
-                    id="description"
-                    name="description"
-                    label="Description"
-                    multiline
-                    rows={4}
-                    variant="outlined"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                /> */}
             {Array.isArray(form.sections) && form.sections.length > 0 ? (
                 form.sections
                     .sort((a, b) => a.id - b.id)

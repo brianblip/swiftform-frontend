@@ -78,8 +78,9 @@ export default function SectionComponent({
                 <QuestionComponent
                     key={question.id}
                     question={question}
-                    handleUpdateQuestion={handleUpdateQuestion}
+                    updateQuestion={handleUpdateQuestion}
                     handleDeleteQuestion={handleDeleteQuestion}
+                    sectionId={section.id}
                 />
             ))}
             <Button
