@@ -11,6 +11,7 @@ import Input from "@/components/UIComponents/Input";
 import Alert from "@/components/Alert";
 import Button from "@/components/UIComponents/Button";
 import Main from "@/components/UIComponents/Main";
+import { toast } from "react-toastify";
 interface RegisterForm {
     name: string;
     email: string;
@@ -49,6 +50,7 @@ export default function RegistrationPage() {
         } catch (error: any) {
             console.log(error);
             if (error.message === "User already exists.") {
+                toast.error(error.message);
                 console.log(error.message);
                 setErrorMessage(error.message);
                 setTimeout(() => {
@@ -56,6 +58,7 @@ export default function RegistrationPage() {
                 }, 5000);
             } else {
                 // Other error handling logic
+                toast.error(error.message);
                 setErrorMessage(error.message);
                 setTimeout(() => {
                     setErrorMessage("");
@@ -152,7 +155,6 @@ export default function RegistrationPage() {
                     <span className="font-bold"> Log in</span>
                 </Link>
             </div>
-            <Alert message={errorMessage} status="Error" />
         </Main>
     );
 }

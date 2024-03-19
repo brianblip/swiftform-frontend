@@ -11,6 +11,7 @@ import Input from "@/components/UIComponents/Input";
 import Alert from "@/components/Alert";
 import Button from "@/components/UIComponents/Button";
 import Main from "@/components/UIComponents/Main";
+import { toast } from "react-toastify";
 
 interface LoginForm {
     email: string;
@@ -44,10 +45,13 @@ export default function Login() {
             })
             .catch((error) => {
                 if (error.message === "Invalid email or password") {
+                    toast.error(error.message);
                     setLoginError(error.message);
                     setTimeout(() => {
                         setLoginError("");
                     }, 5000);
+                } else {
+                    toast.error(error.message);
                 }
                 console.log(error);
             });
@@ -109,7 +113,6 @@ export default function Login() {
                     <span className="font-bold"> Sign up</span>
                 </Link>
             </div>
-            <Alert message={loginError} status="Error" />
         </Main>
     );
 }
