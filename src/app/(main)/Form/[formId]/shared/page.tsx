@@ -129,6 +129,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                     <Input
                                                         variant="textarea"
                                                         labelVariant="form"
+                                                        label={question.prompt}
                                                         type="textarea"
                                                         key={question.id}
                                                         {...register(
@@ -233,7 +234,6 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                         type="select"
                                                         variant="formSelect"
                                                         labelVariant="form"
-                                                        className="bg-primary-neutral"
                                                         key={question.id}
                                                         {...register(
                                                             `sections.${sectionIndex}.questions.${questionIndex}.text`,
@@ -275,7 +275,6 @@ export default function Shared({ params }: { params: { formId: string } }) {
                                                         labelVariant="form"
                                                         label={question.prompt}
                                                         variant="formSelect"
-                                                        className="bg-primary-neutral"
                                                         key={question.id}
                                                         {...register(
                                                             `sections.${sectionIndex}.questions.${questionIndex}.text`,
