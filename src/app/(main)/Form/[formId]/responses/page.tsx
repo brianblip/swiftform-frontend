@@ -14,7 +14,7 @@ export default function ResponseList({
 
     const { data: formData } = useSWR<Form>(`/forms/${formId}`, fetcher);
     const { data: responsesData } = useSWR<Response[]>(
-        `/responses?formId=${formId}`,
+        `/responses?form_id=${formId}`,
         fetcher,
     );
 
