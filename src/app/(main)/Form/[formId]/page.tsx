@@ -11,7 +11,7 @@ import { ErrorBoundary } from "@/components";
 import { useRouter } from "next/navigation";
 import Main from "@/components/UIComponents/Main";
 import Input from "@/components/UIComponents/Input";
-import { usePathname } from 'next/navigation'
+import ResponseList from "./responses/page";
 
 export default function FormPage({ params }: { params: { formId: number } }) {
     const { formId } = params;
@@ -98,6 +98,11 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                     && <DynamicForm form={activeForm} updateForm={updateForm} />
                 }
 
+                {isQuestionSectionOpen ? (
+                    <DynamicForm form={activeForm} updateForm={updateForm} />
+                ) : (
+                    <ResponseList params={{ formId: formId.toString() }} />
+                )}
             </Main>
         </ErrorBoundary>
     );
