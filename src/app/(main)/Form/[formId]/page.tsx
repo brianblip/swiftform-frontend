@@ -6,10 +6,12 @@ import React, { useState, useEffect } from "react";
 import useForm from "@/contexts/forms";
 import ResponseComponent from "@/components/ResponseComponent";
 import DynamicForm from "@/components/FormBuilder/DynamicForm";
+import Link from "next/link";
 import { ErrorBoundary } from "@/components";
 import { useRouter } from "next/navigation";
 import Main from "@/components/UIComponents/Main";
 import Input from "@/components/UIComponents/Input";
+import { usePathname } from 'next/navigation'
 
 export default function FormPage({ params }: { params: { formId: number } }) {
     const { formId } = params;
@@ -18,7 +20,8 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     const activeForm = getForm(Number(formId));
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
-
+    const pathname = usePathname()
+    
     // Set default titleInput value when activeForm changes
     useEffect(() => {
         if (isLoading) return;
@@ -83,20 +86,18 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                         >
                             Question
                         </button>
-                        <button
-                            onClick={() => setIsQuestionSectionOpen(false)}
+                        <Link
+                            href={`${pathname}/responses`}
                             className={`border-b-2 hover:text-white/75 ${!isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent"}`}
                         >
                             Response
-                        </button>
+                        </Link>
                     </div>
                 </section>
+                {isQuestionSectionOpen 
+                    && <DynamicForm form={activeForm} updateForm={updateForm} />
+                }
 
-                {isQuestionSectionOpen ? (
-                    <DynamicForm form={activeForm} updateForm={updateForm} />
-                ) : (
-                    <ResponseComponent />
-                )}
             </Main>
         </ErrorBoundary>
     );
