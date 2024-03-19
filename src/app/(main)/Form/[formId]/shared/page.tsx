@@ -1,12 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
 import { Form, Response, Answer, ApiResponse } from "@@/types";
-import TextInput from "@/components/ui/Input";
 import { useForm } from "react-hook-form";
 import api from "@/services/api";
-import Main from "@/components/UIComponents/Main";
 import Button from "@/components/UIComponents/Button";
 import Input from "@/components/UIComponents/Input";
 
@@ -14,6 +13,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
     const { formId } = params;
     const { data: form } = useSWR<Form>(`/forms/${formId}`, fetcher);
     const [isCreatingResponse, setIsCreatingResponse] = useState(false);
+    const router = useRouter();
 
     const { register, handleSubmit, reset } = useForm<{
         sections: {
@@ -60,7 +60,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
             );
 
             reset();
-            alert("Response submitted successfully");
+            router.push(`/Form/${formId}/shared/success`);
         } catch (e) {
             alert("An error occurred");
         } finally {
