@@ -29,6 +29,7 @@ type InputProps = React.DetailedHTMLProps<
             | "textarea"
             | "form"
             | "formSelect";
+        labelVariant?: "primary" | "form";
     };
 
 // Wrap the component function with React.forwardRef
@@ -46,6 +47,7 @@ const Input = React.forwardRef<
             type,
             error,
             variant,
+            labelVariant,
             isPasswordVisible,
             setIsPasswordVisible,
             children,
@@ -73,13 +75,28 @@ const Input = React.forwardRef<
             },
         );
 
+        const labelVariants = cva(
+            `pb-1 ${error ? "text-error" : ""}`,
+            {
+                variants: {
+                    labelVariant: {
+                        primary: `text-sm font-medium`,
+                        form: `text-base font-normal`,
+                    },
+                },
+                defaultVariants: {
+                    labelVariant: "primary",
+                },
+            },
+        );
+
         // ref parameter added here
         return (
             <div className="grid w-full">
                 {label && (
                     <label
                         htmlFor={id ? id : label}
-                        className={`pb-1 text-sm font-medium ${error ? "text-error" : ""}`}
+                        className={`${cn(labelVariants({ labelVariant }), className)}`}
                     >
                         {label}
                         {required ? "*" : ""}
