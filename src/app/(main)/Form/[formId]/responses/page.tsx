@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { fetcher } from "@/utils";
 import { Response, Form, User } from "@@/types";
 import Link from "next/link";
-import LaunchIcon from '@mui/icons-material/Launch';
+import LaunchIcon from "@mui/icons-material/Launch";
 
 interface ResponseItemProps {
     response: Response;
@@ -12,7 +12,7 @@ interface ResponseItemProps {
 }
 
 function ResponseItem({ response, formId }: ResponseItemProps) {
-    console.log(response)
+    console.log(response);
     const { data: userData } = useSWR<User>(
         `/users/me?user_id=${response.user_id}`,
         fetcher,
@@ -28,7 +28,9 @@ function ResponseItem({ response, formId }: ResponseItemProps) {
                 href={`/Form/${formId}/responses/${response.id}`}
                 className="flex justify-around text-white hover:text-blue-700"
             >
-                <p className="w-1/2 text-center"><LaunchIcon fontSize="small"/> Respondent: {userData.name}</p>
+                <p className="w-1/2 text-center">
+                    <LaunchIcon fontSize="small" /> Respondent: {userData.name}
+                </p>
                 <p className="w-1/2 text-start">Date: {response.created_at}</p>
             </Link>
         </li>
@@ -54,9 +56,10 @@ export default function ResponseList({
 
     return (
         <div className="container mx-auto mt-5">
-
             <div className="relative grid gap-4 rounded border border-white/50 px-4 py-6 shadow-md">
-                <h2 className="text-center text-xl font-bold capitalize">{formData.name} responses</h2>
+                <h2 className="text-center text-xl font-bold capitalize">
+                    {formData.name} responses
+                </h2>
                 <ul className="mt-4">
                     {responsesData
                         .sort((a, b) => {

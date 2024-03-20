@@ -61,8 +61,7 @@ export default function Shared({ params }: { params: { formId: string } }) {
                 ),
             );
 
-            reset();
-            toast.success("Response submitted successfully");
+            router.push(`/Form/${formId}/shared/success`);
         } catch (error) {
             handleApiError(error);
         } finally {
