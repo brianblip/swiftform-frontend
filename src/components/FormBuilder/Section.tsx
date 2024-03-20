@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MenuItem, TextField } from "@mui/material";
-import { Question, QuestionType, Section } from "@@/types";
+import { Question, QuestionType, Section, SectionComponentProps } from "@@/types";
 import useForm from "@/contexts/forms";
 import { mutate } from "swr";
 import QuestionComponent from "@/components/FormBuilder/Question";
@@ -8,20 +8,19 @@ import Input from "../UIComponents/Input";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "../UIComponents/Button";
 import { CopyAll } from "@mui/icons-material";
-
-type SectionComponentProps = {
-    section: Section;
-    updateSection: (sectionId: number, value: string) => void;
-    handleDeleteSection: (sectionId: number) => void;
-    handleDuplicateSection: (sectionId: number) => void;
-};
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 export default function SectionComponent({
     section,
+    sortedSections,
     updateSection,
+    moveSectionUp,
+    moveSectionDown,
     handleDeleteSection,
     handleDuplicateSection,
 }: SectionComponentProps) {
+    const sectionRef = useRef<HTMLDivElement>(null);
     const defaultQuestionType: QuestionType = "multiple_choice";
     const defaultQuestionPrompt: string = "New Question";
 
@@ -75,35 +74,50 @@ export default function SectionComponent({
         const questionIndex = updatedQuestions.findIndex(
             (q) => q.id === questionId,
         );
-
+    
         if (questionIndex > 0) {
             const prevQuestion = updatedQuestions[questionIndex - 1];
             const currentQuestion = updatedQuestions[questionIndex];
-
+    
             prevQuestion.order = currentQuestion.order;
             currentQuestion.order = prevQuestion.order - 1;
-
+    
             updateMultipleQuestions(updatedQuestions);
+            scrollToQuestion(questionId);
         }
     };
-
+    
     const moveQuestionDown = (questionId: number) => {
         const updatedQuestions = [...sortedQuestions];
         const questionIndex = updatedQuestions.findIndex(
             (q) => q.id === questionId,
         );
-
+    
         if (questionIndex < updatedQuestions.length - 1) {
             const nextQuestion = updatedQuestions[questionIndex + 1];
             const currentQuestion = updatedQuestions[questionIndex];
-
+    
             nextQuestion.order = currentQuestion.order;
             currentQuestion.order = nextQuestion.order + 1;
-
+    
             updateMultipleQuestions(updatedQuestions);
+            scrollToQuestion(questionId);
         }
     };
-
+    
+    const scrollToQuestion = (questionId: number) => {
+        const questionElement = document.getElementById(`question_${questionId}`);
+        if (questionElement) {
+            const { y } = questionElement.getBoundingClientRect();
+            const scrollOffset =
+                y - window.innerHeight / 2 + questionElement.offsetHeight / 2;
+            window.scrollTo({
+                top: window.pageYOffset + scrollOffset,
+                behavior: "smooth",
+            });
+        }
+    };
+    
     const handleDuplicateQuestion = async (questionId: number) => {
         try {
             const questionToDuplicate = section.questions.find(
@@ -135,7 +149,6 @@ export default function SectionComponent({
 
             updateMultipleQuestions(updatedQuestions);
 
-            // Scroll to the newly duplicated question
             if (newQuestion.id) {
                 const questionElement = document.getElementById(
                     `question_${newQuestion.id}`,
@@ -176,15 +189,16 @@ export default function SectionComponent({
 
     const handleDeleteQuestion = async (questionId: number) => {
         await deleteQuestion(questionId);
-        mutate("/forms"); // This should trigger a re-fetch of forms data
+        mutate("/forms");
     };
 
     return (
         <section
             key={section.id}
+            ref={sectionRef}
             className="relative grid gap-4 rounded border border-white/50 px-4 py-6 shadow-md"
         >
-            {/* <h1>{section.id}</h1> */}
+            <p>Section #{section.order}</p>
             <Input
                 variant="form"
                 label="Section Title:"
@@ -192,7 +206,7 @@ export default function SectionComponent({
                 id={`section-title-${section.id}`}
                 defaultValue={section.title}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    updateSection(section.id, e.target.value)
+                    updateSection(section.id, e.target.value, section.order)
                 }
             />
             {sortedQuestions.map((question) => (
@@ -216,15 +230,34 @@ export default function SectionComponent({
             >
                 Create Question
             </Button>
-            <div className="absolute right-0 flex">
+            <div className="flex justify-end gap-2">
                 <Button
                     type="button"
-                    variant="copy"
+                    variant="secondary"
                     size="xs"
-                    onClick={() => handleDuplicateSection(section.id)}
+                    onClick={() => moveSectionUp(section.id)}
+                    disabled={section.order === 1}
                 >
-                    <CopyAll />
+                    <ArrowUpwardIcon />
                 </Button>
+                <Button
+                    type="button"
+                    variant="secondary"
+                    size="xs"
+                    onClick={() => moveSectionDown(section.id)}
+                    disabled={section.order === sortedSections.length}
+                >
+                    <ArrowDownwardIcon />
+                </Button>
+            </div>
+            <Button
+                type="button"
+                variant="copy"
+                size="xs"
+                onClick={() => handleDuplicateSection(section.id)}
+            >
+                <CopyAll />
+            </Button>
 
                 <Button
                     type="button"
