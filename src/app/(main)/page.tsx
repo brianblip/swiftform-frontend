@@ -15,6 +15,7 @@ import useFormData from "@/contexts/forms";
 import { useSWRConfig } from "swr";
 import Button from "@/components/UIComponents/Button";
 import Main from "@/components/UIComponents/Main";
+import LoadingPage from "@/components/LoadingPage";
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -22,6 +23,10 @@ export default function Home() {
     const [createFormModalOpened, setCreateFormModalOpened] = useState(false);
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
     const { mutate } = useSWRConfig();
+    const { user } = useAuth();
+    let nameArray = user?.name.split("") as string[];
+    nameArray[0] = nameArray[0].toUpperCase();
+    let joinedName = nameArray.join("");
 
     const { createForm } = useFormData();
 
@@ -81,10 +86,19 @@ export default function Home() {
         }
     });
 
+    if (!user)
+        return (
+            <div className="container flex flex-col items-center justify-center">
+                <LoadingPage />
+            </div>
+        );
+
     return (
         <Main>
             <div className="flex w-full flex-col items-center gap-y-4">
-                <h1 className="text-3xl font-bold md:text-4xl">Forms</h1>
+                <h1 className="text-center text-2xl font-bold md:text-3xl">
+                    Hello {joinedName}, let&lsquo;s create your form
+                </h1>
                 <div className="flex w-full flex-col gap-y-8 lg:w-[720px] xl:w-[820px]">
                     <section className="flex w-full flex-col items-center gap-4">
                         <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
