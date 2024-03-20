@@ -94,6 +94,7 @@ export default function Home() {
                             <SuggestionButton />
                         </div>
                         <Button
+                            type="button"
                             variant="secondary"
                             onClick={() => setCreateFormModalOpened(true)}
                         >
