@@ -7,23 +7,20 @@ import Link from "next/link";
 import LaunchIcon from "@mui/icons-material/Launch";
 
 interface ResponseItemProps {
-    response: Response;
     formId: string;
+    user_id: number;
+    response: Response;
 }
 
-function ResponseItem({ response, formId }: ResponseItemProps) {
-    console.log(response);
-    const { data: userData } = useSWR<User>(
-        `/users/me?user_id=${response.user_id}`,
-        fetcher,
-    );
+function ResponseItem({ user_id, response, formId }: ResponseItemProps) {
+    const { data: userData } = useSWR<User>(`/users/${user_id}`, fetcher);
 
     if (!userData) {
         return <div>Loading...</div>;
     }
 
     return (
-        <li key={response.id} className="border-b border-white/50 py-2">
+        <li key={user_id} className="border-b border-white/50 py-2">
             <Link
                 href={`/Form/${formId}/responses/${response.id}`}
                 className="flex justify-around text-white hover:text-blue-700"
@@ -43,7 +40,6 @@ export default function ResponseList({
     params: { formId: string };
 }) {
     const { formId } = params;
-
     const { data: formData } = useSWR<Form>(`/forms/${formId}`, fetcher);
     const { data: responsesData } = useSWR<Response[]>(
         `/responses?form_id=${formId}`,
@@ -61,19 +57,14 @@ export default function ResponseList({
                     {formData.name} responses
                 </h2>
                 <ul className="mt-4">
-                    {responsesData
-                        .sort((a, b) => {
-                            const dateA: Date = new Date(a.created_at);
-                            const dateB: Date = new Date(b.created_at);
-                            return dateB.getTime() - dateA.getTime();
-                        })
-                        .map((response) => (
-                            <ResponseItem
-                                key={response.id}
-                                response={response}
-                                formId={formId}
-                            />
-                        ))}
+                    {responsesData.map((response) => (
+                        <ResponseItem
+                            key={response.id}
+                            response={response}
+                            user_id={response.user_id}
+                            formId={formId}
+                        />
+                    ))}
                 </ul>
             </div>
         </div>
