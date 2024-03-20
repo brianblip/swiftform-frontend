@@ -106,3 +106,36 @@ export interface FormParam {
 }
 
 export type FormChoice = Choice;
+
+export type SectionComponentProps = {
+    section: Section;
+    sortedSections: Section[];
+    updateSection: (sectionId: number, value: string, order: number) => void;
+    moveSectionUp: (sectionId: number) => void;
+    moveSectionDown: (sectionId: number) => void;
+    handleDeleteSection: (sectionId: number) => void;
+    handleDuplicateSection: (sectionId: number) => void;
+};
+
+export type QuestionComponentProps = {
+    question: Question;
+    sectionId: number;
+    sortedQuestions: Question[];
+    updateQuestion: (
+        questionId: number,
+        type: QuestionType,
+        prompt: string,
+        sectionId: number,
+        questionOrder: number,
+    ) => void;
+    moveQuestionUp: (questionId: number) => void;
+    moveQuestionDown: (questionId: number) => void;
+    handleDeleteQuestion: (questionId: number) => void;
+    handleDuplicateQuestion: (questionId: number) => void;
+};
+
+export type ChoiceComponentProps = {
+    choice: Choice;
+    handleUpdateChoice: (choiceId: number, updatedChoice: string) => void;
+    handleDeleteChoice: (choiceId: number) => void;
+};
