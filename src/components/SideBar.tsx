@@ -26,7 +26,7 @@ export default function SideBar() {
                 </Link>
                 <FormsList formId={currentFormId} />
                 <div className="grid w-full gap-2">
-                    <NotificationButton />
+                    {/* <NotificationButton /> */}
                     <ProfileButton />
                     <LogoutButton />
                 </div>

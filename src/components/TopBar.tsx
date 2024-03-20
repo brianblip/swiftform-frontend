@@ -8,8 +8,8 @@ import Birdie from "@/assets/Birdie.png";
 export default function TopBar() {
     return (
         <section className="sticky top-0 z-50 md:hidden">
-            <nav className="flex items-center justify-between bg-primary-black">
-                <NotificationButton />
+            <nav className="flex w-full items-center justify-between bg-primary-black">
+                {/* <NotificationButton /> */}
                 <Link className="flex items-center" href="/">
                     <Image
                         className="size-14"
