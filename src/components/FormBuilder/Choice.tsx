@@ -46,7 +46,12 @@ export default function ChoiceComponent({
                 className="mb-2"
             /> */}
 
-            <Button onClick={handleDelete} variant="trash" size="xs">
+            <Button
+                type="button"
+                onClick={handleDelete}
+                variant="trash"
+                size="xs"
+            >
                 <DeleteIcon />
             </Button>
         </div>

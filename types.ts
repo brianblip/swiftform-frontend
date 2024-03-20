@@ -24,6 +24,7 @@ export interface Section {
     questions: Question[];
     created_at: string;
     updated_at: string;
+    order: number;
 }
 
 export type QuestionType =
