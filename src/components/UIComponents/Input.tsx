@@ -60,13 +60,15 @@ const Input = React.forwardRef<
             {
                 variants: {
                     variant: {
-                        primary: "text-primary-black",
+                        primary:
+                            "text-primary-black disabled:border-primary-secondary disabled:bg-primary-neutral disabled:text-primary-secondary",
                         auth: `${error ? "border-error" : "border-primary-black"} text-primary-black`,
                         authpassword: `${error ? "border-error" : "border-primary-black"} pr-9 text-primary-black`,
-                        textarea: "max-h-40 min-h-20 text-primary-black",
-                        form: "border-transparent bg-primary-secondary hover:bg-primary-white/15 focus:bg-primary-white/25",
+                        textarea:
+                            "max-h-40 min-h-20 text-primary-black disabled:border-primary-secondary disabled:bg-white/75 disabled:text-primary-secondary",
+                        form: "border-white/25 bg-primary-secondary hover:bg-primary-white/15 focus:bg-primary-white/25",
                         formSelect:
-                            "cursor-pointer border-transparent bg-primary-neutral",
+                            "cursor-pointer border-white/25 bg-primary-secondary",
                     },
                 },
                 defaultVariants: {
