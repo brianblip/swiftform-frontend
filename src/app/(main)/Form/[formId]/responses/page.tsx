@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { fetcher } from "@/utils";
 import { Response, Form, User } from "@@/types";
 import Link from "next/link";
+import LaunchIcon from '@mui/icons-material/Launch';
 
 interface ResponseItemProps {
     response: Response;
@@ -11,6 +12,7 @@ interface ResponseItemProps {
 }
 
 function ResponseItem({ response, formId }: ResponseItemProps) {
+    console.log(response)
     const { data: userData } = useSWR<User>(
         `/users/me?user_id=${response.user_id}`,
         fetcher,
@@ -21,12 +23,13 @@ function ResponseItem({ response, formId }: ResponseItemProps) {
     }
 
     return (
-        <li key={response.id} className="py-2">
+        <li key={response.id} className="border-b border-white/50 py-2">
             <Link
                 href={`/Form/${formId}/responses/${response.id}`}
-                className="text-blue-500 hover:text-blue-700"
+                className="flex justify-around text-white hover:text-blue-700"
             >
-                {userData.name} - {response.created_at}
+                <p className="w-1/2 text-center"><LaunchIcon fontSize="small"/> Respondent: {userData.name}</p>
+                <p className="w-1/2 text-start">Date: {response.created_at}</p>
             </Link>
         </li>
     );
@@ -51,16 +54,23 @@ export default function ResponseList({
 
     return (
         <div className="container mx-auto mt-5">
-            <div className="border border-black p-4">
-                <h2 className="text-xl font-bold">{formData.name}</h2>
+
+            <div className="relative grid gap-4 rounded border border-white/50 px-4 py-6 shadow-md">
+                <h2 className="text-center text-xl font-bold capitalize">{formData.name} responses</h2>
                 <ul className="mt-4">
-                    {responsesData.map((response) => (
-                        <ResponseItem
-                            key={response.id}
-                            response={response}
-                            formId={formId}
-                        />
-                    ))}
+                    {responsesData
+                        .sort((a, b) => {
+                            const dateA: Date = new Date(a.created_at);
+                            const dateB: Date = new Date(b.created_at);
+                            return dateB.getTime() - dateA.getTime();
+                        })
+                        .map((response) => (
+                            <ResponseItem
+                                key={response.id}
+                                response={response}
+                                formId={formId}
+                            />
+                        ))}
                 </ul>
             </div>
         </div>

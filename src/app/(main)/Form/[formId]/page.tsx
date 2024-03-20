@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import useForm from "@/contexts/forms";
 import ResponseComponent from "@/components/ResponseComponent";
 import DynamicForm from "@/components/FormBuilder/DynamicForm";
+import Link from "next/link";
 import { ErrorBoundary } from "@/components";
 import { useRouter } from "next/navigation";
 import Main from "@/components/UIComponents/Main";
@@ -19,7 +20,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     const activeForm = getForm(Number(formId));
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
-
+    
     // Set default titleInput value when activeForm changes
     useEffect(() => {
         if (isLoading) return;
@@ -92,6 +93,9 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                         </button>
                     </div>
                 </section>
+                {isQuestionSectionOpen 
+                    && <DynamicForm form={activeForm} updateForm={updateForm} />
+                }
 
                 {isQuestionSectionOpen ? (
                     <DynamicForm form={activeForm} updateForm={updateForm} />
