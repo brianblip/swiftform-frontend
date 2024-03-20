@@ -81,6 +81,17 @@ export default function AccountSettings() {
                 label="Current Password"
                 placeholder="Current Password"
                 required
+                InputProps={{
+                    style: {
+                        backgroundColor: '#444654',
+                        color: "white"
+                    },
+                }}
+                InputLabelProps={{
+                    style: {
+                        color: 'white',
+                    }
+                }}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
             />
@@ -94,6 +105,17 @@ export default function AccountSettings() {
                     value={newPassword}
                     onChange={handleNewPasswordChange}
                     isError={newPasswordError}
+                    InputProps={{
+                        style: {
+                            backgroundColor: '#444654',
+                            color: "white"
+                        },
+                    }}
+                    InputLabelProps={{
+                        style: {
+                            color: 'white',
+                        }
+                    }}
                     helperText="The password must be at least 8 characters long"
                 />
             </div>
@@ -107,6 +129,17 @@ export default function AccountSettings() {
                     value={confirmNewPassword}
                     onChange={handleConfirmNewPasswordChange}
                     isError={confirmNewPasswordError}
+                    InputProps={{
+                        style: {
+                            backgroundColor: '#444654',
+                            color: "white"
+                        },
+                    }}
+                    InputLabelProps={{
+                        style: {
+                            color: 'white',
+                        }
+                    }}
                     helperText="New password and confirm new password do not match"
                 />
             </div>
