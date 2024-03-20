@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import { TextField } from "@mui/material";
-import { Choice } from "@@/types";
+import { ChoiceComponentProps } from "@@/types";
 import Input from "../UIComponents/Input";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "../UIComponents/Button";
 
-type ChoiceComponentProps = {
-    choice: Choice;
-    handleUpdateChoice: (choiceId: number, updatedChoice: string) => void;
-    handleDeleteChoice: (choiceId: number) => void;
-};
 
 export default function ChoiceComponent({
     choice,
@@ -37,21 +31,8 @@ export default function ChoiceComponent({
                 defaultValue={editedText}
                 onChange={handleChange}
             />
-            {/* <TextField
-                label="Choice Text"
-                variant="filled"
-                value={editedText}
-                onChange={handleChange}
-                fullWidth
-                className="mb-2"
-            /> */}
 
-            <Button
-                type="button"
-                onClick={handleDelete}
-                variant="trash"
-                size="xs"
-            >
+            <Button onClick={handleDelete} variant="trash" size="xs">
                 <DeleteIcon />
             </Button>
         </div>
