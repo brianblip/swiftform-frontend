@@ -26,6 +26,7 @@ const LogoutButton = () => {
     return (
         <Button
             onClick={handleLogout}
+            disabled={isLoggedOut}
             variant="navbar"
             size="sm"
             className="p-2"
