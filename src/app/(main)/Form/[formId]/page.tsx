@@ -21,24 +21,22 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
 
-    // Set default titleInput value when activeForm changes
     useEffect(() => {
         if (isLoading) return;
 
         if (!activeForm) {
             router.push("/");
         } else {
-            setTitleInput(activeForm.name || ""); // Initialize with activeForm.name or ""
+            setTitleInput(activeForm.name || "");
         }
     }, [activeForm, isLoading, router]);
 
-    // Change handleTitleChange function to update the state
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTitle = event.target.value;
         setTitleInput(newTitle);
         if (activeForm) {
             const updatedForm = { ...activeForm, name: newTitle };
-            updateForm(activeForm.id, updatedForm); // Update the form data
+            updateForm(activeForm.id, updatedForm);
         }
         mutate("/forms");
     };
@@ -55,13 +53,6 @@ export default function FormPage({ params }: { params: { formId: number } }) {
             <Main variant="form">
                 <section className="flex w-full flex-col items-center gap-6">
                     <div className="relative flex w-3/4 items-center lg:w-[468px]">
-                        {/* <input
-                            id="formTitle"
-                            autoFocus
-                            value={titleInput}
-                            onChange={handleTitleChange}
-                            className="w-full rounded bg-primary-secondary px-3 py-2 pr-8 text-2xl text-primary-white hover:bg-primary-white/15 focus:bg-primary-white/25 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        /> */}
                         <Input
                             variant="form"
                             id="formTitle"
