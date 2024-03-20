@@ -3,6 +3,9 @@ import useSWR from "swr";
 import { fetcher } from "@/utils";
 import { Response, Form, Answer } from "@@/types";
 import Main from "@/components/UIComponents/Main";
+import Link from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 export default function ResponsePage({
     params,
 }: {
@@ -36,7 +39,15 @@ export default function ResponsePage({
     return (
         <Main variant="form">
             <div className="flex w-full flex-col items-center gap-8 sm:w-11/12 lg:w-9/12 xl:w-[660px]">
-                <h1 className="w-full text-left text-2xl font-bold">
+                <h1 className="flex w-full flex-col gap-4 text-left text-2xl font-bold">
+                    <Link
+                        href={`/Form/${formId}`}
+                        className="w-fit text-white hover:text-blue-700"
+                    >
+                        <p className="">
+                            <ArrowBackIcon />
+                        </p>
+                    </Link>
                     {formData.name}
                 </h1>
                 <div className="grid w-full gap-4">
