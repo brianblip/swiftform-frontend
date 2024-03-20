@@ -1,7 +1,9 @@
-import Input from "../../../components/Input";
+import Input from "@/components/ui/Input";
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import api from "@/services/api";
+import { toast } from "react-toastify";
+
 
 export default function ProfileInformation() {
     const formRef = useRef<HTMLFormElement | null>(null);
@@ -9,7 +11,7 @@ export default function ProfileInformation() {
     const [imageSrc, setImageSrc] = useState("");
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
-
+    const [isDisabled, setIsDisabled] = useState(true)
     const handleFullNameChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setFullName(e.target.value);
@@ -40,17 +42,16 @@ export default function ProfileInformation() {
             const response = await api.get("/users/me", {
                 withCredentials: true,
             });
+            
             const { name } = response.data.data;
-
             // Check if the name has changed before updating
             if (name !== fullName) {
-                // Update name if it has changed
-                const updateResponse = await api.patch(
-                    "/users/me",
-                    { name: fullName },
-                    { withCredentials: true },
-                );
-                console.log("Name updated successfully");
+                const updateResponse = await api.patch("/users/me", {
+                    name: fullName,
+                }, { withCredentials: true });
+                toast.success("Profile updated successfully");
+                setTimeout(()=>setIsDisabled(true), 1000)
+
             }
 
             const file = fileRef.current?.files?.[0]; // Get the selected file
@@ -67,10 +68,13 @@ export default function ProfileInformation() {
                 if (avatar_url) {
                     setImageSrc(`${backendURL}${response.data.avatar_url}`);
                 }
-                console.log("Picture uploaded successfully");
+                toast.success("Picture uploaded successfully");
+
             }
         } catch (error) {
             console.error("Error:", error);
+            toast.error("An error occurred. Please try again.");
+
         }
     };
 
@@ -132,26 +136,70 @@ export default function ProfileInformation() {
                     type="Fullname"
                     placeholder="Fullname"
                     label="Fullname"
-                    size="md"
                     id="fullname"
+                    sx={{
+                        "& .MuiInputBase-input.Mui-disabled": {
+                            WebkitTextFillColor: "white",
+                        },
+                    }}
+                    InputProps={{
+                        style: {
+                            backgroundColor: '#444654',
+                            color: "white"
+                        },
+                    }}
+                    InputLabelProps={{
+                        style: {
+                            color: 'white',
+                        }
+                    }}
+                    required
                     value={fullName}
+                    disabled={isDisabled}
                     onChange={handleFullNameChange}
                 />
                 <Input
                     type="email"
                     placeholder="Email"
                     label="Email"
-                    size="md"
                     id="email"
+                    sx={
+                        {
+                        "& .MuiInputBase-input.Mui-disabled": {
+                            WebkitTextFillColor: "white",
+                        },
+                    }}
+                    InputProps={{
+                        style: {
+                            backgroundColor: '#444654',
+                            color: "white"
+                        },
+                    }}
+                    InputLabelProps={{
+                        style: {
+                            color: "white"
+                        }
+                    }}
+                    required
                     value={email}
+                    disabled={true}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
-            <button
-                type="submit"
+
+            {isDisabled ? <button
                 className="rounded bg-primary-secondary px-8 py-2"
+                onClick={() => setIsDisabled(false)}
             >
-                Save Changes
+                Edit Information
             </button>
+                :
+                <button
+                    type="submit"
+                    className="rounded bg-primary-secondary px-8 py-2"
+                >
+                    Save Changes
+                </button>}
         </form>
     );
 }
