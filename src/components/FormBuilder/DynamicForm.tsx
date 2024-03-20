@@ -8,9 +8,9 @@ import SectionComponent from "./Section";
 import useForm, { FormState } from "@/contexts/forms";
 import Input from "../UIComponents/Input";
 import { toast } from "react-toastify";
-import { Axios, AxiosError } from "axios";
 import { handleApiError } from "@/utils";
 import Button from "../UIComponents/Button";
+import { useRouter } from "next/navigation";
 
 type DynamicFormProps = {
     form: Form;
@@ -21,7 +21,14 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
     const [description, setDescription] = useState<string>(
         form.description || "",
     );
-    const { createSection, updateSection, deleteSection, createQuestion, createChoice } = useForm();
+    const router = useRouter();
+    const {
+        createSection,
+        updateSection,
+        deleteSection,
+        createQuestion,
+        createChoice,
+    } = useForm();
     const [isUpdatingForm, setIsUpdatingForm] = useState(false);
 
     useEffect(() => {
@@ -49,36 +56,46 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
     const handleDuplicateSection = async (sectionId: number) => {
         try {
             const sectionToDuplicate = form.sections.find(
-                (section) => section.id === sectionId
+                (section) => section.id === sectionId,
             );
-    
+
             if (!sectionToDuplicate) {
                 console.error(`Section with ID ${sectionId} not found`);
                 return;
             }
-    
-            const newSection = await createSection(sectionToDuplicate.title, form.id);
-    
+
+            const newSection = await createSection(
+                sectionToDuplicate.title,
+                form.id,
+            );
+
             for (const question of sectionToDuplicate.questions) {
                 const newQuestion = await createQuestion(
                     question.type,
                     question.prompt,
                     newSection.id,
                     question.order,
-                    question.is_required
+                    question.is_required,
                 );
-    
+
                 for (const choice of question.choices) {
-                    await createChoice(choice.text, newQuestion.id, choice.order);
+                    await createChoice(
+                        choice.text,
+                        newQuestion.id,
+                        choice.order,
+                    );
                 }
             }
-    
+
             mutate("/forms");
         } catch (error) {
             console.error("Error duplicating section:", error);
         }
     };
 
+    const handleNavigateSharedForm = () => {
+        router.push(`/Form/${form.id}/shared`);
+    };
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
@@ -133,6 +150,15 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
 
             <Button type="submit" variant="secondary" className="mb-10">
                 {isUpdatingForm ? "Saving..." : "Save Changes"}
+            </Button>
+
+            <Button
+                type="button"
+                variant="secondary"
+                className="mb-10"
+                onClick={handleNavigateSharedForm}
+            >
+                Share
             </Button>
         </form>
     );
