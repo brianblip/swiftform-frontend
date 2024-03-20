@@ -2,6 +2,10 @@
 import useSWR from "swr";
 import { fetcher } from "@/utils";
 import { Response, Form, Answer } from "@@/types";
+import Main from "@/components/UIComponents/Main";
+import Link from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 export default function ResponsePage({
     params,
 }: {
@@ -33,36 +37,53 @@ export default function ResponsePage({
     };
 
     return (
-        <div className="container mx-auto mt-24">
-            <div className="border border-black p-4">
-                {formData.sections.map((section) => (
-                    // section
-                    <section
-                        key={section.id}
-                        className="mt-4 border border-white"
+        <Main variant="form">
+            <div className="flex w-full flex-col items-center gap-8 sm:w-11/12 lg:w-9/12 xl:w-[660px]">
+                <h1 className="flex w-full flex-col gap-4 text-left text-2xl font-bold">
+                    <Link
+                        href={`/Form/${formId}`}
+                        className="w-fit text-white hover:text-blue-700"
                     >
-                        <h1>{section.title}</h1>
-                        {section.questions.map((question) => (
-                            <article
-                                key={question.id}
-                                className="mt-8 border border-white"
-                            >
-                                <h1>{question.prompt}</h1>
-                                {getAnswersForQuestion(question.id).map(
-                                    (answer) => (
-                                        <div
-                                            key={question.id}
-                                            className="ml-4 mt-2"
-                                        >
-                                            {answer.text}
-                                        </div>
-                                    ),
-                                )}
-                            </article>
-                        ))}
-                    </section>
-                ))}
+                        <p className="">
+                            <ArrowBackIcon />
+                        </p>
+                    </Link>
+                    {formData.name}
+                </h1>
+                <div className="grid w-full gap-4">
+                    {formData.sections.map((section) => (
+                        // section
+                        <section
+                            key={section.id}
+                            className="grid gap-4 rounded border border-white/50 p-4 shadow-md"
+                        >
+                            <h1 className="text-xl font-semibold">
+                                {section.title}
+                            </h1>
+                            {section.questions.map((question) => (
+                                <div
+                                    key={question.id}
+                                    className="relative ml-5 grid items-center gap-1 rounded border border-white/25 p-2 shadow-md before:absolute before:right-[calc(100%+8px)] before:size-3 before:rounded-full before:bg-white"
+                                >
+                                    <h1>{question.prompt}</h1>
+                                    {getAnswersForQuestion(question.id).map(
+                                        (answer) => (
+                                            <div key={question.id}>
+                                                <p className="flex flex-col gap-1">
+                                                    <span className="italic">
+                                                        Answer:
+                                                    </span>
+                                                    {answer.text}
+                                                </p>
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
+                            ))}
+                        </section>
+                    ))}
+                </div>
             </div>
-        </div>
+        </Main>
     );
 }
