@@ -36,7 +36,7 @@ export default function QuestionComponent({
     moveQuestionUp,
     moveQuestionDown,
     handleDeleteQuestion,
-    handleDuplicateQuestion
+    handleDuplicateQuestion,
 }: QuestionComponentProps) {
     const questionRef = useRef<HTMLDivElement>(null);
     const { createChoice, updateChoice, deleteChoice } = useForm();
@@ -50,8 +50,12 @@ export default function QuestionComponent({
         if (questionRef.current) {
             const questionElement = questionRef.current;
             const { y } = questionElement.getBoundingClientRect();
-            const scrollOffset = y - window.innerHeight / 2 + questionElement.offsetHeight / 2;
-            window.scrollTo({ top: window.pageYOffset + scrollOffset, behavior: "smooth" });
+            const scrollOffset =
+                y - window.innerHeight / 2 + questionElement.offsetHeight / 2;
+            window.scrollTo({
+                top: window.pageYOffset + scrollOffset,
+                behavior: "smooth",
+            });
         }
     }, [question.order]);
 
@@ -66,7 +70,7 @@ export default function QuestionComponent({
             setNewChoiceText("");
         }
     };
-    
+
     const handleUpdateChoice = async (
         choiceId: number,
         updatedChoice: string,
@@ -74,7 +78,7 @@ export default function QuestionComponent({
         await updateChoice(choiceId, updatedChoice);
         mutate("/forms");
     };
-    
+
     // Inside handleDeleteChoice function
     const handleDeleteChoice = async (choiceId: number) => {
         await deleteChoice(choiceId);
