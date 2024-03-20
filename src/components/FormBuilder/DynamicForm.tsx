@@ -21,7 +21,7 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
     const [description, setDescription] = useState<string>(
         form.description || "",
     );
-    const { createSection, updateSection, deleteSection } = useForm();
+    const { createSection, updateSection, deleteSection, createQuestion, createChoice } = useForm();
     const [isUpdatingForm, setIsUpdatingForm] = useState(false);
 
     useEffect(() => {
@@ -43,6 +43,39 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
             mutate("/forms");
         } catch (error) {
             console.error("Error deleting section:", error);
+        }
+    };
+
+    const handleDuplicateSection = async (sectionId: number) => {
+        try {
+            const sectionToDuplicate = form.sections.find(
+                (section) => section.id === sectionId
+            );
+    
+            if (!sectionToDuplicate) {
+                console.error(`Section with ID ${sectionId} not found`);
+                return;
+            }
+    
+            const newSection = await createSection(sectionToDuplicate.title, form.id);
+    
+            for (const question of sectionToDuplicate.questions) {
+                const newQuestion = await createQuestion(
+                    question.type,
+                    question.prompt,
+                    newSection.id,
+                    question.order,
+                    question.is_required
+                );
+    
+                for (const choice of question.choices) {
+                    await createChoice(choice.text, newQuestion.id, choice.order);
+                }
+            }
+    
+            mutate("/forms");
+        } catch (error) {
+            console.error("Error duplicating section:", error);
         }
     };
 
@@ -83,6 +116,7 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
                             section={section}
                             updateSection={updateSection}
                             handleDeleteSection={handleDeleteSection}
+                            handleDuplicateSection={handleDuplicateSection}
                         />
                     ))
             ) : (
