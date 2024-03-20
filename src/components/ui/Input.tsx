@@ -3,13 +3,13 @@ import { TextField, TextFieldProps } from "@mui/material";
 import { InputHTMLAttributes } from "react";
 
 interface Props extends Omit<TextFieldProps, "error" | "required"> {
-    error?: string;
+    isError?: boolean;
     required?: boolean;
     readOnly?: boolean;
 }
 
 const Input = forwardRef<InputHTMLAttributes<HTMLInputElement>, Props>(
-    (props, ref) => {
+    ({ isError, required, ...props }, ref) => {
         return (
             <TextField
                 size="small"
@@ -19,13 +19,14 @@ const Input = forwardRef<InputHTMLAttributes<HTMLInputElement>, Props>(
                 InputProps={{
                     style: {
                         backgroundColor: "#fff",
+                        ...(isError && { border: "1px solid red" }), // Apply red border if isError is true
                         ...props.InputProps?.style,
                     },
                 }}
-                error={!!props.error}
-                helperText={props.error}
+                error={isError}
+                helperText={isError && props.helperText} // Display helper text only if isError is true
                 required={undefined} // don't use required prop because it's overlapping with react-hook-form
-                label={`${props.label} ${props.required ? "*" : ""}`}
+                label={`${props.label} ${required ? "*" : ""}`}
             />
         );
     },
