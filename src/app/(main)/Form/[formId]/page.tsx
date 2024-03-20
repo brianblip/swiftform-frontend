@@ -95,7 +95,6 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                         </button>
                     </div>
                 </section>
-
                 {isQuestionSectionOpen ? (
                     <DynamicForm form={activeForm} updateForm={updateForm} />
                 ) : (
