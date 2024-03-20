@@ -200,6 +200,7 @@ export default function QuestionComponent({
                 <CopyAll />
             </Button>
             <Button
+                type="button"
                 variant="exit"
                 size="xs"
                 onClick={() => handleDeleteQuestion(question.id)}
