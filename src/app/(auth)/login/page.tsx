@@ -59,12 +59,17 @@ export default function Login() {
 
     return (
         <Main variant="auth">
-            <div className="flex flex-col items-center gap-8">
-                <div className="size-28 overflow-hidden rounded-full">
-                    <Image src={Birdie} alt="SwiftForm logo" />
-                </div>
-
-                <h1 className="text-xl font-bold md:text-3xl">Welcome back</h1>
+            <section className="flex flex-col items-center gap-6">
+                <header className="flex flex-col items-center gap-4">
+                    <Image
+                        className="size-28 overflow-hidden rounded-full"
+                        src={Birdie}
+                        alt="SwiftForm logo"
+                    />
+                    <h1 className="text-2xl font-bold md:text-3xl">
+                        Welcome back
+                    </h1>
+                </header>
 
                 <form
                     onSubmit={handleSubmit(handleLogin)}
@@ -112,7 +117,7 @@ export default function Login() {
                     Don&rsquo;t have an account?
                     <span className="font-bold"> Sign up</span>
                 </Link>
-            </div>
+            </section>
         </Main>
     );
 }
