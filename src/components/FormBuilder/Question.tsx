@@ -100,10 +100,10 @@ export default function QuestionComponent({
             ref={questionRef}
             className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
         >
-            <h1>Question Order: {question.order}</h1>
+            <h1>Question: {question.order}</h1>
             <Input
                 variant="form"
-                label="Question Prompt:"
+                label="Prompt:"
                 id={`Question_Prompt_${question.id}`}
                 type="text"
                 defaultValue={question.prompt}
@@ -118,7 +118,7 @@ export default function QuestionComponent({
                 }
             />
             <Input
-                label="Question Type:"
+                label="Type:"
                 id={`Question_Type_${question.id}`}
                 type="select"
                 variant="formSelect"
@@ -175,10 +175,10 @@ export default function QuestionComponent({
                     </div>
                 </div>
             )}
-            <div className="flex justify-end gap-2">
+            <div className="absolute right-0 flex">
                 <Button
                     type="button"
-                    variant="secondary"
+                    variant="arrows"
                     size="xs"
                     onClick={() => moveQuestionUp(question.id)}
                     disabled={question.order === 1}
@@ -187,30 +187,30 @@ export default function QuestionComponent({
                 </Button>
                 <Button
                     type="button"
-                    variant="secondary"
+                    variant="arrows"
                     size="xs"
                     onClick={() => moveQuestionDown(question.id)}
                     disabled={question.order === sortedQuestions.length}
                 >
                     <ArrowDownwardIcon />
                 </Button>
+                <Button
+                    type="button"
+                    variant="copy"
+                    size="xs"
+                    onClick={() => handleDuplicateQuestion(question.id)}
+                >
+                    <CopyAll />
+                </Button>
+                <Button
+                    type="button"
+                    variant="exit"
+                    size="xs"
+                    onClick={() => handleDeleteQuestion(question.id)}
+                >
+                    <CloseIcon />
+                </Button>
             </div>
-            <Button
-                type="button"
-                variant="copy"
-                size="xs"
-                onClick={() => handleDuplicateQuestion(question.id)}
-            >
-                <CopyAll />
-            </Button>
-            <Button
-                type="button"
-                variant="exit"
-                size="xs"
-                onClick={() => handleDeleteQuestion(question.id)}
-            >
-                <CloseIcon />
-            </Button>
         </div>
     );
 }
