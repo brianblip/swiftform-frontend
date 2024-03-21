@@ -7,9 +7,12 @@ interface Props extends HTMLAttributes<HTMLButtonElement> {
 
 export default function SuggestionButton({ title, subtitle, ...props }: Props) {
     return (
-        <button className="bg-primary-secondary px-2 py-3" {...props}>
+        <button
+            className="flex flex-col gap-1 rounded bg-primary-secondary px-2 py-3 text-left"
+            {...props}
+        >
             <h1 className="font-semibold">{title}</h1>
-            <p>{subtitle}</p>
+            <p className="text-sm">{subtitle}</p>
         </button>
     );
 }

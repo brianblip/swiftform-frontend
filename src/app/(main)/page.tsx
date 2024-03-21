@@ -143,13 +143,16 @@ export default function Home() {
         );
 
     return (
-        <Main>
-            <div className="flex w-full flex-col items-center gap-y-4">
+        <Main className="items-start overflow-scroll lg:items-center">
+            <div className="flex h-fit w-full flex-col items-center gap-4">
                 <h1 className="text-center text-2xl font-bold md:text-3xl">
                     Hello {user.name}, let&lsquo;s create your form
                 </h1>
-                <div className="flex w-full flex-col gap-y-8 lg:w-[720px] xl:w-[820px]">
-                    <section className="flex w-full flex-col items-center gap-4">
+                <div className="flex w-full flex-col gap-4 lg:w-[720px] xl:w-[820px]">
+                    <section className="flex w-full flex-col items-center gap-1 border-b border-white/50 pb-4">
+                        <p className="text-sm font-medium">
+                            Start with a template
+                        </p>
                         <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
                             {TEMPLATES.map((template, index) => (
                                 <SuggestionButton
@@ -164,6 +167,11 @@ export default function Home() {
                                 />
                             ))}
                         </div>
+                    </section>
+                    <div className="flex w-full flex-col items-center gap-1 border-b border-white/50 pb-4">
+                        <p className="text-sm font-medium">
+                            Or, start from scratch
+                        </p>
                         <Button
                             type="button"
                             variant="secondary"
@@ -171,14 +179,14 @@ export default function Home() {
                         >
                             Create new form
                         </Button>
-                    </section>
+                    </div>
 
                     <form
                         className="grid w-full gap-4"
                         onSubmit={handleGenerateForm}
                     >
                         <Input
-                            label="Describe the form you want to generate..."
+                            label="Or, describe your ideal template to our AI to speed things up"
                             variant="textarea"
                             type="textarea"
                             error={generateFormErrors.description?.message}
