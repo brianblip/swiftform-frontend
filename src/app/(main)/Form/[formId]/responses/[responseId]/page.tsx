@@ -1,10 +1,11 @@
 "use client";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
-import { Response, Form, Answer } from "@@/types";
+import { Response, Form, Answer, User } from "@@/types";
 import Main from "@/components/UIComponents/Main";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import LoadingPage from "@/components/LoadingPage";
 
 export default function ResponsePage({
     params,
@@ -16,9 +17,17 @@ export default function ResponsePage({
         `/responses/${responseId}`,
         fetcher,
     );
+    const { data: userData } = useSWR<User>(
+        `/users/${responseData?.user_id}`,
+        fetcher,
+    );
     const { data: formData } = useSWR<Form>(`/forms/${formId}`, fetcher);
-    if (!responseData || !formData) {
-        return <div>Loading...</div>;
+    if (!responseData || !formData || !userData) {
+        return (
+            <div className="container flex flex-col items-center justify-center">
+                <LoadingPage />
+            </div>
+        );
     }
     const getAnswersForQuestion = (questionId: number): Answer[] => {
         return responseData.answers.filter(
@@ -35,21 +44,35 @@ export default function ResponsePage({
         }
         return [];
     };
-
     return (
         <Main variant="form">
-            <div className="flex w-full flex-col items-center gap-8 sm:w-11/12 lg:w-9/12 xl:w-[660px]">
-                <h1 className="flex w-full flex-col gap-4 text-left text-2xl font-bold">
-                    <Link
-                        href={`/Form/${formId}`}
-                        className="w-fit text-white hover:text-blue-700"
-                    >
-                        <p className="">
-                            <ArrowBackIcon />
-                        </p>
-                    </Link>
-                    {formData.name}
-                </h1>
+            <section className="flex w-full flex-col items-center gap-8 sm:w-11/12 lg:w-9/12 xl:w-[660px]">
+                <div className="flex w-full flex-col gap-2 text-left">
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href={`/Form/${formId}`}
+                            className="w-fit text-white hover:text-blue-700"
+                        >
+                            <p className="">
+                                <ArrowBackIcon />
+                            </p>
+                        </Link>
+                        <h1 className="text-2xl font-bold">{formData.name}</h1>
+                    </div>
+
+                    <p>
+                        name:{" "}
+                        <span className="font-semibold underline">
+                            {userData.name}
+                        </span>
+                    </p>
+                    <p>
+                        email:{" "}
+                        <span className="font-semibold underline">
+                            {userData.email}
+                        </span>
+                    </p>
+                </div>
                 <div className="grid w-full gap-4">
                     {formData.sections.map((section) => (
                         // section
@@ -83,7 +106,7 @@ export default function ResponsePage({
                         </section>
                     ))}
                 </div>
-            </div>
+            </section>
         </Main>
     );
 }

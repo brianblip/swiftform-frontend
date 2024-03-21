@@ -70,14 +70,17 @@ export default function RegistrationPage() {
 
     return (
         <Main variant="auth">
-            <div className="flex flex-col items-center gap-8">
-                <div className="size-28 overflow-hidden rounded-full">
-                    <Image src={Birdie} alt="SwiftForm logo" />
-                </div>
-
-                <h1 className="text-xl font-bold md:text-2xl">
-                    Create your account
-                </h1>
+            <section className="flex flex-col items-center gap-6">
+                <header className="flex flex-col items-center gap-4">
+                    <Image
+                        className="size-28 overflow-hidden rounded-full"
+                        src={Birdie}
+                        alt="SwiftForm logo"
+                    />
+                    <h1 className="text-2xl font-bold md:text-3xl">
+                        Create your account
+                    </h1>
+                </header>
 
                 <form
                     onSubmit={handleSubmit(handleFormSubmit)}
@@ -146,7 +149,7 @@ export default function RegistrationPage() {
                         setIsPasswordVisible={setIsReenterPasswordVisible}
                     />
 
-                    <Button type="submit" variant="auth">
+                    <Button className="mt-4" type="submit" variant="auth">
                         Continue
                     </Button>
                 </form>
@@ -154,7 +157,7 @@ export default function RegistrationPage() {
                     Already have an account?
                     <span className="font-bold"> Log in</span>
                 </Link>
-            </div>
+            </section>
         </Main>
     );
 }

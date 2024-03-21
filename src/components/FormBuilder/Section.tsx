@@ -28,7 +28,9 @@ export default function SectionComponent({
     const [sortedQuestions, setSortedQuestions] = useState<Question[]>([]);
 
     useEffect(() => {
-        setSortedQuestions([...section.questions].sort((a, b) => a.order - b.order));
+        setSortedQuestions(
+            [...section.questions].sort((a, b) => a.order - b.order),
+        );
     }, [section.questions]);
 
     const { createQuestion, deleteQuestion, updateQuestion, createChoice } =
@@ -182,7 +184,7 @@ export default function SectionComponent({
             key={section.id}
             className="relative grid gap-4 rounded border border-white/50 px-4 py-6 shadow-md"
         >
-            <h1>{section.id}</h1>
+            {/* <h1>{section.id}</h1> */}
             <Input
                 variant="form"
                 label="Section Title:"
@@ -214,23 +216,25 @@ export default function SectionComponent({
             >
                 Create Question
             </Button>
-            <Button
-                type="button"
-                variant="copy"
-                size="xs"
-                onClick={() => handleDuplicateSection(section.id)}
-            >
-                <CopyAll />
-            </Button>
+            <div className="absolute right-0 flex">
+                <Button
+                    type="button"
+                    variant="copy"
+                    size="xs"
+                    onClick={() => handleDuplicateSection(section.id)}
+                >
+                    <CopyAll />
+                </Button>
 
-            <Button
-                type="button"
-                variant="exit"
-                size="xs"
-                onClick={() => handleDeleteSection(section.id)}
-            >
-                <CloseIcon />
-            </Button>
+                <Button
+                    type="button"
+                    variant="exit"
+                    size="xs"
+                    onClick={() => handleDeleteSection(section.id)}
+                >
+                    <CloseIcon />
+                </Button>
+            </div>
         </section>
     );
 }
