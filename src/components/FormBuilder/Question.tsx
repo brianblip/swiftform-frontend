@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { QuestionType, Choice, Question } from "@@/types";
+import { QuestionType, QuestionComponentProps, Question } from "@@/types";
 import useForm from "@/contexts/forms";
 import ChoiceComponent from "./Choice";
 import { mutate } from "swr";
@@ -10,23 +10,6 @@ import Button from "../UIComponents/Button";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { CopyAll } from "@mui/icons-material";
-
-type QuestionComponentProps = {
-    question: Question;
-    sectionId: number;
-    sortedQuestions: Question[];
-    updateQuestion: (
-        questionId: number,
-        type: QuestionType,
-        prompt: string,
-        sectionId: number,
-        questionOrder: number,
-    ) => void;
-    moveQuestionUp: (questionId: number) => void;
-    moveQuestionDown: (questionId: number) => void;
-    handleDeleteQuestion: (questionId: number) => void;
-    handleDuplicateQuestion: (questionId: number) => void;
-};
 
 export default function QuestionComponent({
     question,
@@ -79,11 +62,11 @@ export default function QuestionComponent({
         mutate("/forms");
     };
 
-    // Inside handleDeleteChoice function
     const handleDeleteChoice = async (choiceId: number) => {
         await deleteChoice(choiceId);
         mutate("/forms");
     };
+
     const questionTypes: QuestionType[] = [
         "textfield",
         "textarea",
@@ -100,7 +83,7 @@ export default function QuestionComponent({
             ref={questionRef}
             className="relative grid gap-4 rounded border border-white/25 p-4 shadow-md"
         >
-            <h1>Question: {question.order}</h1>
+            <h1>Question #{question.order}:</h1>
             <Input
                 variant="form"
                 label="Prompt:"
