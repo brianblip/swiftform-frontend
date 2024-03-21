@@ -36,11 +36,18 @@ export default function ResponsePage({
     };
 
     const separateCheckboxValues = (text: string): string[] => {
-        // Assuming the checkbox values are separated by commas within curly braces
         const regex = /{([^}]*)}/;
         const match = text.match(regex);
         if (match && match[1]) {
-            return match[1].split(",").map((value) => value.trim());
+            const values = match[1].split(",").map((value) => value.trim());
+            if (values.length > 1) {
+                return values
+                    .slice(0, -1)
+                    .map((value) => value + ", ")
+                    .concat(values.slice(-1));
+            } else {
+                return values;
+            }
         }
         return [];
     };
@@ -96,7 +103,12 @@ export default function ResponsePage({
                                                     <span className="italic">
                                                         Answer:
                                                     </span>
-                                                    {answer.text}
+                                                    {question.type ===
+                                                    "checkbox"
+                                                        ? separateCheckboxValues(
+                                                              answer.text,
+                                                          )
+                                                        : answer.text}
                                                 </p>
                                             </div>
                                         ),
