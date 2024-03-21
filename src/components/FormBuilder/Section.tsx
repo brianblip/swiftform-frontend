@@ -237,10 +237,10 @@ export default function SectionComponent({
             >
                 Create Question
             </Button>
-            <div className="flex justify-end gap-2">
+            <div className="absolute right-0 top-0 flex">
                 <Button
                     type="button"
-                    variant="secondary"
+                    variant="arrows"
                     size="xs"
                     onClick={() => moveSectionUp(section.id)}
                     disabled={section.order === 1}
@@ -249,31 +249,31 @@ export default function SectionComponent({
                 </Button>
                 <Button
                     type="button"
-                    variant="secondary"
+                    variant="arrows"
                     size="xs"
                     onClick={() => moveSectionDown(section.id)}
                     disabled={section.order === sortedSections.length}
                 >
                     <ArrowDownwardIcon />
                 </Button>
-            </div>
-            <Button
-                type="button"
-                variant="copy"
-                size="xs"
-                onClick={() => handleDuplicateSection(section.id)}
-            >
-                <CopyAll />
-            </Button>
+                <Button
+                    type="button"
+                    variant="copy"
+                    size="xs"
+                    onClick={() => handleDuplicateSection(section.id)}
+                >
+                    <CopyAll />
+                </Button>
 
-            <Button
-                type="button"
-                variant="exit"
-                size="xs"
-                onClick={() => handleDeleteSection(section.id)}
-            >
-                <CloseIcon />
-            </Button>
+                <Button
+                    type="button"
+                    variant="exit"
+                    size="xs"
+                    onClick={() => handleDeleteSection(section.id)}
+                >
+                    <CloseIcon />
+                </Button>
+            </div>
         </section>
     );
 }
