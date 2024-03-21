@@ -185,11 +185,11 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
         }
     };
 
-    const handleShareForm = () => {
-        const shareLink = `https://swiftform.boomtech.co${pathname}/shared`;
-        navigator.clipboard.writeText(shareLink);
-        toast.success("Copied form link to clipboard!");
-    };
+    // const handleShareForm = () => {
+    //     const shareLink = `https://swiftform.boomtech.co${pathname}/shared`;
+    //     navigator.clipboard.writeText(shareLink);
+    //     toast.success("Copied form link to clipboard!");
+    // };
 
     return (
         <form
@@ -240,9 +240,9 @@ export default function DynamicForm({ form, updateForm }: DynamicFormProps) {
                 {isUpdatingForm ? "Saving..." : "Save Changes"}
             </Button>
 
-            <Button type="button" className="mb-4" onClick={handleShareForm}>
-                Share Form to Respondents
-            </Button>
+            {/* <Button type="button" className="mb-4" onClick={handleShareForm}>
+                <IosShareIcon />
+            </Button> */}
         </form>
     );
 }
