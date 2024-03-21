@@ -148,9 +148,11 @@ export default function Home() {
                 <h1 className="text-center text-2xl font-bold md:text-3xl">
                     Hello {user.name}, let&lsquo;s create your form
                 </h1>
-                <div className="flex w-full flex-col gap-8 lg:w-[720px] xl:w-[820px]">
-                    <section className="flex w-full flex-col items-center gap-6">
-                        <p className="-mb-4">Start with a template</p>
+                <div className="flex w-full flex-col gap-4 lg:w-[720px] xl:w-[820px]">
+                    <section className="flex w-full flex-col items-center gap-1 border-b border-white/50 pb-4">
+                        <p className="text-sm font-medium">
+                            Start with a template
+                        </p>
                         <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
                             {TEMPLATES.map((template, index) => (
                                 <SuggestionButton
@@ -165,14 +167,19 @@ export default function Home() {
                                 />
                             ))}
                         </div>
+                    </section>
+                    <div className="flex w-full flex-col items-center gap-1 border-b border-white/50 pb-4">
+                        <p className="text-sm font-medium">
+                            Or, start from scratch
+                        </p>
                         <Button
                             type="button"
                             variant="secondary"
                             onClick={() => setCreateFormModalOpened(true)}
                         >
-                            Start from scratch
+                            Create new form
                         </Button>
-                    </section>
+                    </div>
 
                     <form
                         className="grid w-full gap-4"
