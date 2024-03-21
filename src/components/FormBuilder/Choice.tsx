@@ -14,7 +14,7 @@ export default function ChoiceComponent({
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newText = e.target.value;
         setEditedText(newText);
-        handleUpdateChoice(choice.id, newText); // Pass choice id and updated text
+        handleUpdateChoice(choice.id, newText, choice.order); // Pass choice id and updated text
     };
 
     const handleDelete = () => {

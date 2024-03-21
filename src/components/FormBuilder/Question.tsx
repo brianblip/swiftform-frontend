@@ -57,8 +57,9 @@ export default function QuestionComponent({
     const handleUpdateChoice = async (
         choiceId: number,
         updatedChoice: string,
+        order: number
     ) => {
-        await updateChoice(choiceId, updatedChoice);
+        await updateChoice(choiceId, updatedChoice, order);
         mutate("/forms");
     };
 
