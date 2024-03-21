@@ -16,6 +16,30 @@ import { useSWRConfig } from "swr";
 import Button from "@/components/UIComponents/Button";
 import Main from "@/components/UIComponents/Main";
 import LoadingPage from "@/components/LoadingPage";
+import { toast } from "react-toastify";
+
+const TEMPLATES = [
+    {
+        title: "Event Registration Form",
+        subtitle:
+            "A user-friendly template for registering for events, featuring fields for personal info, preferences, and payments. Ideal for any event type.",
+    },
+    {
+        title: "Customer Feedback",
+        subtitle:
+            "Designed to collect customer feedback efficiently, with sections for ratings, open-ended questions, and contact details.",
+    },
+    {
+        title: "Employment Application Form",
+        subtitle:
+            "Simplifies the job application process with sections for personal details, qualifications, and experience. Customizable for any role.",
+    },
+    {
+        title: "Efficient Service Request",
+        subtitle:
+            "Streamlines service requests with fields for customer information, service details, and urgency level. Perfect for service-based businesses.",
+    },
+];
 
 export default function Home() {
     const [isCreatingForm, setIsCreatingForm] = useState(false);
@@ -78,13 +102,38 @@ export default function Home() {
             router.push(`/Form/${newForm?.id}`);
         } catch (e) {
             if (e instanceof AxiosError) {
-                return alert(e.response?.data.message || e.message);
+                return toast.error(e.response?.data.message || e.message);
             }
-            alert(e);
+            toast.error("An unknown error occured");
         } finally {
             setIsGeneratingForm(false);
         }
     });
+
+    const handleGenerateTemplate = async (formDescription: string) => {
+        try {
+            const response = await generateFormJson(formDescription);
+            const generatedFormJson = response.data;
+
+            if (!generatedFormJson) {
+                throw new Error("Failed to generate form");
+            }
+
+            const nestedFormResponse =
+                await createNestedForm(generatedFormJson);
+
+            const newForm = nestedFormResponse.data;
+
+            await mutate("/forms");
+
+            router.push(`/Form/${newForm?.id}`);
+        } catch (e) {
+            if (e instanceof AxiosError) {
+                return toast.error(e.response?.data.message || e.message);
+            }
+            toast.error("An unknown error occured");
+        }
+    };
 
     if (!user)
         return (
@@ -101,12 +150,20 @@ export default function Home() {
                 </h1>
                 <div className="flex w-full flex-col gap-y-8 lg:w-[720px] xl:w-[820px]">
                     <section className="flex w-full flex-col items-center gap-4">
-                        {/* <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
-                            <SuggestionButton />
-                            <SuggestionButton />
-                            <SuggestionButton />
-                            <SuggestionButton />
-                        </div> */}
+                        <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
+                            {TEMPLATES.map((template, index) => (
+                                <SuggestionButton
+                                    key={index}
+                                    title={template.title}
+                                    subtitle={template.subtitle}
+                                    onClick={() =>
+                                        handleGenerateTemplate(
+                                            `${template.title} - ${template.subtitle}`,
+                                        )
+                                    }
+                                />
+                            ))}
+                        </div>
                         <Button
                             type="button"
                             variant="secondary"
