@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MenuItem, TextField } from "@mui/material";
-import { Question, QuestionType, Section, SectionComponentProps } from "@@/types";
+import {
+    Question,
+    QuestionType,
+    Section,
+    SectionComponentProps,
+} from "@@/types";
 import useForm from "@/contexts/forms";
 import { mutate } from "swr";
 import QuestionComponent from "@/components/FormBuilder/Question";
@@ -74,39 +79,41 @@ export default function SectionComponent({
         const questionIndex = updatedQuestions.findIndex(
             (q) => q.id === questionId,
         );
-    
+
         if (questionIndex > 0) {
             const prevQuestion = updatedQuestions[questionIndex - 1];
             const currentQuestion = updatedQuestions[questionIndex];
-    
+
             prevQuestion.order = currentQuestion.order;
             currentQuestion.order = prevQuestion.order - 1;
-    
+
             updateMultipleQuestions(updatedQuestions);
             scrollToQuestion(questionId);
         }
     };
-    
+
     const moveQuestionDown = (questionId: number) => {
         const updatedQuestions = [...sortedQuestions];
         const questionIndex = updatedQuestions.findIndex(
             (q) => q.id === questionId,
         );
-    
+
         if (questionIndex < updatedQuestions.length - 1) {
             const nextQuestion = updatedQuestions[questionIndex + 1];
             const currentQuestion = updatedQuestions[questionIndex];
-    
+
             nextQuestion.order = currentQuestion.order;
             currentQuestion.order = nextQuestion.order + 1;
-    
+
             updateMultipleQuestions(updatedQuestions);
             scrollToQuestion(questionId);
         }
     };
-    
+
     const scrollToQuestion = (questionId: number) => {
-        const questionElement = document.getElementById(`question_${questionId}`);
+        const questionElement = document.getElementById(
+            `question_${questionId}`,
+        );
         if (questionElement) {
             const { y } = questionElement.getBoundingClientRect();
             const scrollOffset =
@@ -117,7 +124,7 @@ export default function SectionComponent({
             });
         }
     };
-    
+
     const handleDuplicateQuestion = async (questionId: number) => {
         try {
             const questionToDuplicate = section.questions.find(
@@ -259,15 +266,14 @@ export default function SectionComponent({
                 <CopyAll />
             </Button>
 
-                <Button
-                    type="button"
-                    variant="exit"
-                    size="xs"
-                    onClick={() => handleDeleteSection(section.id)}
-                >
-                    <CloseIcon />
-                </Button>
-            </div>
+            <Button
+                type="button"
+                variant="exit"
+                size="xs"
+                onClick={() => handleDeleteSection(section.id)}
+            >
+                <CloseIcon />
+            </Button>
         </section>
     );
 }
