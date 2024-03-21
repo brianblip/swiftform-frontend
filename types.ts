@@ -136,7 +136,7 @@ export type QuestionComponentProps = {
 
 export type ChoiceComponentProps = {
     choice: Choice;
-    handleUpdateChoice: (choiceId: number, updatedChoice: string) => void;
+    handleUpdateChoice: (choiceId: number, updatedChoice: string, order: number) => void;
     handleDeleteChoice: (choiceId: number) => void;
 };
 
@@ -182,6 +182,6 @@ export type FormState = {
         questionId: number,
         order: number,
     ) => Promise<Choice>;
-    updateChoice: (choiceId: number, text: string) => Promise<Choice>;
+    updateChoice: (choiceId: number, text: string, order: number) => Promise<Choice>;
     deleteChoice: (choiceId: number) => Promise<void>;
 };

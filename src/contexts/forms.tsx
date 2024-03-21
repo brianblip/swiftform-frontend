@@ -257,9 +257,9 @@ const useFormStore = (): FormState => {
         }
     };
 
-    const updateChoice = async (choiceId: number, text: string) => {
+    const updateChoice = async (choiceId: number, text: string, order: number) => {
         try {
-            const { data } = await api.put(`/choices/${choiceId}`, { text });
+            const { data } = await api.put(`/choices/${choiceId}`, { text, order });
             const updatedForms = (forms || []).map((form) => ({
                 ...form,
                 sections: form.sections.map((section) => ({
@@ -268,7 +268,7 @@ const useFormStore = (): FormState => {
                         ...question,
                         choices: question.choices.map((choice) =>
                             choice.id === choiceId
-                                ? { ...choice, text: data.data.text }
+                                ? { ...choice, text: data.data.text, order: data.data.order }
                                 : choice,
                         ),
                     })),
