@@ -24,9 +24,9 @@ export default function Home() {
     const [isGeneratingForm, setIsGeneratingForm] = useState(false);
     const { mutate } = useSWRConfig();
     const { user } = useAuth();
-    let nameArray = user?.name.split("") as string[];
-    nameArray[0] = nameArray[0].toUpperCase();
-    let joinedName = nameArray.join("");
+    // let nameArray = user?.name.split("") as string[];
+    // nameArray[0] = nameArray[0].toUpperCase();
+    // let joinedName = nameArray.join("");
 
     const { createForm } = useFormData();
 
@@ -97,16 +97,16 @@ export default function Home() {
         <Main>
             <div className="flex w-full flex-col items-center gap-y-4">
                 <h1 className="text-center text-2xl font-bold md:text-3xl">
-                    Hello {joinedName}, let&lsquo;s create your form
+                    Hello {user.name}, let&lsquo;s create your form
                 </h1>
                 <div className="flex w-full flex-col gap-y-8 lg:w-[720px] xl:w-[820px]">
                     <section className="flex w-full flex-col items-center gap-4">
-                        <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
+                        {/* <div className="grid w-11/12 grid-cols-2 gap-x-2 gap-y-4">
                             <SuggestionButton />
                             <SuggestionButton />
                             <SuggestionButton />
                             <SuggestionButton />
-                        </div>
+                        </div> */}
                         <Button
                             type="button"
                             variant="secondary"
