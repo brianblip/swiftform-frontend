@@ -4,7 +4,6 @@ import Input from "../UIComponents/Input";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "../UIComponents/Button";
 
-
 export default function ChoiceComponent({
     choice,
     handleUpdateChoice,
@@ -32,7 +31,12 @@ export default function ChoiceComponent({
                 onChange={handleChange}
             />
 
-            <Button onClick={handleDelete} variant="trash" size="xs">
+            <Button
+                onClick={handleDelete}
+                className="my-1 self-end"
+                variant="trash"
+                size="xs"
+            >
                 <DeleteIcon />
             </Button>
         </div>

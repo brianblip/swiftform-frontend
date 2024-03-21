@@ -48,17 +48,17 @@ export default function FormsList({ formId }: FormsListProps) {
                             <li key={form.id}>
                                 <Link
                                     href={`/Form/${form.id}`}
-                                    className={`group relative flex items-center rounded p-2 hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
+                                    className={`group relative flex items-center rounded p-2 transition hover:bg-primary-secondary ${form.id == formId ? "bg-primary-secondary" : ""}`}
                                 >
                                     <h2 className="truncate whitespace-nowrap rounded text-sm">
                                         {form.name}
                                     </h2>
                                     <div className="absolute right-0 hidden rounded pr-2 group-hover:flex">
-                                        <button
+                                        {/* <button
                                             onClick={() => console.log("hi")}
                                         >
                                             <MoreHoriz className="text-2xl hover:text-zinc-500" />
-                                        </button>
+                                        </button> */}
                                         <button
                                             onClick={() =>
                                                 handleDelete(form.id, form.name)
