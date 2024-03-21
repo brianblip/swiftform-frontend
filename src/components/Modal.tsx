@@ -29,13 +29,15 @@ export default function Modal({
                 ref={ref}
                 className="relative w-10/12 rounded bg-primary-secondary p-4 sm:w-[500px]"
             >
-                <Button
-                    variant="exit"
-                    size="xs"
-                    onClick={() => setCreateFormModalOpened(false)}
-                >
-                    <CloseIcon />
-                </Button>
+                <div className="absolute right-0 top-0">
+                    <Button
+                        variant="exit"
+                        size="xs"
+                        onClick={() => setCreateFormModalOpened(false)}
+                    >
+                        <CloseIcon />
+                    </Button>
+                </div>
                 {children}
             </div>
         </section>
