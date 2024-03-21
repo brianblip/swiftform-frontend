@@ -8,10 +8,13 @@ import ResponseComponent from "@/components/ResponseComponent";
 import DynamicForm from "@/components/FormBuilder/DynamicForm";
 import Link from "next/link";
 import { ErrorBoundary } from "@/components";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Main from "@/components/UIComponents/Main";
 import Input from "@/components/UIComponents/Input";
 import ResponseList from "./responses/page";
+import { toast } from "react-toastify";
+import Button from "@/components/UIComponents/Button";
+import IosShareIcon from "@mui/icons-material/IosShare";
 
 export default function FormPage({ params }: { params: { formId: number } }) {
     const { formId } = params;
@@ -20,6 +23,7 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     const activeForm = getForm(Number(formId));
     const [isQuestionSectionOpen, setIsQuestionSectionOpen] = useState(true);
     const [titleInput, setTitleInput] = useState<string>("");
+    const pathname = usePathname();
 
     useEffect(() => {
         if (isLoading) return;
@@ -42,6 +46,12 @@ export default function FormPage({ params }: { params: { formId: number } }) {
     };
     const handleRedirectToShared = () => {
         router.push(`/Form/${formId}/shared`);
+    };
+
+    const handleShareForm = () => {
+        const shareLink = `https://swiftform.boomtech.co${pathname}/shared`;
+        navigator.clipboard.writeText(shareLink);
+        toast.success("Copied form link to clipboard!");
     };
 
     if (!activeForm) {
@@ -69,21 +79,31 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                             <Edit />
                         </label>
                     </div>
-                    <div className="flex w-full gap-2 border-b border-b-primary-white">
-                        <button
+                    <div className="flex w-full justify-between border-b border-b-primary-white">
+                        <div className="flex gap-2">
+                            <button
+                                type="button"
+                                onClick={() => setIsQuestionSectionOpen(true)}
+                                className={`border-b-2 px-2 py-1 ${isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent hover:text-white/75"}`}
+                            >
+                                Question
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setIsQuestionSectionOpen(false)}
+                                className={`border-b-2 px-2 py-1 ${!isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent hover:text-white/75"}`}
+                            >
+                                Response
+                            </button>
+                        </div>
+                        <Button
                             type="button"
-                            onClick={() => setIsQuestionSectionOpen(true)}
-                            className={`border-b-2 px-2 py-1 ${isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent hover:text-white/75"}`}
+                            size="xs"
+                            className="size-fit bg-transparent"
+                            onClick={handleShareForm}
                         >
-                            Question
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setIsQuestionSectionOpen(false)}
-                            className={`border-b-2 px-2 py-1 ${!isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent hover:text-white/75"}`}
-                        >
-                            Response
-                        </button>
+                            <IosShareIcon />
+                        </Button>
                     </div>
                 </section>
                 {isQuestionSectionOpen ? (
