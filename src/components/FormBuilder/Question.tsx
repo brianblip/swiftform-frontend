@@ -150,6 +150,7 @@ export default function QuestionComponent({
                         <Button
                             type="button"
                             variant="add"
+                            className="my-1 self-end"
                             size="xs"
                             onClick={handleCreateChoice}
                         >
