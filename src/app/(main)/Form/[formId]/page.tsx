@@ -69,18 +69,18 @@ export default function FormPage({ params }: { params: { formId: number } }) {
                             <Edit />
                         </label>
                     </div>
-                    <div className="flex w-full gap-4 border-b border-b-primary-white">
+                    <div className="flex w-full gap-2 border-b border-b-primary-white">
                         <button
                             type="button"
                             onClick={() => setIsQuestionSectionOpen(true)}
-                            className={`border-b-2 ${isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent hover:text-white/75"}`}
+                            className={`border-b-2 px-2 py-1 ${isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent hover:text-white/75"}`}
                         >
                             Question
                         </button>
                         <button
                             type="button"
                             onClick={() => setIsQuestionSectionOpen(false)}
-                            className={`border-b-2 ${!isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent hover:text-white/75"}`}
+                            className={`border-b-2 px-2 py-1 ${!isQuestionSectionOpen ? "border-b-primary-white font-bold text-white hover:text-white" : "border-b-transparent hover:text-white/75"}`}
                         >
                             Response
                         </button>
